@@ -1,0 +1,73 @@
+﻿@using System.Configuration
+@{
+    ViewBag.Title = "Administración Noticias";
+}
+
+<section id="main-content" class="container">
+    <div id="noticias-container" class="col-xs-11">
+        <div class="row">
+            <h2 class="page-header">NOTICIAS</h2>
+        </div>
+        <div class="row">
+            <div class="dyk-grid">
+                <div id="noticias-grid"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <hr />
+            <a class="btn btn-success" href="@Url.Action("Editar", "Noticias", new { })">Agregar Noticia</a>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var urlVirtualPath = '@(ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"])';
+        var urlTraerNoticias = '@(Url.Action("TraerNoticias", "Noticias"))';
+        var urlEliminarNoticia = '@(Url.Action("EliminarNoticia", "Noticias"))';
+        var urlEditarNoticia = '@(Url.Action("Editar", "Noticias"))';
+        var urlPrevisualizarNoticia = '@(Url.Action("Preview", "Noticias"))';
+        var urlImagenPorDefecto = '@(Url.Content("~/Image/defaultNoticia.png"))';
+        var urlImagenNoticia = '@(ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"] + ConfigurationManager.AppSettings["Imagen.Path.Noticias.Thumb"])';
+        var deleteMessage = '¿Esta seguro de eliminar la noticia seleccionado?';
+        var deleteSuccessMessage = 'La noticia ha sido eliminada exitosamente';
+    </script>
+    <script id="noticias-grid-edit-template" type="text/x-kendo-template">
+        <a class="editar-noticia icon-grid-fix" href="javascript:void(0);" title="Editar" data-id="#= NOTICIAID #">
+            <i class="fa fa-pencil"></i>
+        </a>
+    </script>
+    <script id="noticias-grid-delete-template" type="text/x-kendo-template">
+        <a class="eliminar-noticia icon-grid-fix" href="javascript:void(0);" title="Eliminar" data-id="#= NOTICIAID #">
+            <i class="fa fa-close"></i>
+        </a>
+    </script>
+    <script id="noticias-grid-preview-template" type="text/x-kendo-template">
+        <a class="previsualizar-noticia icon-grid-fix" href="javascript:void(0);" title="Previsualizar" data-id="#= NOTICIAID #">
+            <i class="fa fa-search"></i>
+        </a>
+    </script>
+    <script id="noticias-grid-image-template" type="text/x-kendo-template">
+        <a href="javascript:void(0);" title="Imagen" class="glyphicon glyphicon-picture noticias-image-tg">
+            <div class="noticias-image" style="display: none;">
+                <img src="#= IMAGEN ? urlImagenNoticia + IMAGEN : urlImagenPorDefecto #" />
+            </div>
+        </a>
+    </script>
+    <script id="noticias-grid-descripcion-template" type="text/x-kendo-template">
+        #= DESCRIPCION.substring(0, 150) #
+    </script>
+    <script id="noticias-grid-date-template" type="text/x-kendo-template">
+        #
+        var date = convertDateToUTC(parseDate(FECHA));
+        #
+        #= kendo.toString(date, 'd') #
+    </script>
+    <script id="noticias-grid-check-template" type="text/x-kendo-template">
+        <input type="checkbox" #=ACTIVO ? "checked=checked" : "" # disabled="disabled" />
+    </script>
+
+    @Scripts.Render("~/bundles/emermedica.adminListaNoticias")
+}

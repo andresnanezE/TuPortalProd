@@ -1,0 +1,198 @@
+﻿@{
+    ViewBag.Title = "Reporte Gerente Nacional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <link href="~/Content/css/ReporteDirector.css" rel="stylesheet" />
+    <link href="~/Content/daterangepicker.css" rel="stylesheet" />
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-multiselect-reports.css" rel="stylesheet" />
+}
+
+<form class="frm-slt">
+
+    <div class="row frm-slt text-center">
+
+        <div class="col-sm-12 col-md-4">
+            <label class="label lb-name">Estado Reserva:</label><br />
+            <select id="m-select-e-reserva" multiple="multiple" class="multiselect-reporte" data-bind="options: EstadosReserva, optionsText: 'nombreEstado', optionsValue: 'Id_Estado',
+                    multiselect: { includeSelectAllOption: true , nonSelectedText : 'Seleccionar...', allSelectedText:'Todos',selectAllText:'Todos', buttonWidth:'65%'}"></select>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <label class="label lb-name">Estado Cotización:</label><br />
+            <select id="m-select-e-cotizacion" class="multiselect-bootstrap" multiple="multiple" data-bind="options: EstadoCotizacion, optionsText: 'Nombre', optionsValue: 'Id',
+                    multiselect: { includeSelectAllOption: true , nonSelectedText : 'Seleccionar...', allSelectedText:'Todos',selectAllText:'Todos', buttonWidth:'65%'}"></select>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <label class="label lb-name">Producto:</label><br />
+            <select id="m-select-productos" multiple="multiple" data-bind="options: Productos, optionsText: 'Abreviatura',optionsValue: 'id_producto',
+                    multiselect: { includeSelectAllOption: true , nonSelectedText : 'Seleccionar...', allSelectedText:'Todos',selectAllText:'Todos', buttonWidth:'65%'}"></select>
+        </div>
+
+    </div>
+
+    <div class="row rw-mf text-center">
+        <div class="col-sm-12 col-md-4">
+            <label class="label lb-name text-left">Canal:</label><br />
+            <select id="m-select-canales" multiple="multiple" data-bind="options: Canales, optionsText: 'Canal',optionsValue: 'Id_Canal',
+                    multiselect: { includeSelectAllOption: true , nonSelectedText : 'Seleccionar...', allSelectedText:'Todos',selectAllText:'Todos', buttonWidth:'65%'}"></select>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <label class="label lb-name text-left">Sector Económico:</label><br />
+            <select id="m-select-sectores" multiple="multiple" data-bind="options: Sectores, optionsText: 'Descripcion',optionsValue: 'Id_sector',
+                    multiselect: { includeSelectAllOption: true , nonSelectedText : 'Seleccionar...', allSelectedText:'Todos',selectAllText:'Todos', buttonWidth:'65%', maxHeight: 450}"></select>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <label class="label lb-name">Ciudad:</label><br />
+            <select id="m-select-ciudades" multiple="multiple" data-bind="options: Ciudades, optionsText: 'Descripcion',optionsValue: 'Descripcion',
+                    multiselect: { includeSelectAllOption: true , nonSelectedText : 'Seleccionar...', allSelectedText:'Todos',selectAllText:'Todos', buttonWidth:'60%',maxHeight: 450}"></select>
+        </div>
+    </div>
+
+    <div class="row rw-mf text-center">
+        <div class=" col-sm-12 col-md-4">
+            <label class="label lb-name text-left">Fecha:</label><br />
+            <div id="reportrange" class="text-center" style="margin-left:auto; margin-right:auto;">
+                <i class="fa fa-calendar"></i>&nbsp;<span></span> <i class="fa fa-caret-down"></i>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <label class="label lb-name">Director:</label><br />
+            <select id="m-select-directores" multiple="multiple" data-bind="options: Directores, optionsText: 'nom_usr',optionsValue: 'id_usr',
+                    multiselect: { includeSelectAllOption: true ,  enableFiltering: true, filterPlaceholder: 'Buscar', nonSelectedText : 'Seleccionar...', allSelectedText:'Todos',selectAllText:'Todos', buttonWidth:'66%',maxHeight: 450}"></select>
+        </div>
+        <div class="col-sm-12 col-md-4 text-center">
+            <label class="label lb-name">Asesor:</label><br />
+            <input id="tx-asesor" type="text" class="form-control" style="width: 65%;border-radius: 50px; margin: auto;" />
+        </div>
+    </div>
+
+    <div class="row rw-mf">
+        <div class="col-sm-12 col-md-4 text-center">
+            <button id="cns-rpt-gr-nacional" class="btn btnCl btn-primary" data-bind="click: obtenerDatosReporte">Generar Reporte</button>
+        </div>
+        <div class="col-sm-12 col-md-4 text-center">
+            <input type="button" class="btn btnCl btn-warning" id="btn-clear" value="Limpiar">
+        </div>
+        <div class="col-sm-12 col-md-4 text-center" data-bind="visible: reporteGeneral().length > 0" id="tableActions">
+        </div>
+    </div>
+</form>
+
+
+<div class="col-md-12" style="min-height:360px;">
+    <div class="row" style="padding: 0px 15px">
+        <div id="dv-loading-data" class="col-sm-12" style="display:none;">
+            <div style="position: absolute;z-index: 999999999;color: rgb(255,255,255);width: 100%;height: 360px;top: 0;left: 0;">
+                <div style="position: relative;top: 50%;left: 50%;transform: translate(-50% , -50%);width: 59%;text-align: center;">
+                    <label style="position: relative;color: rgba(0, 0, 0, .3);font-size: 3em" data-text="Obteniendo reservas…">Obteniendo datos…</label>
+                </div>
+            </div>
+        </div>
+        <div id="dv-tb-ctzn" class="col-md-12">
+            <table id="tb-rpt" class="table table-hover row-border order-column text-center tb-ctzn">
+                <thead>
+                    <tr id="tr-hdr-1">
+                        <th id="th-hdr-rsva" colspan="9">
+                            RESERVA
+                        </th>
+                        <th id="th-hdr-ctzn" colspan="5" class="hdr-ctzn">
+                            COTIZACIÓN
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>N° RESERVA</th>
+                        <th>DIRECTOR</th>
+                        <th>ASESOR</th>
+                        <th>NIT</th>
+                        <th>D.V.</th>
+                        <th>RAZÓN SOCIAL</th>
+                        <th>FECHA</th>
+                        <!-- 7 - 12 SON OCULTAS PERO SE EXPORTAN -->
+                        <th data-bind="visible: false">N° RENOVACIONES</th>
+                        <th data-bind="visible: false">NOMBRE CONTACTO</th>
+                        <th data-bind="visible: false">CARGO CONTACTO</th>
+                        <th data-bind="visible: false">CORREO</th>
+                        <th data-bind="visible: false">TELÉFONO</th>
+                        <th data-bind="visible: false">CELULAR</th>
+                        <!-- 7 - 12 SON OCULTAS PERO SE EXPORTAN -->
+                        <th>CIUDAD</th>
+                        <th>ESTADO</th>
+                        <th>PRODUCTO</th>
+                        <!-- 16 - 20 SON OCULTAS PERO SE EXPORTAN -->
+                        <th data-bind="visible: false">TOTAL PERSONAL PERMANENTE</th>
+                        <th data-bind="visible: false">TOTAL PROMEDIO VISITANTES</th>
+                        <th data-bind="visible: false">N° SEDES COTIZADAS</th>
+                        <th data-bind="visible: false">N° RECONSIDERACIONES</th>
+                        <th data-bind="visible: false">TOTAL ÚLTIMA RECONSIDERACIÓN</th>
+                        <!-- 16 - 20 SON OCULTAS PERO SE EXPORTAN -->
+                        <th>VALOR COTIZACIÓN FINAL</th>
+                        <th>ESTADO</th>
+                        <th>CANAL</th>
+                        <th>SECTOR ECONÓMICO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ko foreach: reporteGeneral -->
+                    <tr>
+                        <td data-bind="text: IdCotizacion"></td>
+                        <td data-bind="text: NombreDirector"></td>
+                        <td data-bind="text: NombreAsesor"></td>
+                        <td data-bind="text: NIT"></td>
+                        <td data-bind="text: DV"></td>
+                        <td data-bind="text: NombreEmpresa"></td>
+                        <td data-bind="text: moment(FechaReserva).format('ll')"></td>
+                        <td data-bind="visible: false, text: NumeroRenovaciones"></td>
+                        <td data-bind="visible: false, text: NombreContacto"></td>
+                        <td data-bind="visible: false, text: Cargo"></td>
+                        <td data-bind="visible: false, text: CorreoElectronico"></td>
+                        <td data-bind="visible: false, text: Telefono"></td>
+                        <td data-bind="visible: false, text: Celular"></td>
+                        <td data-bind="text: Ciudad"></td>
+                        <td data-bind="text: EstadoReserva"></td>
+                        <td data-bind="text: NombreProducto"></td>
+                        <td data-bind="visible: false, text: PersonalPermanente"></td>
+                        <td data-bind="visible: false, visible: false, text: PromedioVisitantes"></td>
+                        <td data-bind="visible: false, text: SedesCotizadas"></td>
+                        <td data-bind="visible: false, text: NumeroReconsideraciones"></td>
+                        <td data-bind="visible: false, text: ValorUltimaReconsideracion"></td>
+                        <td data-bind="text: ValorCotizacionFinal"></td>
+                        <td data-bind="text: EstadoCotizacion"></td>
+                        <td data-bind="text: Canal"></td>
+                        <td data-bind="text: SectorEconomico"></td>
+                    </tr>
+                    <!-- /ko -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Datepickers -->
+    <script src="~/Scripts/daterangepicker.min.js"></script>
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <!-- Datepickers -->
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/DatatableExport/dataTables.buttons.min.js"></script>
+    <!-- Export -->
+    <script src="~/Scripts/DatatableExport/buttons.flash.min.js"></script>
+    <script src="~/Scripts/DatatableExport/jszip.min.js"></script>
+    <script src="~/Scripts/DatatableExport/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DatatableExport/pdfmake.min.js"></script>
+    <script src="~/Scripts/DatatableExport/vfs_fonts.js"></script>
+    <script src="~/Scripts/DatatableExport/buttons.print.min.js"></script>
+    <!-- Export -->
+
+    <script type="text/javascript">
+        var formatDate = "YYYY-MM-DD";
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+        var table;
+        const reporte = "Gerente Nacional";
+    </script>
+    <script src="~/App/Reportes/ReporteViewModel.js"></script>
+}
+

@@ -1,0 +1,272 @@
+﻿@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+
+@{
+    ViewBag.Title = "Mis Cotizaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/MisCotizaciones.css" rel="stylesheet" />
+<link href="~/js/loading-bar.min.css" rel="stylesheet" />
+<link href="~/Content/ui-grid.min.css" rel="stylesheet" />
+
+<style>  
+
+    #loading-bar .bar {
+        background-color: #4CAF50 !important;
+        height: 8px !important;
+    }
+
+    .grid {
+        width: 100%;
+        height: 500px;
+    }
+
+    .ui-grid-top-panel {
+        background-color: #183B63;
+        color: #ffffff;
+    }
+</style>
+
+@* Sección Angular Js *@
+<div ng-app="portalComercialApp" ng-controller="misCotizacionesController">
+
+    @* Filtros *@
+    <form id="frmFiltros" ng-submit="filtroMisReservas()">
+
+        <div id="filtrocotizacionesform">
+
+            <div ALIGN="center">
+                <label class="title-header">Ingresa el NIT,  Nombre o Razón Social</label>
+            </div>
+
+            @* Consulta Nit / Nombre *@
+            <div class="row" align="center">
+                <div class="col-xs-12 col-md-12 col-lg-12 ">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-xs-8 col-md-8 col-lg-8">
+
+                                <div class="inner-addon right-addon">
+                                    <i class="glyphicon glyphicon-search"></i>
+
+                                    <input class="form-control ipt-nit"
+                                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0,this.maxLength);"
+                                           type="text"
+                                           maxlength="100"
+                                           onpaste="return false"
+                                           ng-change="filtrarGrid(1, objDataFiltro.NitNombre)"
+                                           ng-model="objDataFiltro.NitNombre">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <button id="btnGuardarInfo" type="button" ng-click="limpiarFiltros()" class="btnConsultar-nit  btn btn-primary">Limpiar Filtros</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Otros Filtros *@
+            <div class="row" id="filter-row" style="width:100%">
+                <div class="filters col-lg-12 col-xs-12 col-md-12 ">
+                    <div class="form-control" id="flts--">
+                        <div class="flt-1 col-xs-12 col-md-4 col-lg-4">
+                            <div class="lb-1 col-xs-12 col-md-6 col-lg-6">
+                                <label class="control-label text-center" id="lbl-cotizacion">Estado De Cotización:</label>
+                            </div>
+                            <div class="slct-1 col-xs-12 col-md-6 col-lg-6">
+                                <select class="form-control"
+                                        id="estadoCotiFiltroCotiSelectID"
+                                        name="estadoCotizacion"
+                                        ng-change="filtrarGrid(1, objDataFiltro.estadoCotizacion)"
+                                        ng-model="objDataFiltro.estadoCotizacion">
+                                    <option value="">--Todos--</option>
+                                    <option ng-repeat="datos in lstEstadosCotizacion" value="{{datos.Nombre}}">{{datos.Nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flt-2 col-xs-12 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-md-4 col-lg-4 col-lg-4">
+                                <label class="control-label" id="lbl-producto">Producto:</label>
+                            </div>
+                            <div class="slct-2 col-xs-12 col-md-8 col-lg-8">
+                                <select class="form-control"
+                                        id="productoFiltroCotiSelectID"
+                                        name="estadoCotizacion"
+                                        ng-change="filtrarGrid(1, objDataFiltro.producto)"
+                                        ng-model="objDataFiltro.producto">
+
+                                    <option value="">--Todos--</option>
+                                    <option ng-repeat="datos in lstProductos" value="{{datos.NombreProducto}}">{{datos.NombreProducto}}
+                                    <option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flt-3 col-xs-12 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <label class="control-label" id="lbl-estado-reserva">Estado De La Reserva:</label>
+                            </div>
+                            <div class="slct-3 col-xs-12 col-md-6 col-lg-6">
+
+                                <select class="form-control"
+                                        id="estadoReserFiltroCotiSelectID"
+                                        name="estadoCotizacion"
+                                        ng-change="getObtenerInfMisCotizaciones(objDataFiltro.estadoReserva)"
+                                        ng-model="objDataFiltro.estadoReserva">
+
+                                    <option value="">--Todos--</option>
+                                    <option ng-repeat="datos in lstEstadosReserva" value="{{datos.nombreEstado}}">{{datos.nombreEstado}}
+                                    <option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 col-lg-12" id="filtrocotizacionesform">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-md-3 col-lg-3" id="dtpk-1">
+                                    <label class="control-label" id="dpk-start"> Fecha Inicio:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-9 col-lg-9" id="dtpk-2">
+                                    <input class="input-date form-control datepicker"
+                                           type="text"
+                                           id="fechaInicioFiltroCoti"
+                                           ng-model="objDataFiltro.fechaInicio">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-md-3 col-lg-3" id="dtpk-3">
+                                    <label class="control-label" id="dpk-End"> Fecha Fin:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-9 col-lg-9" id="dtpk-4">
+                                    <input class="input-date form-control datepicker"
+                                           type="text"
+                                           id="fechaFinFiltroCoti"
+                                           ng-change="filtrarGrid(2, objDataFiltro.fechaInicio, objDataFiltro.fechaFin)"
+                                           ng-model="objDataFiltro.fechaFin">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+
+    @* Tabla de Mis Reserva - Asesor  *@
+    <div class="col-md-12 tbl-header" ng-if="gridInfMisCotizaciones.data.length > 0">
+        <div ui-grid="gridInfMisCotizaciones" ui-grid-pagination class="grid"></div>
+    </div>
+
+    @* Tabla de Mis Reserva - Director / Pricyng  *@
+    <div class="col-md-12 tbl-header" ng-if="gridInfMisCotizacionesRol.data.length > 0">
+        <div ui-grid="gridInfMisCotizacionesRol" ui-grid-pagination class="grid">
+
+        </div>
+    </div>
+
+    @* Modal de Reservas proximas a vencer *@
+    <div class="modal fade" id="myModalProximasVencer" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content pd-mdl-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <span class="sb-title-nit">Reservas Próximas a Vencer</span>
+                        </div>
+                        <div class="col-md-12 text-center mg-dv-image">
+                            <img class="img-responsive center-block" src="~/Image/Artboard 4@300x.png" style="width: 55%">
+                        </div>
+                        <div class="col-md-9 text-center dv-info-modal">
+                            <p class="tx-modal--">
+                                <div class="col-md-12 text-center" style="margin-top: 40px">
+                                    <span class="tx-modal--" ng-repeat="datos in infMisCotizaciones.LstMsgProximasVencer">{{ datos }}</span>
+                                </div>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer mdl-footer-nit">
+                    <button type="button" class="btn-modal btn-modal-nit" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $.fn.datepicker.dates['es'] = {
+            days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            today: "Hoy",
+            clear: "Limpiar",
+            format: 'yyyy, mm, dd',
+            titleFormat: "yyyy, mm, dd",
+            weekStart: 1
+        };
+
+        $("#fechaInicioFiltroCoti").datepicker({
+            format: 'yyyy, mm, dd',
+            language: 'es',
+            autoclose: true,
+        });
+        $("#fechaFinFiltroCoti").datepicker({
+            format: 'yyyy, mm, dd',
+            language: 'es',
+            autoclose: true,
+
+        });
+
+    });
+    function validarFechaMenorActual(fechaInicio, fechaFin) {
+
+        //Quita el signo - del año
+        fechaInicio = fechaInicio.replace("-", "");
+        fechaFin = fechaFin.replace("-", "");
+
+        //Quita el signo - del mes
+        fechaInicio = fechaInicio.replace("-", "");
+        fechaFin = fechaFin.replace("-", "");
+
+        if (parseInt(fechaFin) < parseInt(fechaInicio))
+            return 1;
+        else
+            return 0;
+    }
+    function limpiarFiltros() {
+
+        $('#nitFiltroCoti').val('');
+        $('#estadoCotiFiltroCotiSelectID').val(null);
+        $('#productoFiltroCotiSelectID').val(null);
+        $('#productoFiltroCotiSelectID').val(null);
+        $('#estadoReserFiltroCotiSelectID').val(4);
+        $('#fechaInicioFiltroCoti').val(null);
+        $('#fechaFinFiltroCoti').val(null);
+
+    }
+
+</script>
+
+@*Librerias Externas*@
+<script type="text/javascript" src="~/js/kendo.all.min.js"></script>
+<script type="text/javascript" src="~/js/angular.min.js"></script>
+<script type="text/javascript" src="~/Content/ui-grid.min.js"></script>
+<script type="text/javascript" src="~/js/ui-grid.core.min.js"></script>
+<script type="text/javascript" src="~/js/ui-grid.pagination.min.js"></script>
+<script type="text/javascript" src="~/js/ui-grid.language.all.js"></script>
+<script type="text/javascript" src="~/js/loading-bar.min.js"></script>
+<script type="text/javascript" src="~/js/MisCotizaciones/misReservas.js"></script>
+
+

@@ -1,0 +1,83 @@
+﻿@model Presentacion.Mvc.App.Models.MenuModel
+
+@{
+    ViewBag.Title = "Administración Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="sedes-form" action="@Url.Action("Modificar")" method="POST">
+    <div class="panel panel-default" style="width: 65%">
+        <div class="panel-heading">
+            <h3>Modificar</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.MenuId)
+                <div class="form-group">
+                    @Html.Label("Menu", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Nodo Padre", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.NodoPadreId, new SelectList(Model.ListadoMenuPadres,
+                            "MenuId", "Descripcion"), "--selecione--", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Controller", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Controller, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Controller, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Action", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Action, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Action, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Url", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    @Html.Label("Roles", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @if (Model != null && Model.ListadoRoles != null)
+                        {
+                            @Html.CheckBoxListFor(x => x.RolesIds,
+                            x => x.ListadoRoles,
+                            x => x.RolId,
+                            x => x.Rol,
+                            x => x.Seleccionado)
+                            <br />
+                            @Html.ValidationMessageFor(model => model.RolesIds, "", new { @class = "text-danger" })
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="panel-footer" style="height: auto">
+            <div class="form-group fa fa-align-right">
+                <a class="btn btn-primary" href="@Url.Action("Index", "Menu")">Cancelar</a>
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="p-5px">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Generar referencias únicas de afiliación para contratos nuevos e inclusiones</h4>
+        </div>
+        <div class="form-horizontal p-15px">
+            <div class="row">
+                <div class="col-sm-4 float-left">
+                    <table class="col-sm-12">
+                        <tr>
+                            <td class="p-5px"><label>Selecciona tipo de afiliación:</label></td>
+                        </tr>
+                        <tr>
+                            <td class="p-5px">
+                                <select class="form-control" data-bind="value: tipoAfiliacion">
+                                    <option value="nuevo">Contrato nuevo</option>
+                                    <option value="inclusion">Inclusión con primera cuota</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-4 float-left">
+                    <table class="col-sm-12">
+                        <tr data-bind="visible: tipoAfiliacion() === 'nuevo'">
+                            <td class="p-5px"><label>Cédula del contratante(*)</label></td>
+                        </tr>
+                        <tr data-bind="visible: tipoAfiliacion() === 'nuevo'">
+                            <td class="p-5px">
+                                <input placeholder="No. de cédula"
+                                       type="text" class="form-control" data-bind="value: cedulaNuevo" />
+                            </td>
+                        </tr>
+                        <!-- ko if: tipoAfiliacion() === 'inclusion' -->
+                        <tr>
+                            <td class="p-5px"><label>Ingresa número del contrato (*)</label></td>
+                        </tr>
+                        <tr>
+                            <td class="p-5px">
+                                <input placeholder="No. del contrato"
+                                       type="text" class="form-control" data-bind="value: numeroContratoInclusion" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-5px"><label>Cédula del contratante (*)</label></td>
+                        </tr>
+                        <tr>
+                            <td class="p-5px">
+                                <input placeholder="No. de cédula del contratante"
+                                       type="text" class="form-control" data-bind="value: cedulaContratante" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-5px"><label>Cédula del beneficiario (*)</label></td>
+                        </tr>
+                        <tr>
+                            <td class="p-5px">
+                                <input placeholder="No. de cédula del beneficiario"
+                                       type="text" class="form-control" data-bind="value: cedulaBeneficiario" />
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </table>
+                </div>
+                <div class="col-sm-4 float-left">
+                    <table class="col-sm-12">
+                        <tr data-bind="visible: tipoAfiliacion() === 'inclusion'">
+                            <td>
+                                Para inclusiones de más de una persona solo debe diligenciar
+                                los datos de la cédula de uno de los beneficiarios a incluir<br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-bind="html: validezContratoInclusion"></td>
+                        </tr>
+                        <tr>
+                            <td><br /></td>
+                        </tr>
+                        <tr>
+                            <td data-bind="html: referenciaGenerada" style="font-size:25px"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
+                        <input type="button" id="btn-generar-referencia" class="btn btn-primary col-sm-12" value="Generar"
+                               data-bind="click:generarReferencia" />
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="col-sm-3 d-inline-block">
+                            <img src="https://www.grupobancolombia.com/wps/wcm/connect/fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4/logo-grupo-bancolombia+%281%29.png?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE-fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4-men-lbl"/>
+                        </div>
+                        <div class="col-sm-3 d-inline-block">
+                            <img src="https://www.grupobancolombia.com/wps/wcm/connect/fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4/logo-grupo-bancolombia+%281%29.png?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE-fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4-men-lbl"/>
+                        </div>
+                        <div class="col-sm-3 d-inline-block">
+                            <img src="https://www.grupobancolombia.com/wps/wcm/connect/fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4/logo-grupo-bancolombia+%281%29.png?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE-fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4-men-lbl"/>
+                        </div>
+                        <div class="col-sm-3 d-inline-block">
+                            <img src="https://www.grupobancolombia.com/wps/wcm/connect/fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4/logo-grupo-bancolombia+%281%29.png?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE-fd61ff6b-61e6-4c84-a8f8-7f1b74b942d4-men-lbl"/>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-4">
+                            <input type="button" class="btn btn-primary col-sm-12"
+                                   value="Enviar referencia al contratante"
+                                   data-bind="visible: verBotonEnviarReferencia" />
+                        </div>*@
+                </di>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mdl-info" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body mdl-bd-up">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h3 class="h-md-up" data-bind="text: tituloInfo"></h3>
+                        <hr class="hr-up">
+                    </div>
+                    <div class="col-sm-12 mt-2-up">
+                        <center><h4 data-bind="text: resultadoInfo"></h4></center>
+                        <br /><br />
+                    </div>
+                    <div class="col-sm-12">
+                        <div>
+                            <center>
+                                <input type="button"
+                                       class="btn btn-primary" data-dismiss="modal" value="Aceptar" />
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @*<script>
+          var isSac = @Html.Raw(Json.Encode(ViewBag.isSac));
+            var isDirector = @Html.Raw(Json.Encode(ViewBag.IsDirector));
+        </script>*@
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/App/ReferenciaPago/indexViewModel.js"></script>
+}

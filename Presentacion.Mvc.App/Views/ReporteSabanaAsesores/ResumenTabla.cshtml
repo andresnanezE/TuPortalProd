@@ -1,0 +1,243 @@
+﻿@using Dominio.Administracion.Entidades.MapperDto
+@model Presentacion.Mvc.App.Models.AfiliacionesModel
+@{
+    ViewBag.Title = "Resumen Afiliaciones";
+}
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Resultados Consulta</h4>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Label("Periodo", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <p class="form-control-static">@Model.ListaResultadoResumenTabla.FirstOrDefault(x=>x.PERIODO_INICIO != null).PERIODO_INICIO a @Model.ListaResultadoResumenTabla.FirstOrDefault().PERIODO_FINAL </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Label("Fecha de digitación", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <p class="form-control-static">@Model.ListaResultadoResumenTabla.FirstOrDefault().ACT_HORA_MAENO </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <table class="table table-striped table-condensed table-hover" id="tabla-datos" style="font-size: 1em;">
+                        @{ var listaTotal = Model.ListaResultadoResumenTabla.Where(x => x.SEGMENTO.Equals("TOTAL")).ToList();}
+                        <thead>
+                            <tr>
+                                <th colspan="4" class="text-center"><h5 style="display: inline-block;">Productos</h5><span style="position: relative; float: right;"><input type="button" class="btn btn-danger btn-xs" id="resumen-pdf" value="PDF" />&nbsp;<input type="button" class="btn btn-success btn-xs" id="resumen-excel" value="EXCEL" /></span></th>
+                            </tr>
+                            <tr class="filtros">
+                                <th class="col-md-6"></th>
+                                <th class="col-md-2" @if (listaTotal[0].FAMILIAR < 0) { @: style="display: none;"
+                                                                                                                                                     }>Familiar</th>
+                                <th class="col-md-2" @if (listaTotal[0].PMP < 0) { @: style="display: none;"
+                                                                                                                                                     }>PMP</th>
+
+                                <th class="col-md-2" @if (listaTotal[0].AREAS_PROTEGIDAS < 0) { @: style="display: none;"
+                                                                                         }>Areas protegidas</th>
+
+                                <th class="col-md-2"> Totales</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr style="font-weight: 800;">
+                                <th></th>
+
+                                @{
+                                    int? pmp1 = 0;
+                                    int? fam1 = 0;
+                                    int? area1 = 0;
+                                }
+                                @if (listaTotal[0].FAMILIAR > 0)
+                                {
+                                <th>@listaTotal[0].FAMILIAR</th>
+                                    fam1 = listaTotal[0].FAMILIAR;
+                                }
+                                else
+                                {
+                                <th>0</th>
+                                }
+                                @if (listaTotal[0].PMP > 0)
+                                {
+                                <th>@listaTotal[0].PMP</th>
+                                    pmp1 = listaTotal[0].PMP;
+                                }
+                                else
+                                {
+                                <th>0</th>
+                                }
+                                @if (listaTotal[0].AREAS_PROTEGIDAS > 0)
+                                {
+                                <th> @listaTotal[0].AREAS_PROTEGIDAS</th>
+                                    area1 = listaTotal[0].AREAS_PROTEGIDAS;
+                                }
+                                else
+                                {
+                                <th>0</th>
+                                }
+
+                                @{
+                                    var tot = pmp1 + fam1 + area1;
+                                }
+                                <th>@tot</th>
+                            </tr>
+                        </tfoot>
+                        @{
+                            var list = Model.ListaResultadoResumenTabla.ToList();
+                            var i = 0;
+                        }
+                        <tbody id="panel-tabla" style="font-size: 1em;">
+                            @foreach (var estatus in Model.ListaGroup)
+    {
+        if (!estatus.Equals("TOTAL"))
+        {
+
+            list= new List<ResultadosConsultaAfiliacionResumenTablaDto>();
+
+            int? pmp = 0;
+            int? fam = 0;
+            int? area = 0;
+            int? totalesEstatus = 0;
+
+            switch (i)
+            {
+                case 0:
+                    list = Model.ListaResultadoResumenTabla.GroupBy(x => new { x.CANAL })
+                             .Select(cl => new ResultadosConsultaAfiliacionResumenTablaDto
+                             {
+                                 CANAL = cl.First().CANAL,
+                                 PMP = cl.Sum(c => c.PMP),
+                                 AREAS_PROTEGIDAS = cl.Sum(c => c.AREAS_PROTEGIDAS),
+                                 FAMILIAR = cl.Sum(c => c.FAMILIAR)
+                             }).ToList();
+                    i++;
+
+                    pmp = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.PMP);
+                    fam = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.FAMILIAR);
+                    area = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.AREAS_PROTEGIDAS);
+
+                    totalesEstatus = pmp + fam + area;
+
+                    break;
+
+                case 1:
+                    list = Model.ListaResultadoResumenTabla.GroupBy(x => new { x.SEGMENTO })
+                             .Select(cl => new ResultadosConsultaAfiliacionResumenTablaDto
+                             {
+                                 CANAL = cl.First().SEGMENTO,
+                                 PMP = cl.Sum(c => c.PMP),
+                                 AREAS_PROTEGIDAS = cl.Sum(c => c.AREAS_PROTEGIDAS),
+                                 FAMILIAR = cl.Sum(c => c.FAMILIAR)
+                             }).ToList();
+                    i++;
+                    pmp = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.PMP);
+                    fam = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.FAMILIAR);
+                    area = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.AREAS_PROTEGIDAS);
+                    totalesEstatus = pmp + fam + area;
+                    break;
+
+                case 2:
+                    list = Model.ListaResultadoResumenTabla.GroupBy(x => new { x.CIUDAD })
+                             .Select(cl => new ResultadosConsultaAfiliacionResumenTablaDto
+                             {
+                                 CANAL = cl.First().CIUDAD,
+                                 PMP = cl.Sum(c => c.PMP),
+                                 AREAS_PROTEGIDAS = cl.Sum(c => c.AREAS_PROTEGIDAS),
+                                 FAMILIAR = cl.Sum(c => c.FAMILIAR)
+                             }).ToList();
+                    pmp = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.PMP);
+                    fam = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.FAMILIAR);
+                    area = list.Where(x => x.CANAL != "TOTAL").Sum(x => x.AREAS_PROTEGIDAS);
+                    totalesEstatus = pmp + fam + area;
+                    i++;
+                    break;
+
+            }
+
+                            <tr>
+                                <td colspan="5" style="font-weight: 800;">@estatus</td>
+
+                                @*<td colspan="1" style="font-weight: 800;">@totalesEstatus</td>*@
+                            </tr>
+
+            foreach (var datos in list)
+            {
+                if (datos.CANAL != "TOTAL")
+                {
+                            <tr>
+                                <td style="padding-left: 1.5em;">@datos.CANAL</td>
+                                @if (@datos.FAMILIAR > 0)
+                                                {
+                                <td>@datos.FAMILIAR</td>
+                                                }
+                                                else
+                                                {
+                                <td>0</td>
+                                                }
+                                @if (@datos.PMP > 0)
+                                                {
+                                <td>@datos.PMP</td>
+                                                }
+                                                else
+                                                {
+                                <td>0</td>
+                                                }
+                                @if (@datos.AREAS_PROTEGIDAS > 0)
+                                                {
+                                <td>@datos.AREAS_PROTEGIDAS</td>
+                                                }
+                                                else
+                                                {
+                                <td>0</td>
+                                                }
+
+                                @{
+                                            var totaless = datos.PMP + datos.FAMILIAR + datos.AREAS_PROTEGIDAS;
+                                }
+                                <td>@totaless</td>
+                            </tr>
+                                        }
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group text-center">
+                <input type="button" class="btn btn-primary btn-sm" id="informe-detallado" value="Descargar Informe Detallado" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("input#informe-detallado").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+            $("form#consulta-form input[name=TipoInforme]").val("D");
+            $("form#consulta-form").submit();
+        });
+
+        $("input#resumen-excel").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+            $("form#consulta-form input[name=TipoInforme]").val("R");
+            $("form#consulta-form").submit();
+        });
+
+        $("input#resumen-pdf").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Pdf");
+            $("form#consulta-form input[name=TipoInforme]").val("R");
+            $("form#consulta-form").submit();
+        });
+    });
+</script>

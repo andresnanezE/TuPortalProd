@@ -1,0 +1,27 @@
+﻿@using System.Configuration
+@model Dominio.Administracion.Entidades.MapperDto.DYK_NOTICIADto
+@{
+    var banner = ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"] + ConfigurationManager.AppSettings["Imagen.Path.Noticias.Banner"] + Model.BANNER;
+}
+
+<section id="main-content" class="container">
+    <div class="">
+        <div class="col-xs-11">
+            <div class="banner">
+                <img src="@banner" alt="Banner Noticias">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 title">
+                    <h1 id="titulo">@(Model.TITULO)</h1>
+                    <p id="fecha">@(Model.FECHA.ToString("dddd, MMMM dd, yyyy")) / <b>Responsabilidad social</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-11 col-sm-offset-1 col-sm-10 content-noticia">
+            <div class="row">@(Html.Raw(Model.CONTENIDO))</div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/emermedica.noticia")
+}

@@ -1,0 +1,215 @@
+﻿@model Presentacion.Mvc.App.Models.EnvioCertificadoTributarioModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Parametrización de envío masivo de Certificado Tributario";
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+<br />
+
+<div class="col-md-12">
+    <form id="certificado" action="@Url.Action("ReporteCertificadoTributario")" method="POST" target="_bank">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal">
+                <br />
+                <br />
+
+                @*@if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2 alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                                {
+                                    @modelError.ErrorMessage<br />
+                                }
+                            </div>
+                        </div>
+                    }*@
+                @*<div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <p>Genera aquí tu certificado tributario</p>
+                        <hr />
+                    </div>
+                </div>*@
+
+                <div class="row">
+
+                    <div class="col-md-2">
+                    </div>
+
+                    <div class="col-md-2">
+                        Año certificado
+                    </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(m => m.Año,Model.Años,
+                              new
+                              {
+                                  @class = "form-control"
+                              })
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        Selecciona el Tipo de contrato
+                    </div>
+                    <div class="col-md-5">
+
+                        @Html.DropDownListFor(
+                              m => m.TipoContrato, Model.Tipos,
+                              new
+                              {
+                                  @class = "form-control"
+                              }
+                              )
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        Fecha máxima de envío
+                    </div>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.FechaMaximaEnvio,
+                            new { type = "date",@class="date-picker col-md-12" })
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        Tipo de envío
+                    </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(
+                              m => m.TipoEnvio, Model.TiposEnvio,
+                              new
+                              {
+                                  @class = "form-control"
+                              }
+                              )
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                </div>
+                <br />
+
+                <div class="row" id="pnl-archivo">
+
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        Cargar archivo
+                    </div>
+                    <div class="col-md-5">
+                       <input type="file" id="btnCargarArchivo" class="form-control" accept=".xlsx"/>
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-5" style="text-align:right;">
+
+                        <button type="button" class="btn btn-danger" id="generar" onclick="solicitarCertificados()">
+                            Solicitar <span class="glyphicon glyphicon-chevron-right PosDos"></span>
+                        </button>
+                        <br /><br />
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+
+                <br />
+                <div id="mensajeData" class="row">
+                    <div class="col-md-6 col-md-offset-2 alert alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <label id="L_mensaje">No se encontraron datos</label><br />
+                    </div>
+                </div>
+
+                <br />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalProcesando" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                <h4 class="modal-title">Espera por favor</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="windows8">
+                    <div class="wBall" id="wBall_1">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_2">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_3">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_4">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_5">
+                        <div class="wInnerBall"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm" style="width:65%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Mensaje</h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-msg-alert" id="mensajeResultado"></span>
+                <div id="ajax-container"></div>
+            </div>
+            <div class="modal-footer footer-alert">
+                <button type="button" class="btn btn-accion" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/CertificadoTributario/EnvioMasivo.js"></script>

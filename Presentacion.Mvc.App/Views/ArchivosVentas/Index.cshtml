@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/MisCotizaciones.css" rel="stylesheet" />
+
+
+
+<div class="col-md-12 text-center" style="margin:25px 0px;">
+    <label class="title-header">Consulta de Documentos</label>
+</div>
+<span>@ViewBag.Id</span>
+<div class="col-sm-12">
+    <div id="rw-cnt-bsq" class="row pr-">
+        <div id="dv-cnt-bsq" class="col-sm-12 dv-cnt-bsq">
+            <table class="tbl-frm text-left">
+                <tbody>
+                    <tr>
+                        <td style="width: 30%">
+                            <label class="control-label lb-frm-up">Por favor ingrese el número del documento para realizar la búsqueda:</label>
+                            <div class="inner-addon right-addon dv-search">
+                            </div>
+                        </td>
+                        <td style="width: 30%">
+                            <input type="text" class="form-control" data-bind="value: documento" />
+                        </td>
+                        <td style="vertical-align: bottom;">
+                            <input id="btn-clean" type="button" class="btn btn-cl-cr" value="Buscar" data-bind="click: obtenerArchivos" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="row pr-">
+        <div id="dv-loading-data" class="col-sm-12">
+            <div style="position: absolute;z-index: 12;color: rgb(255,255,255);width: 100%;height: 360px;top: 0;left: 0;">
+                <div style="position: relative;top: 50%;left: 50%;transform: translate(-50% , -50%);width: 59%;text-align: center;">
+                    <label class="sp-loading-data" data-text="Obteniendo documentos…">Obteniendo documentos…</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dv-tb-ctzn" class="col-sm-12" style="display: none; padding: 0">
+        <table id="tb-ctzn" class="table table-hover stripe row-border tb-ctzn">
+
+            <thead>
+                <tr>
+                    <th>Documentos</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ko foreach: archivosBlob -->
+                <tr>
+                    <td data-bind="text: $data"></td>
+                    <td>
+                        <input type="button" value="Descargar" data-bind="click: $root.descargarArchivo.bind($data)" class="btn btn-cl-cr" />
+                    </td>
+                </tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="mdl-fnsh" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body mdl-bd-up">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h3 class="h-md-up">Alerta</h3>
+                        <hr class="hr-up">
+                    </div>
+                    <div class="col-sm-12 mt-2-up-">
+                        <span data-bind="text: textModal">
+                        </span>
+                    </div>
+                    <div class="col-sm-12 mdl-ft-up text-right">
+                        <button id="close" type="button" class="btn btn-default btn-cancel-up" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/App/ArchivosVentas/IndexViewModel.js"></script>
+
+

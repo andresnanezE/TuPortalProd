@@ -1,0 +1,12 @@
+﻿@using Presentacion.Mvc.App.Models
+@{
+    ViewBag.Title = "Perimetro Bogotá";
+}
+@{  @Html.Hidden("PerimetroUrlBogota", ConfiguracionesGlobales.PerimetroUrlBogota)  }
+<h2 id="log" class="col-md-12 ajax-file-upload-green">Abriendo perimetro Bogotá... Por favor permitir abrir ventanas emergentes, Gracias</h2>
+
+<script>
+    window.open($("#PerimetroUrlBogota").val());
+    var url = '@Url.Action("Index","Home")';
+    window.setTimeout($('#log').empty(), 30000);
+</script>

@@ -1,0 +1,275 @@
+﻿body {
+    
+    font-family:  Arial, Helvetica, sans-serif;
+}
+
+.panel-heading-color {
+    background-image: url('../../Image/Factores/banner.png') !important;
+    border-radius: 12px 12px 12px 12px;
+    -moz-border-radius: 12px 12px 12px 12px;
+    -webkit-border-radius: 12px 12px 12px 12px;
+    border: 0px solid #000000;
+    height: 60px;
+}
+
+.panel-default-color {
+    background-image: url('../../Image/Factores/banner.png') !important;
+    border-radius: 12px 12px 12px 12px;
+    -moz-border-radius: 12px 12px 12px 12px;
+    -webkit-border-radius: 12px 12px 12px 12px;
+    border: 0px solid #000000;
+}
+
+.panel-heading-modal {
+    background-image: url('../../Image/Factores/banner.png') !important;
+    height: 60px;
+}
+
+.btn-consultar {
+    height: 44px;
+    width: 44px;
+    background-image: url('../../Image/Factores/Next.png');
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 50%;
+}
+
+.title-factor-table {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-seri
+}
+
+.title-factor-table-tr {
+    color: #22558d !important;
+    font-size: 15px;
+    font-weight: inherit;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.title-factor-table-editar {
+    color: #22558d !important;
+    font-size: 15px;
+    font-weight: inherit;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.title-factor-table-tr-consultar {
+    color: #FFFFFF !important;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px !important;
+    vertical-align: bottom;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.title-factor {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 15px;
+}
+
+.title-modal {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 12px;
+}
+
+.btn-back-factor {
+    height: 40px;
+    width: 100px;
+    background-image: url('../../Image/Factores/volver.png');
+    background-repeat: no-repeat;
+    border: none;
+    margin-left: 50px;
+    margin-top: 6px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+.label-modal {
+    color: #22558d !important;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+    opacity: inherit;
+}
+
+.table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+    opacity: inherit;
+}
+
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+    background-color: #22558d;
+    color: white;
+    font-size: 17px;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #22558d;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: #22558d;
+    font-size: 17px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#btnEditar {
+    background-color: #34C38A;
+    border-radius: 50px;
+    color: #ffffff;
+}
+
+.input-modal-factor {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+}
+
+#txtNombreDetalleFactor {
+    border-radius: 50px;
+}
+
+#txtValorActual {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+}
+
+#txValorDetalleConstante {
+    border-radius: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#txValorFactorAjuste {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+}
+
+#txtEstado {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+}
+
+#txValorDetalleExponencial {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+}
+
+#txValorDetalleEC {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+}
+
+#btnGuardarInfo {
+    background-color: #34C38A;
+    font-family: Arial;
+    font-weight: bold;
+    border-color: #34c38a;
+    color: #ffffff;
+}
+
+#btnEditar {
+    border-color: #707070;
+}
+
+#btn-modal-cancel {
+    font-family: Arial;
+    background-color: #22558D;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.btn-danger1 {
+    background-color: #22558D;
+    border-color: #22558D;
+    color: #ffffff;
+    font-family: Arial;
+    font-weight: bold;
+}
+
+.btn:hover, .btn:focus, .btn.focus {
+    color: #ffffff;
+}
+
+#lbl-cnstnt {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 0px !important;
+    font-size: 17px !important;
+}
+
+#lbl-xpnt {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 0px !important;
+    font-size: 17px !important;
+}
+
+#lbl-cnstnt {
+    font-family: Arial, Helvetica, sans-serif;
+    left: 100px;
+    bottom: 19px;
+}
+
+div.col-md-5:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) {
+    left: 89px;
+    top: 0px;
+}
+
+div.col-lg-5:nth-child(2) {
+    left: 21px;
+}
+
+#txtValorConstanteFactor {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+    color: #22558d;
+    box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208);
+}
+
+#lbl-xpnt {
+    font-family: Arial, Helvetica, sans-serif;
+    bottom: 18px;
+}
+
+#txtValorExponenteFactor {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 50px;
+    color: #22558d;
+    box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208);
+}
+
+.btn-primary {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #34c38a;
+    border: none;
+    font-family: Arial;
+    font-weight: bold;
+    width: 100%;
+}
+
+.div.col-md-2:nth-child(3) {
+    right: 30px;
+}
+
+.dataTables_wrapper {
+    overflow-x: scroll;
+}

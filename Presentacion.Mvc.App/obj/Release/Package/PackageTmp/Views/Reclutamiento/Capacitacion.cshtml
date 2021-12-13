@@ -1,0 +1,226 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/Reclutamiento.css" rel="stylesheet" />
+
+<div class="col-md-12 text-center" style="margin-top:25px;">
+    <label class="title-header">Ingresa un dato para realizar la búsqueda</label>
+</div>
+
+<div id="ov-loading" style="display: none;">
+    <div class="wrap">
+        <div class="loading">
+            <div class="bounceball"></div>
+            <div class="text">Procesando Información</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-md-8">
+                <div class="inner-addon right-addon dv-search"></div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="row pr-">
+        <div id="dv-loading-data" class="col-sm-12">
+            <div style="position: absolute;z-index: 12;color: rgb(255,255,255);width: 100%;height: 360px;top: 0;left: 0;">
+                <div style="position: relative;top: 50%;left: 50%;transform: translate(-50% , -50%);width: 59%;text-align: center;">
+                    <label class="sp-loading-data" data-text="Obteniendo solicitudes…">Obteniendo solicitudes…</label>
+                </div>
+            </div>
+        </div>
+        <div id="dv-tb-ctzn" class="col-sm-12" style="display: block; padding: 0;">
+            <table id="tb-ctzn" class="table table-hover nowrap stripe row-border order-column text-center tb-ctzn">
+                <thead>
+                    <tr>
+                        <th>
+                            Gestionar
+                        </th>
+                        <th>Nombres</th>
+                        <th>Tipo Identificación</th>
+                        <th>Número Identificación</th>
+                        <th>Proceso</th>
+                        <th>Estado</th>
+                        <th>Correo</th>
+                        <th>Ciudad</th>
+                        <th>Fecha Aprobación Reclutamiento</th>
+                        <th>Fecha proceso capacitación</th>
+                        <th>Fecha cierre capacitación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ko foreach: capacitaciones -->
+                    <tr>
+                        <td>
+                            <a class="btn btn-rnvr-alt" data-bind="click: $root.gestionarCapacitacion.bind($data, Id)">
+                                <label>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </label>
+                            </a>
+                        </td>
+                        <td data-bind="text: ApellidosNombres"></td>
+                        <td data-bind="text: TipoIdentificacion"></td>
+                        <td data-bind="text: NumeroDocumento"></td>
+                        <td data-bind="text: Proceso"></td>
+                        <td data-bind="text: Estado"></td>
+                        <td data-bind="text: CorreoElectronico"></td>
+                        <td data-bind="text: Ciudad"></td>
+                        <td data-bind="text: moment(FechaRegistro).format('ll')"></td>
+                        <td data-bind="text: FechaInicio === null ? 'Sin definir' : moment(FechaInicio).format('ll')"></td>
+                        <td data-bind="text: FechaFin === null ? 'Sin definir' : moment(FechaFin).format('ll')"></td>
+                    </tr>
+                    <!-- /ko -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="mdl-form" class="modal fade" role="dialog" style="padding-top: 0px !important;">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content mdl-content-slc">
+            <div class="modal-body mdl-bd-up">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h3 class="h-md-up">Gestionar capacitación</h3>
+                        <hr class="hr-up">
+                    </div>
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="nombre">Nombre:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="nombre" name="nombre" data-bind="value: nombresApellidos">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="tipoIdentificacion">Tipo identificación:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="tipoIdentificacion" name="tipoIdentificacion" data-bind="value: tipoIdentificacion">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="cedula">Cédula:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="cedula" name="cedula" data-bind="value: cedula">
+                                </div>
+                            </div>
+                            <div class="form-group" style="display: none;">
+                                <label class="control-label col-sm-2" for="fechaCapCorp">Fecha capacitación:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="fechaCapCorp" name="fechaCapCorp" data-bind="value: fechaCapacitacion">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="estado">Estado:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="estado" data-bind="event:{ change: estadoChanged }">
+                                        <option value="" selected>Seleccione...</option>
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="aprobado">Aprobado</option>
+                                        <option value="devuelto">Devuelto</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="capacitador">Capacitador:</label>
+                                <div class="col-sm-10">
+                                    <select id="capacitador" class="form-control" data-bind="options: capacitadores, optionsText: 'Nombres', optionsValue: 'Id', optionsCaption: 'Seleccione...', event:{ change: capacitadorChanged }, value: capacitadorId"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="fechaInicio">Fecha incio capacitación:</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <input id="dtIni" name="fechaInicio" type="text" class="form-control" data-bind="value: fechaInicio">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-th"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="fechaFin">Fecha cierre capacitación:</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <input id="dtFin" name="fechaFin" type="text" class="form-control" data-bind="value: fechaFin">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-th"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ko if: estado() !== 'devuelto' -->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="observaciones">Observaciones:</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="observaciones" name="observaciones" data-bind="value: observaciones"></textarea>
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="observaciones">NOTAS:</label>
+                                <div class="col-sm-10" style="padding: 0 30px;">
+                                    <div class="row dv-notas">
+                                        <!-- ko foreach: notas -->
+                                        <div class="col-sm-12">
+                                            <span class="tx-date" data-bind="text: '- ' + moment(FechaRegistro).format('MM/DD/YYYY, h:mm a')"></span>
+                                            &nbsp;
+                                            <span data-bind="text: Nota"></span>
+                                        </div>
+                                        <!-- /ko -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-right">
+                        <!-- ko if: estado() !== 'devuelto' -->
+                        <button id="btn-guardar" class="btn btn-primary" data-bind="click: actualizarCapacitacion.bind($data)">Actualizar capacitación</button>
+                        <!-- /ko -->
+                        <button id="btn-guardar" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="mdl-error" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body mdl-bd-up">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h3 class="h-md-up" data-bind="text: titleModal"></h3>
+                        <hr class="hr-up">
+                    </div>
+                    <div id="msg-error" class="col-sm-12 mt-2-up- text-center hidden">
+                        <span data-bind="text: textModal"></span>
+                    </div>
+                    <div class="col-sm-12 mdl-ft-up text-right">
+                        <button id="btn-cont-mdl" class="btn btn-block btn-primary" data-dismiss="modal">Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/App/Transversal/general.js"></script>
+    <script src="~/App/Reclutamiento/capacitacionViewModel.js"></script>
+}

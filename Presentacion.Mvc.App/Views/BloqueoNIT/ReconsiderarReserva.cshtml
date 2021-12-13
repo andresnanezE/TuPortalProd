@@ -1,0 +1,378 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Reconsiderar Reserva";
+}
+@*<link href="~/Content/css/Reconsiderar.css" rel="stylesheet" />*@
+<link href="~/Content/css/ReconsiderarReserva.css" rel="stylesheet" />
+<div id="body-reconsideracion" ng-app="portalComercialApp" ng-controller="renovarLiberarReservaController">
+    <form id="form-reserve" class="info-reserva">
+        <div class="row rw-top">
+            <div class="col-sm-3 col-md-3 text-center">
+                <label>N° Reserva: </label>
+                <label>{{ idCotizacion }}</label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center rw-name">
+                <label>Nombre : </label>
+                <label>{{ lstInformacionReserva[0].nombreEmpresa }}</label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center rw-nit">
+                <label>NIT : </label>
+                <label>{{ lstInformacionReserva[0].NIT }}</label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Ciudad:</label>
+                <label>{{ lstInformacionReserva[0].ciudad }}</label>
+
+            </div>
+        </div>
+        <div class="row rw-title">
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Nombre De Contacto:</label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Cargo</label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Teléfono</label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Celular: </label>
+            </div>
+        </div>
+
+        <div class="row rw-txt">
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label id="lbl-tx">{{ lstInformacionReserva[0].contacto }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].cargo }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].telefono }} Ext : {{ lstInformacionReserva[0].TelefonoExt }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].celular }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-title">
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Fecha Envío: </label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Canal: </label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Valor Total: </label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Vence: </label>
+            </div>
+        </div>
+
+        <div class="row rw-txt">
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].fechaVisita | date:'dd/MM/yyyy'  }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].canal }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].Total | currency }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].fechaExpiracion | date:'dd/MM/yyyy' }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-title">
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Producto: </label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Tipo Área Protegida: </label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Sector Económico: </label>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <label>Correo: </label>
+            </div>
+        </div>
+
+        <div class="row rw-txt">
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].NombreProducto }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].TipoAP }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].SectorEconomico }}</label>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-3 text-center">
+                <div class="form-group">
+                    <label class="lbl-tx">{{ lstInformacionReserva[0].correoElectronico }}</label>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <form id="frm-body" ng-submit="abrirModalLiberar()">
+        <div class="row rw-tbl" ng-show="lstSedesCotizacion.length > 0">
+            <table class="table tabla-sedes">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Sedes</th>
+                        <th scope="col" class="text-center">Ciudad</th>
+                        <th scope="col" class="text-center" width="8%">N°.Personas Permanentes</th>
+                        <th scope="col" class="text-center" width="8%">Promedio Visitantes</th>
+                        <th scope="col" class="text-center">Tipo Riesgo</th>
+                        <th scope="col" class="text-center">Valor Total</th>
+                        <th scope="col" class="text-center" width="10%" ng-show="permiteReconsiderar() || permiteVerReconsideracion()">Valor Reconsideración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="datos in lstSedesCotizacion">
+                        <th scope="row" class="text-center">{{ datos.NombreSede }}:</th>
+                        <td class="text-center">{{ datos.NombreCiudad }}</td>
+                        <td class="text-center">{{ datos.NoPersonalPermanente }}</td>
+                        <td class="text-center">{{ datos.NoPersonalVisitantes }}</td>
+                        <td class="text-center">{{ datos.NombreTipoRiesgo }}</td>
+                        <td class="text-center">{{ datos.Valor | currency}}</td>
+                        <td ng-show="permiteReconsiderar() || permiteVerReconsideracion()" ng-style="{'background-color': datos.ValorReconsideracion != datos.Valor ? '#FBC793':'white'}" class="text-center">
+                            <input class="form-control ipt-nit text-box single-line rounded-10 w-75" type="number" step="any" 
+                                   ng-disabled="permiteVerReconsideracion()"
+                                   ng-model="datos.ValorReconsideracion">
+                        </td>
+
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4"></td>
+                        <th class="text-center">Totales</th>
+                        <td class="text-center">{{ lstInformacionReserva[0].Total | currency }}</td>
+                        <td class="text-center" ng-show="permiteReconsiderar() || permiteVerReconsideracion()">{{ getTotal() | currency }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <br />
+        <div class="row banner-notas">
+            <div class="col-xs-12 col-md-12">
+                <label>Notas:</label>
+            </div>
+        </div>
+        <div class="div-notas">
+            <div class="col-xs-12 col-md-12 mb-5">
+                <div class="row frm-nota">
+                    <div class="col-xs-1 col-md-1">
+                        <label>Nota:</label>
+                    </div>
+                    <div class="col-xs-11 col-md-8">
+                        <textarea class="form-control tx-a-nota" ng-required="true" ng-model="objLiberarRenovar.notaLiberarRenovar" id="exampleFormControlTextarea1" rows="2">
+                    </textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 col-md-3">
+                        <button type="submit" ng-click="validarLiberarReservar = 1" class="btn btn-lbr text-center">Liberar Reserva</button>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <button type="submit" ng-click="validarLiberarReservar = 2" class="btn btn-rnr">Renovar Reserva</button>
+                    </div>
+                    <div class="col-sm-3 col-md-3" ng-show="permiteReconsiderar()">
+                        <button type="submit" ng-click="validarLiberarReservar = 3" class="btn btn-rnr">{{rolUsuario == '28' ? 'Modificar Reconsideración' : 'Reconsiderar Cotización'}}</button>
+                    </div>
+                    <div class="col-sm-3 col-md-3" ng-show="permiteAprobar()">
+                        <button type="submit" ng-click="validarLiberarReservar = 4" class="btn btn-cancel">Aprobar Reconsideración</button>
+                        <button type="submit" ng-click="validarLiberarReservar = 5" class="btn btn-cancel btn-danger">Rechazar Reconsideración</button>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <button type="button" ng-click="redirectMisReservas()" class="btn btn-cancel">Cancelar</button>
+                    </div>
+                </div>
+                <br />
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr ng-repeat="nota in lstNotas">
+                            <td width="7%"><label>Fecha:</label></td>
+                            <td width="15%"><label class="lbl-fecha">{{ nota.Fecha | date:'dd-MM-yyyy HH:mm a' }}</label></td>
+                            <td width="7%"><label>{{ nota.Rol }}:</label></td>
+                            <td width="20%"><label>{{ nota.NombreUsuario }}</label></td>
+                            <td><label class="lbl-nota">{{ nota.Nota}}</label></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+            </div>
+
+        </div>
+
+        @*Modal Liberación de Reserva*@
+        <div class="modal fade" id="m-liberacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p id="m-title"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img id="m-img" class="img-responsive center-block" src="~/Content/images/sci-alert.svg" />
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <p id="m-title-2"></p>
+                                    <p id="m-message" class="text-center">
+                                        Se liberará esta reserva. ¿Estás seguro de realizar esta acción?
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-m-cancelar" data-dismiss="modal">Cancelar</button>
+                                    <button class="btn btn-m-aceptar" ng-click="guardarData()">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @*Modal Liberación de Reserva*@
+        <div class="modal fade" id="m-renovar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p id="m-title"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p id="m-title-2"></p>
+                                    <p id="m-message" class="text-center">
+                                        Se Renovará esta reserva. ¿Estás seguro de realizar esta acción?.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img id="m-img" class="img-responsive center-block" src="~/Content/images/sci-renovar.svg" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p id="m-title-2"></p>
+                                    <p id="m-message" class="text-center">
+                                        Duración: 60 días a partir de hoy
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-m-cancelar" data-dismiss="modal">Cancelar</button>
+                                    <button class="btn btn-m-aceptar" ng-click="guardarData()">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Modal Reconsiderar*@
+        <div class="modal fade" id="m-reconsideracion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p id="m-title"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img class="img-responsive center-block" src="~/Content/images/sci-alert.svg" />
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <p id="m-reconsiderar-message" class="text-center m-message">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center m-md-0">
+                                    <button class="btn btn-m-cancelar" data-dismiss="modal">Cancelar</button>
+                                    <button class="btn btn-m-aceptar" ng-click="confirmarModal()">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var roles = @Html.Raw(Json.Encode(Model.lstIdRol));
+    var RolEnum = {
+        ASESOR: '8',
+        PRICING:'28',
+        DIRECTOR: '7',
+        GERENTEREG: '29',
+        GERENTENAL: '30'
+    };
+    var EstadosEnum = {
+        NOCOTIZADO: 'Sin Cotizar',
+        COTIZADO: 'Cotizado',
+        PENDIENTERECONSIDERAR: "Pendiente Reconsideración",
+        RECONSIDERADO: 'Reconsiderado',
+        NORECONSIDERADO: 'No Reconsiderado'
+    };
+    var rolPrincipal = getRolPrincipal();
+
+    function getRolPrincipal() {
+        if (roles.includes(RolEnum.PRICING)) return RolEnum.PRICING;
+        if (roles.includes(RolEnum.GERENTENAL)) return RolEnum.GERENTENAL;
+        if (roles.includes(RolEnum.GERENTEREG)) return RolEnum.GERENTEREG;
+        if (roles.includes(RolEnum.DIRECTOR)) return RolEnum.DIRECTOR;
+        if (roles.includes(RolEnum.ASESOR)) return RolEnum.ASESOR;
+    }
+   
+
+</script>
+@*Librerias Externas*@
+<script type="text/javascript" src="~/js/angular.min.js"></script>
+<script type="text/javascript" src="~/js/Reserva/renovarLiberarReserva.js"></script>

@@ -1,0 +1,129 @@
+﻿@using Microsoft.Web.Mvc
+@using Microsoft.Web.Mvc.Html
+@model Presentacion.Mvc.App.Models.UsuarioModel
+
+@{
+    ViewBag.Title = "Administración Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    
+<div class="panel panel-default" style="width: 65%">
+    <div class="panel-heading">
+        <h3>Agregar</h3>
+    </div>
+    <div class="panel-body">
+            
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+                
+            <form id="usiarios-form" action="@Url.Action("ObtenerUsuarioExterno")" method="POST">
+
+                <div class="form-group">
+                    @Html.Label("Tipo Documento", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.TipoDocumento, new SelectList(Model.TipoDocumentos,
+                            "ID_TIPO_IDENTIFICACION", "TIPO_IDENTIFICACION",
+                            Model.TipoDocumentos.First().ID_TIPO_IDENTIFICACION), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Documento", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Documento, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Documento, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 ">
+                        <button class="btn btn-primary glyphicon glyphicon-search"></button>
+                    </div>
+                </div>
+            </form>
+
+            <form id="usiarios-form" action="@Url.Action("Agregar")" method="POST">
+
+
+
+                @Html.HiddenFor(model => model.TipoDocumento)
+                @Html.HiddenFor(model => model.Documento)
+                @Html.HiddenFor(model => model.Usuario)
+                @Html.HiddenFor(model => model.NombreUsuario)
+                @Html.HiddenFor(model => model.Contrasena)
+
+                <div class="form-group">
+                    @Html.Label("Usuario", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Nombre Usuario", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Documento", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.Documento, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Correo", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Activo", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.CheckBoxFor(model => model.Activo)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Roles", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @if (Model != null && Model.ListadoRoles != null)
+                        {
+                            foreach (var item in Model.ListadoRoles)
+                             {
+                                <div class="radio">
+                                  <label>
+                                      <input type="radio" style="clip: auto;" name="RolesIds" value="@item.RolId" @if (item.Seleccionado) { @: checked
+                                                                                                    }>@item.Rol.Trim()
+                                  </label>
+                                </div>
+                            }
+                            @*@Html.CheckBoxListFor(x => x.RolesIds,
+                                x => x.ListadoRoles,
+                                x => x.RolId,
+                                x => x.Rol,
+                                x => x.Seleccionado)
+                            <br />*@
+                            @Html.ValidationMessageFor(model => model.RolesIds, "", new { @class = "text-danger" })
+                        }
+                    </div>
+                </div>
+
+                <div class="panel-footer" style="height: auto">
+                    <div class="form-group fa fa-align-right">
+                        <a class="btn btn-primary" href="@Url.Action("Index", "Usuario")">Cancelar</a>
+
+                        <input type="submit" value="Agregar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+        
+
+</div>
+

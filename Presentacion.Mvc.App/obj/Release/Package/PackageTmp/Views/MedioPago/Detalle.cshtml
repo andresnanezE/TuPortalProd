@@ -1,0 +1,769 @@
+﻿
+@{
+    ViewBag.Title = "Detalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Presentacion.Mvc.App.Models
+@model Presentacion.Mvc.App.Models.ContratosModel
+
+<style>
+    /*esto hace parte del aspecto visual de la descarga de las ultimas 5 facturas.*/
+    .disabledbutton {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    .c-f {
+        text-align: center;
+    }
+
+    .a-f {
+        text-decoration: none !important;
+        font-weight: bold;
+        color: black;
+    }
+
+    .img-f {
+        max-width: 80px;
+    }
+
+    .f {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        max-width: 100px;
+        border: solid 1px #ffffff;
+    }
+
+        .f:hover {
+            border: solid 1px #022578;
+            background-color: #b1bbd5;
+        }
+
+    .ac img {
+        max-width: 70px;
+        width: auto;
+    }
+
+    .ac > * {
+        max-width: 80px;
+        margin-top: 0;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        color: #000;
+    }
+
+    .ac a {
+        text-decoration: none;
+        text-decoration-color: aqua;
+        color: black;
+    }
+
+    .ac {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .ac-con {
+        padding: 0.2em 0.5em;
+    }
+
+        .ac-con:hover {
+            box-shadow: 4px 4px 9px 1px #1a3e6b96;
+        }
+
+    .c-block {
+        background-color: #ffffff;
+        position: absolute;
+        height: 150px;
+        width: 100%;
+        left: 0px;
+    }
+</style>
+<script src="~/js/modal.js"></script>
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+@if (ViewBag.Mensaje != null && !string.IsNullOrEmpty(ViewBag.Mensaje))
+{
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            @ViewBag.Mensaje
+        </div>
+    </div>
+}
+@Html.HiddenFor(model => model.NOMBRE_RTE_ATENCIONES, new { Value = "RTE HISTÓRICO ATENCIONES.xls" })
+@Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+<div id="onlyView" class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+
+            <div class="row">
+                <h4 style="float:left;margin-left:10px">Detalle de Contrato</h4>
+                @Html.HiddenFor(model => model.fCorte)
+                @Html.HiddenFor(model => model.diasFaltantes)
+                @Html.HiddenFor(model => model.diasProrrateo)
+
+                @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+                <button class="btn btn-info" style="float:right;margin-right:10px" id="Nuevo" onclick="atras()"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</button>
+            </div>
+        </div>
+        <input type="hidden" id="path-controler" name="path-controler" data-path="@Url.Action("CalcularCuotaInclusiones")" />
+        <input type="hidden" id="path-controler-tarifa" name="path-controler-tarifa" data-path="@Url.Action("TarifasContrato")" />
+        <div class="row">
+
+            <div class="form-horizontal" style="margin-left:10%">
+                <br />
+                <br />
+
+                <div style="margin-left: auto; margin-right: auto; float: inherit; max-width: 800px;">
+                    <div class="well" style="max-width: 700px;">
+
+                        <div style="text-align: center">
+                            <h4 style="font-weight: bold">@Model.Titulo</h4><br />
+                            <div><label>Núm. Cont. / Id Cont.</label></div>
+
+                            <div class="col-md-12">
+                                @Html.DisplayFor(model => model.NumCont) / @Html.DisplayFor(model => model.Rmt_Cont)
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.Label("Identificación Contratante", new { @class = "control-label " })
+                                    <br />
+                                    @Html.DisplayFor(model => model.Identificacion)
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Contratante", new { @class = "control-label " })
+                                    <br />
+                                    @Html.DisplayFor(model => model.Contratante)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.Label("Datos Contacto Contratante", new { @class = "control-label" })
+                                    <br />
+                                    @Html.DisplayFor(model => model.Telefono)
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Estado Contrato", new { @class = "control-label" })
+                                    <br />
+                                    @Html.DisplayFor(model => model.Estado)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.Label("Asesor", new { @class = "control-label" })
+                                    <br />
+                                    @Html.DisplayFor(model => model.Asesor)  @Html.Label("(" + Model.EstadoAse + ")")
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Datos Contacto Asesor", new { @class = "control-label" })
+                                    <br />
+                                    @Html.DisplayFor(model => model.TelefonoAse)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.Label("Forma de Pago", new { @class = "control-label" })
+                                    <br />
+                                    @Html.DisplayFor(model => model.FormaPago)
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Modalidad de Pago", new { @class = "control-label" })
+                                    <br />
+                                    @Html.DisplayFor(model => model.ModoPago)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.Label("Fecha Inicial", new { @class = "control-label" })
+
+                                    <br />
+                                    @Html.DisplayFor(model => model.FechaInicio)
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Fecha Vencimiento", new { @class = "control-label" })
+
+                                    <br />
+                                    @Html.DisplayFor(model => model.FechaFin)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:@Model.viewBene">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Identificación Beneficiario", new { @class = "control-label " })
+                                        <br />
+                                        @Html.DisplayFor(model => model.Num_idenBen)
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Nombre Beneficiario", new { @class = "control-label " })
+                                        <br />
+                                        @Html.DisplayFor(model => model.Nom_bene)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Fecha Nacimiento", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.Fec_naciBen)
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Datos Contacto Beneficiario", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.Tel_bene)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:@Model.viewPMP">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Cantidad Afiliados", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.Cantidad)
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Cuota Mensual", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.CuotaMensual)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Valor Contratado", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.ValorContrato)
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Valor Cartera", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.ValorCartera)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:@Model.viewAP">
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Valor Contratado", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.ValorContrato)
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Valor Cartera", new { @class = "control-label" })
+                                        <br />
+                                        @Html.DisplayFor(model => model.ValorCartera)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divcalcular" tabindex="-1">
+                            @Html.Partial("_CalcularCuotaInclusionesView", new CalcularCuotaInclusiones())
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12" style="text-align: center">
+                            <div class="ac">
+                                <div class="ac-con">
+                                    <a onclick="mostarModalAceptacionMedioPago()" href="#">
+                                        <img src="~/Image/IconosContratos/Afiliados.png">
+                                        <br>Afiliados<br><br>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Confirm medio pago-->
+<div class="modal fade" id="confirmar-medio-pago" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confidencialidad de la información</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    Toda la información de este documento, así como los anexos, son de carácter estrictamente confidencial, por ende está prohibida su revelación, divulgación o impresión. El uso indebido de la misma está sancionado de acuerdo con las normas legales aplicables. ¿Deseas continuar?
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"onclick="irActualizarMedioPago()" id="btnSi">Si</button>
+                <a class="btn btn-danger btn-ok" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function irActualizarMedioPago() {
+        window.location.href = "../MedioPago/Index?IdContrato="@Model.Rmt_Cont;
+    }   
+
+    function mostarModalAceptacionMedioPago() {  
+        if ($('#confirmar-medio-pago') !== 'undefined') {
+            $('#confirmar-medio-pago').modal('toggle');
+            return;
+            }
+        }
+
+    $(function () {
+        $('#nPersonas').qtip({
+            content: 'Cantidad de personas a incluir en el contrato.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('#vleRte').qtip({
+            content: 'Valor a pagar en las proximas cuotas.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('#fInclusion').qtip({
+            content: 'Seleccionar la fecha comprendida entre el día actual y el día de corte de la factura.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('.checkbox').qtip({
+            content: 'Si se marca, muestra el valor a pagar de forma anticipada al pago de la próxima factura.<br> De lo contrario, muestra el valor del prorrateo sumado al valor de la proxima cuota.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('.pcuota').qtip({
+            content: 'Valor del prorrateo + valor de la próxima cuota.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $(".dtp").datepicker({
+            format: "dd/mm/yyyy", language: 'es', startDate: '0d',
+            //endDate: '+' + $('#diasFaltantes').val() + 'd',
+            ignoreReadonly: true,
+            autoclose: true
+        });
+
+        $("#divcalcular").animate({
+            height: 'toggle'
+        });
+
+        $("#calcI").on('click', function () {
+            var mappeddata;
+            var numPersonas = (typeof $('#nPersonas').val() === 'undefined') ? 0 : $('#nPersonas').val();
+            $.SCIalertHidden("ialert");
+
+            $("#divcalcular").animate({
+                height: 'toggle'
+            });
+
+            if ($('#seCargaronTarifas').data('tarifas') == true)
+                return;
+
+            $.wait('OBTENIENDO TARIFAS...');
+            $("#ialert").addClass('hidden');
+
+            $('#sTarifas option').remove();
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: "{'rmt':'@Model.Rmt_Cont'}",
+                url: $('#path-controler-tarifa').attr('data-path'),
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    mappeddata = $.map(data, function (item) {
+                        return new TarifasItem(item);
+                    });
+                }
+            }).done(function (datar) {
+
+                if (typeof (datar.mensaje) != 'undefined') {
+                    $.closeWait();
+                    $.SCIalert(datar.mensaje, 'ialert');
+                }
+
+                if ("@Model.Estado" != "ACTIVO") {
+                    $.SCIalert('No se puede calcular el valor de prorrateo porque el contrato no ha sido renovado o no se encuentra activo.  ', 'ialert');
+                }
+
+                var dateTime = new Date();
+                if ((((@Model.FechaFin.Value.Month) - (dateTime.getMonth() + 1)) <= 0) && (((@Model.FechaFin.Value.Year) - (dateTime.getFullYear())) <= 0)) {
+                    $.SCIalert('No se puede calcular el valor de prorrateo porque el contrato no ha sido renovado o no se encuentra activo.  ', 'ialert');
+                }
+
+                if (datar.length > 0) {
+
+                    $('#sTarifas').append('<option value="0.0">0.0</option>');
+
+                    for (var t in mappeddata)
+                    {
+                        if (numPersonas > 0)
+                        {
+                            if ((mappeddata[t].rangoInicialPersona <= numPersonas) && (mappeddata[t].rangoFinalPersona >= numPersonas))
+                            {
+                                $('#sTarifas').append('<option value="' + mappeddata[t].valCuot + '" data-rangoIni =' + mappeddata[t].rangoInicialPersona + '" data-rangoFin =' + mappeddata[t].rangoFinalPersona +'">' + mappeddata[t].valCuot + '</option>');
+                            }
+                            else {
+                                $('#sTarifas').append('<option value="' + mappeddata[t].valCuot + '" data-rangoIni =' + mappeddata[t].rangoInicialPersona + '" data-rangoFin =' + mappeddata[t].rangoFinalPersona + '" style="display: none;" >' + mappeddata[t].valCuot + '</option>');
+                            }
+                        }
+
+                    }
+
+                    $('#seCargaronTarifas').data('tarifas', true);
+
+                }
+                $.closeWait();
+            }).fail(function () {
+                $.closeWait();
+                $.SCIalert('Ha surgido algo inesperado obteniendo las tarifas para este contrato. <br />Vuelve a intentarlo, si el proble persiste comunícate con el área de tecnología.', 'ialert');
+                });
+
+            if ($("#divcalcular").is(':visible')) {
+                $("html, body").animate({ scrollTop: $("#divcalcular").offset().top });
+            }
+        });
+
+        function TarifasItem(data)
+        {
+            this.rangoInicialPersona = data.Rango_Inicial_Persona;
+            this.rangoFinalPersona = data.Rango_Final_Persona
+            this.valCuot = data.Val_Cuot
+        }
+
+        function HabilitarTarifasList()
+        {
+            var numPersonas = (typeof $('#nPersonas').val() === 'undefined') ? 0 : $('#nPersonas').val();
+
+            $("#sTarifas > option").each(function () {
+                var rangoInicial = (typeof $(this).attr("data-rangoIni") === 'undefined') ? 0 : parseInt($(this).attr("data-rangoIni"));
+                var rangoFinal = (typeof $(this).attr("data-rangoFin") === 'undefined') ? 0 : parseInt($(this).attr("data-rangoFin"));
+
+                if ((rangoInicial <= numPersonas) && (rangoFinal >= numPersonas)) {
+                    $(this).css("display", "block");
+                }
+                else {
+                    $(this).css("display", "none");
+                }
+
+            });
+
+            $('#sTarifas > option').each(function () {
+                if ($(this).css('display') != 'none') {
+                    $(this).prop("selected", true);
+                    $("#iTarifas").val($(this).val())
+                    return false;
+                }
+            });
+        }
+
+        $("#nPersonas").click(function () {
+            HabilitarTarifasList();
+        });
+
+        $('.pcuota').css('display', 'none');
+        $('.prorrateo').css('display', 'inline');
+
+        $('.checkbox').change(function () {
+            if ($('.checkbox').prop('checked') === true) {
+                $('.pcuota').css('display', 'none');
+                $('.prorrateo').css('display', 'inline');
+            } else {
+                $('.pcuota').css('display', 'inline');
+                $('.prorrateo').css('display', 'none');
+            }
+
+        });
+
+        $('.calc').html('$0.0');
+        $('#btn_calcular').on('click', function () {
+
+            var tarifa = $('#iTarifas').val();
+
+            if (!($.isNumeric(tarifa) && tarifa > 0)) {
+                $.SCIalert('El valor de la tarifa no es correcto.', 'ialert');
+                return;
+            }
+
+            $.wait('CALCULANDO...');
+            $.SCIalertHidden("ialert");
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: "{'rmt':'@Model.Rmt_Cont','nPersonas':'" + $('#nPersonas').val() + "','fInclusion':'" + $('#fInclusion').val() + "','tarifa':'" + tarifa + "'}",
+                url: $('#path-controler').attr('data-path'),
+                dataType: "json",
+            }).done(function (datar) {
+
+                var date = new Date(parseInt(datar[0].fCorte.substr(6)));
+                date = $.formatDate(date).format;
+
+                $('.calc').html('');
+                $('#vProrrateo').append('$' + $.addCommas(datar[0].vProrrateo));
+                $('#vProximaCuota').append('$' + $.addCommas(datar[0].vProximaCuota));
+                $('#vRecurrente').append('$' + $.addCommas(datar[0].vRecurrente));
+                $('#vIvaProrrateo').append('$' + $.addCommas(datar[0].valIvaProrrateo));
+                $('#vIvaProximaCuota').append('$' + $.addCommas(datar[0].valIvaProxCuota));
+                $('#vIvaRecurrente').append('$' + $.addCommas(datar[0].valIvaRecurrente));
+                $('#tProrrateo').append('$' + $.addCommas(datar[0].tProrrateo));
+                $('#tProximaCuota').append('$' + $.addCommas(datar[0].tProximaCuota));
+                $('#tRecurrente').append('$' + $.addCommas(datar[0].tRecurrente));
+
+                $('#fechaCorte').val(date);
+                $('#vDiasProrrateo').val($.addCommas(datar[0].diasProrrateo));
+
+                $('.prorrateo').qtip({
+                    content: 'Valor a pagar de forma anticipada al pago de la próxima factura. dias[' + datar[0].diasProrrateo + ']',
+                    style: { classes: 'qtip-tipsy qtip-shadow' },
+                    position: {
+
+                        target: 'mouse', // Track the mouse as the positioning target
+                        adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                    }
+                });
+                $('#fInclusion').qtip({
+                    content: 'Seleccionar la fecha comprendida entre el día actual y el día de corte de la factura.<br>Fecha corte :' + date,
+                    style: { classes: 'qtip-tipsy qtip-shadow' },
+                    position: {
+
+                        target: 'mouse', // Track the mouse as the positioning target
+                        adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                    }
+                });
+                if ("@Model.Estado" != "ACTIVO") {
+                    $.SCIalert('No se puede calcular el valor de prorrateo porque el contrato no ha sido renovado o no se encuentra activo.  ', 'ialert');
+                }
+
+                var dateTime = new Date();
+                if ((((@Model.FechaFin.Value.Month) - (dateTime.getMonth() + 1)) <= 0) && (((@Model.FechaFin.Value.Year) - (dateTime.getFullYear())) <= 0)) {
+                    $.SCIalert('No se puede calcular el valor de prorrateo porque el contrato no ha sido renovado o no se encuentra activo.  ', 'ialert');
+                }
+                $.closeWait();
+            }).fail(function () {
+                $.closeWait();
+                $.SCIalert('Ha surgido algo inesperado realizando el cálculo. <br />Vuelve a intentarlo, si el problema persiste comunícate con el área de tecnología.', 'ialert');
+            });
+        });
+
+    });
+
+    var deacuerdo = false;
+
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        deacuerdo = true;
+
+    });
+
+    function Afiliados() {
+        var report = document.getElementById('formAfiliado');
+        report.submit();
+
+    }
+
+    function Cancelados() {
+            var report = document.getElementById('formCancelados');
+            report.submit();
+    }
+
+    function Beneficiario() {
+            var report = document.getElementById('formBeneficiario');
+            report.submit();
+    }
+
+    function Confirm() {
+        var message = $('<p />', { text: '* Toda la información consignada y los anexos en este documento son de carácter estrictamente confidencial, prohibido que sea revelada, divulgada o impresa. El uso indebido de esta información está sancionado de acuerdo con las normas legales aplicables. Esta de acuerdo?' }),
+            ok = $('<button />', {
+                text: 'Ok'
+            }),
+            cancel = $('<button />', {
+                text: 'Cancel'
+            });
+
+        dialogue(message.add(ok).add(cancel), 'Descarga');
+    };
+    function Factura(rmt, formulariofactura) {
+        //if (confirm('* Toda la información consignada y los anexos en este documento son de carácter estrictamente confidencial, prohibido que sea revelada, divulgada o impresa. El uso indebido de esta información está sancionado de acuerdo con las normas legales aplicables. Esta de acuerdo?')) {
+            localStorage.Anexo = "SI";
+            var report = document.getElementById(formulariofactura);
+            report.submit();
+        //}
+    }
+
+    function Anexo() {
+
+            var report2 = document.getElementById('formAnexo');
+            report2.submit();
+
+    }
+
+    function Estado(rmt) {
+            var report = document.getElementById('formEstado');
+            report.submit();
+    }
+
+    function Atenciones(rmt) {
+
+        var report = document.getElementById('formAfiliado');
+        if (deacuerdo) report.submit();
+
+        deacuerdo = false;
+
+        //if (confirm('* Toda la información consignada y los anexos en este documento son de carácter estrictamente confidencial, prohibido que sea revelada, divulgada o impresa. El uso indebido de esta información está sancionado de acuerdo con las normas legales aplicables. Esta de acuerdo?')) {
+        //    var report = document.getElementById('formAtenciones');
+        //    report.submit();
+        //}
+    }
+
+    $('#bn-form').submit(function () {
+
+        if ($('#Observacion').val() == '' || $('#MotivoId').val() == '') {
+            Command: toastr["error"]("Por favor ingrese Motivo y Observación", "Aplicación");
+            return false;
+        }
+
+        if ($('#Observacion').val().length < 11) {
+            Command: toastr["error"]("Por favor ingrese una Observación más completa", "Aplicación");
+            return false;
+        }
+
+        return true;
+
+    });
+
+    $(window).load(function () {
+        if ($('#Afiliado').val() != null && $('#Afiliado').val() != '') {
+            $('#Guardar').show();
+        }
+
+        if ("@Model.Mensaje" != '' && "@Model.Mensaje" != null) {
+            Command: toastr["success"]("@Model.Mensaje", "Aplicación");
+        }
+
+    });
+
+    $('#Rmt_Cont').change(function () {
+
+        if ($('#Identificacion').val() != ' ' && $('#Identificacion').val() != '') {
+            Command: toastr["error"]("Si desea cambiar el beneficiario, debe ingresar el No. de documento", "Aplicación");
+            $('#Identificacion').val('');
+        }
+    });
+
+    function dialogue(content, title) {
+        $('<div />').qtip({
+            content: {
+                text: content,
+                title: title
+            },
+            position: {
+                my: 'center', at: 'center',
+                target: $(window)
+            },
+            show: {
+                ready: true,
+                modal: {
+                    on: true,
+                    blur: false
+                }
+            },
+            hide: false,
+            style: 'dialogue',
+            events: {
+                render: function (event, api) {
+                    $('button', api.elements.content).click(function (e) {
+                        api.hide(e);
+                    });
+                },
+                hide: function (event, api) { api.destroy(); }
+            }
+        });
+    }
+
+    function atras() {
+
+        window.history.back();
+        $("#modalProcesando").modal('show');
+    }
+
+    function ocultarTerminosFacturas(){
+        $('.c-block-vis').hide();
+    }
+
+    function mostrarTerminosFacturas(){
+        $('.c-block-vis').show();
+    }
+</script>
+@Scripts.Render("~/bundles/modal")

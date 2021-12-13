@@ -1,0 +1,171 @@
+﻿body {
+    background-image: url('../../Image/Factores/background.png');
+}
+
+.dataTables_wrapper {
+    overflow: scroll;
+}
+
+.dt-buttons.btn-group {
+    position: absolute;
+}
+
+#table-data thead tr th {
+    background-color: rgb(31,78,120);
+    color: rgba(255,255,255,1);
+    font-size: 1.25rem;
+}
+
+.button.btn.dropdown-toggle.btn-default.bs-placeholder {
+    border-radius: 17px !important;
+}
+
+#btn-gnr {
+    background-color: rgb(52,195,139);
+    color: rgb(255,255,255);
+    font-size: 1.55rem;
+    font-weight: 700;
+    padding: 4px;
+    margin-right: 6px;
+    border-radius: 0;
+}
+
+#btn-clear {
+    background-color: rgb(24,59,99);
+    color: rgb(255,255,255);
+    font-size: 1.55rem;
+    font-weight: 700;
+    padding: 4px;
+    margin-right: 6px;
+    border-radius: 0;
+}
+
+div.text-left:nth-child(1) > div:nth-child(1) {
+    right: 30px;
+    left: -40px;
+}
+
+div.text-left:nth-child(1) > div:nth-child(2) {
+    right: 84px;
+}
+
+div.form-group:nth-child(2) > div:nth-child(1) {
+    left: 22px;
+    top: 7px;
+    right: 0px;
+}
+
+div.form-group:nth-child(2) > div:nth-child(2) {
+    left: -6px;
+}
+
+.dropup {
+    padding-right: 15px;
+    padding-left: 15px;
+    right: 15px;
+}
+
+*/
+
+div.form-group:nth-child(2) > div:nth-child(2) > div:nth-child(1) > select:nth-child(1) {
+    padding-right: 15px;
+    padding-left: 15px;
+    left: -109px;
+}
+
+*/
+
+div.form-group:nth-child(2) > div:nth-child(2) > div:nth-child(1) {
+    padding-left: 15px;
+    padding-right: 15px;
+    right: 0px;
+    left: -40px;
+}
+
+div.form-group:nth-child(3) > div:nth-child(1) {
+    left: 95px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+div.form-group:nth-child(3) > div:nth-child(2) > div:nth-child(1) {
+    padding-left: 15px;
+    padding-right: 15px;
+    left: 43px;
+}
+
+div.form-group:nth-child(3) > div:nth-child(2) {
+    left: -10px;
+}
+
+div.text-right:nth-child(1) {
+    left: 130px;
+}
+
+.col-xs-6 > div:nth-child(2) {
+    left: 112px;
+}
+
+div.col-md-4:nth-child(4) {
+    left: 39px;
+}
+
+div.text-right:nth-child(3) {
+    left: 62px;
+}
+
+div.text-left:nth-child(1) > div:nth-child(2) > div:nth-child(1) > select:nth-child(1) {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+div.text-left:nth-child(1) > div:nth-child(2) > div:nth-child(1) {
+    padding-left: 15px;
+    padding-right: 15px;
+    right: 17px;
+}
+
+div.form-group:nth-child(2) > div:nth-child(2) > div:nth-child(1) {
+    right: 40px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Elemento | http://localhost:15580/Reportes/ReporteCotizador */
+
+div.col-xs-6:nth-child(1) > div:nth-child(2) {
+    margin-bottom: 20px;
+    right: 0px;
+    left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    bottom: 10px;
+}
+
+    /* Elemento | http://localhost:15580/Reportes/ReporteCotizador */
+
+    div.col-xs-6:nth-child(1) > div:nth-child(2) > div:nth-child(1) {
+        right: 113px;
+        padding-left: 0px;
+        padding-right: 0px;
+        left: -110px;
+    }
+
+/* Elemento | http://localhost:15580/Reportes/ReporteCotizador */
+
+div.col-xs-6:nth-child(2) > div:nth-child(2) {
+    right: 0px;
+    left: -110px;
+    margin-bottom: 0px;
+    bottom: 9px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+    /* Elemento | http://localhost:15580/Reportes/ReporteCotizador */
+
+    div.col-xs-6:nth-child(2) > div:nth-child(2) > div:nth-child(1) {
+        padding-left: 0px;
+        padding-right: 0px;
+    }

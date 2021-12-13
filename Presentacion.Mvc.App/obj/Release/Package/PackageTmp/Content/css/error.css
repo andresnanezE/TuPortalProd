@@ -1,0 +1,22 @@
+﻿/* Responsive Full Background Image Using CSS
+ * Tutorial URL: http://sixrevisions.com/css/responsive-background-image/
+*/
+#content {
+    background-image: url("/Image/BANNER-ERROR/BANNER ERROR-03.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.box {
+    position: relative;
+    border: 1px solid red;
+}
+
+.inner-box {
+    position: relative;
+    top: 700px;
+    left: 800px;
+    border: 1px solid blue;
+}

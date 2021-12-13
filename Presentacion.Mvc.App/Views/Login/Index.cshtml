@@ -1,0 +1,170 @@
+﻿@using System.Web.Configuration
+@model Presentacion.Mvc.App.Models.LoginModel
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/fuente.css" rel="stylesheet" />
+    <link href="~/Styles/estilos.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.3.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/App/GoogleAnalytics/indexViewModel.js"></script>
+    <link rel="icon" type="image/png" href="~/Image/icono.png" />
+    <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
+    <script type="text/javascript" id="cookieinfo"
+            src="~/js/cookie.js"
+            data-bg="#CFCFCF"
+            data-fg="#000"
+            data-link="#337AC4"
+            data-divlink="#FFF"
+            data-divlinkbg="#337AB7"
+            data-cookie="CookieTuPortal"
+            data-text-align="left"
+            data-close-text="ACEPTO"
+            data-font-size="12px"
+            data-linkmsg=" - Mas informacíon"
+            data-moreinfo="https://www.emermedica.com.co/politica-de-cookies/"
+            data-message="Usamos cookies propias para ayudarte en tu navegación. Si continúas navegando consideramos que aceptas el uso de cookies para Tu Portal">
+    </script>
+
+    <title>Herramientas Comerciales</title>
+</head>
+<body>
+
+    <div class="container" style="margin-top: 10px">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                            <img src="~/Image/APP COTIZADOR.png" alt="" class="img-responsive" style="width: 70%; margin-left: 50px;">
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <img src="~/Image/logo_emermedica.png" class="col-sm-5 col-xs-5 img-responsive" style="display: inline-block !important;float: none !important" alt="emermedica" />
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" action="@Url.Action("Index", new{ banderaCaptcha = Model.banderaCaptcha})" method="POST">
+
+                            <fieldset>
+                                <div class="panel-heading text-center" style="padding-top: 0px;">
+                                    <h3 style="margin-top: 0px;"><strong>¡Bienvenid@@!</strong></h3>Aquí encontrarás herramientas de apoyo para tu gestión comercial.
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                        @if (!string.IsNullOrWhiteSpace(ViewBag.Mensaje))
+                                        {
+                                            <div class="alert alert-success">
+                                                <strong>@ViewBag.Mensaje</strong>
+                                            </div>
+                                        }
+
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
+                                                @Html.TextBoxFor(model => model.Usuario, new { @class = "has-error form-control ValidacionScriptPrevent" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Usuario, null, new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-lock"></i>
+                                                </span>
+
+                                                @Html.PasswordFor(model => model.Contrasena, new { @class = "has-error form-control ValidacionScriptPrevent" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Contrasena, null, new { @class = "text-danger" })
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4" id="registrarteLogin">
+                                                <a id="registrarteLogin" href="@Url.Action("Registrate","Login")"><img src="~/Image/icon_azulPeq.png" /><b> Regístrate</b></a>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <a id="olvidasteLogin" href="@Url.Action("OlvideMiClave","Login")"><img src="~/Image/icon_azulPeq.png" /><b> ¿Olvidaste tu contraseña?</b></a>
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <input type="hidden" id="valueCap" value="@ViewBag.ActivateCaptcha" />
+                                        <input type="hidden" id="valueCapCont" value="@Model.banderaCaptcha" />
+                                        @*<input type="hidden" id="tokenGog" name="tokenGog" value="" />*@
+                                        @*@Html.HiddenFor(model => model.tokenGog, new { @id = "tokenGog", @name= "tokenGog" })*@
+
+                                        @*@if (ViewBag.ActivateCaptcha == "1" && Model.banderaCaptcha > 0)
+                                        {
+                                            <br />
+                                            <div class="form-group">
+
+                                                <div class="g-recaptcha" data-sitekey="@ViewBag.PublicSecurityKey" style="margin-right: 18px; margin-left: -18px;">
+                                                </div>
+                                            </div>
+
+                                        }*@
+                                        <div class="form-group">
+                                            <button id="btn-ini-sesion" class="btn btn-lg btn-primary btn-block">Iniciar sesión</button>
+                                            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*<p>Nota: recuerda que tu usuario y contraseña son los mismos del Cotizador Web</p>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <a href="@Url.Action("Index","Reclutamiento")" id="btn-ini-sesion" class="btn btn-lg btn-primary btn-block">Trabaja con nosotros</a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-md-offset-4" style="margin-top: 15px;">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="padding-top: 10px;padding-bottom: 10px;">
+                        <span>
+                            Si deseas ser parte de nuestro grupo de asesores o verificar el estado de tu solicitud de vinculación ingresa aquí.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script defer>
+
+        //grecaptcha.ready(function () {
+        //    grecaptcha.execute('6LcY0n0UAAAAACthAz-kUx4bfEljlC9zLBu_utSP', { action: 'Index' })
+        //    .then(function (token) {
+
+        //        //document.getElementById("tokenGog").val = token;
+        //        $('#tokenGog').val(token);
+
+        //    });
+        //});
+        function onSubmit(token) {
+            document.getElementById('form').submit();
+        }
+
+        $(document).ready(function () {
+            //$(function () { $("input[name=usuario]").focus(); });
+            localStorage.setItem('namemenu', null);
+        });
+
+    </script>
+</body>
+</html>
+
+@Scripts.Render("~/bundles/validaciones")

@@ -1,0 +1,13 @@
+﻿@using Presentacion.Mvc.App.Models
+@{
+    ViewBag.Title = "Perimetro Piedecuesta";
+}
+@{  @Html.Hidden("PerimetroUrlPiedecuesta", ConfiguracionesGlobales.PerimetroUrlPiedecuesta)  }
+<h2 id="log" class="col-md-12 ajax-file-upload-green">Abriendo perimetro Piedecuesta... Por favor permitir abrir ventanas emergentes, Gracias</h2>
+
+<script>
+    window.open($("#PerimetroUrlPiedecuesta").val());
+    //window.open('https://www.google.com/maps/d/viewer?mid=zRXBpRh6KJY8.kQ26PaAB1IEo&usp=sharing');
+    var url = '@Url.Action("Index","Home")';
+    window.setTimeout($('#log').empty(), 30000);
+</script>

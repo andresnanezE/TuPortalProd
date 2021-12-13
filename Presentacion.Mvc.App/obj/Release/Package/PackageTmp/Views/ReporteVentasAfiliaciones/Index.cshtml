@@ -1,0 +1,296 @@
+﻿@*@using PagedList.Mvc*@
+@model Presentacion.Mvc.App.Models.AfiliacionesModel
+
+@{
+    ViewBag.Title = "Detalle de afiliaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<link href="@Url.Content("~/Styles/modalCargando.css")" rel="stylesheet" type="text/css" />
+
+<br />
+<br />
+
+<div class="col-md-12">
+    <form id="consulta-form" action="@Url.Action("ExportarInforme")" method="POST" target="_blank">
+
+        @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+        <input type="hidden" name="ExportarFormato" value="Excel" />
+        <input type="hidden" name="TipoInforme" value="D" />
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal">
+
+                <br />
+
+                @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        @*<a class="close" data-dismiss="alert">×</a>*@
+                        @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                        @modelError.ErrorMessage<br />
+                            }
+                    </div>
+                </div>
+                }
+
+                <h3 class=" text-success" style="padding-left: 20px">
+                    @Html.DisplayTextFor(model => model.Mensaje)
+                </h3>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <p>Consulta el detalle de tus afiliaciones y compáralo con tu récord de ventas.</p>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        @Html.Label("Fechas Inicio:", new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            <select id="Periodo" name="Periodo" class="form-control" required="required" onchange="validaPeriodoInicialFinal()">
+                                @if (Model.ListaPeriodos != null)
+                                {
+                                    foreach (var periodo in Model.ListaPeriodos)
+                                    {
+                                <option value="@periodo.FECHA_CORTE"> @periodo.FEC_INI.ToShortDateString()  </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    @Html.Hidden("urlObtenerPeriodoId", Url.Action("ObtenerPeriodoPorId"))
+                    <div>
+                        @Html.Label("Fechas Fin:", new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            <select id="Periodo2" name="Periodo2" class="form-control" required="required">
+                                @if (Model.ListaPeriodos != null)
+                                {
+                                    foreach (var periodo in Model.ListaPeriodos)
+                                    {
+                                <option value="@periodo.FECHA_CORTE"> @periodo.FECHA_CORTE.ToShortDateString()</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var filtro in Model.ListaFiltros)
+                {
+                    if (filtro.Mostar.Equals("S"))
+                    {
+                <div class="form-group">
+                    @Html.Label(@filtro.DatosFiltro.NOMBRE, new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <select id="@filtro.DatosFiltro.ID_CODIGO" name="@filtro.DatosFiltro.ID_CODIGO" class="form-control" multiple="multiple" required="required">
+                            @if (filtro.DatosFiltro.ID_CODIGO.Equals("Novedad"))
+                                    {
+                                        if (filtro.ListaNovedadesHomologadas != null)
+                                        {
+                                            foreach (var opcion in filtro.ListaNovedadesHomologadas)
+                                            {
+                            <option value="@opcion.Nombre.Trim()" selected="selected"> @opcion.Nombre</option>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var opcion in filtro.ListaOpciones)
+                                        {
+                                            if (opcion.ACTIVO.Equals("A"))
+                                            {
+                            <option value="@opcion.VALOR.Trim()" selected="selected"> @opcion.DESCRIPCION</option>
+                                            }
+                                        }
+                                    }
+                        </select>
+                        <p class="help-block hide">Seleccione mínimo una opción.</p>
+                    </div>
+                </div>
+                    }
+                }
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="button" id="buscar-afiliaciones" value="Consultar" class="btn btn-primary" />
+                        <br /><br />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <p>Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar al equipo de Administración de Ventas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="seccion-resumen">
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalProcesando" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                <h4 class="modal-title">Espera por favor</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="windows8">
+                    <div class="wBall" id="wBall_1">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_2">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_3">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_4">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_5">
+                        <div class="wInnerBall"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Modal Alert -->
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-msg-alert"></span>
+                <div id="ajax-container"></div>
+            </div>
+            <div class="modal-footer footer-alert">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validaPeriodoInicialFinal() {
+
+        var periodoIni = $("#Periodo").val();
+        var periodoFin = $("#Periodo2").val();
+        var urlObtenerPeriodoId = $("#urlObtenerPeriodoId").val();
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: urlObtenerPeriodoId,
+            data: window.JSON.stringify({ periodoId: periodoIni }),
+            dataType: 'json',
+            headers: { '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val() },
+            beforeSend: function () {
+
+            },
+            success: function (Data) {
+                var content = Data.Data;
+                if (content.length > 0) {
+
+                    $("#Periodo2").empty();
+                    for (var i = 0; i < content.length; i++) {
+                        var date = new Date(parseInt(content[i].FECHA_CORTE.substr(6)));
+                        var valor = new Date(parseInt(content[i].FECHA_CORTE.substr(6)));
+                        $("#Periodo2").append("<option value='" + valor.toLocaleString() + "'>" + convertDate(date) + "</option>");
+                    }
+                }
+            },
+            error: function (result) {
+                alert('ha surgido un error recupenrando los périodos.');
+            }
+
+        });
+
+    }
+
+    function convertDate(inputFormat) {
+        function pad(s) { return (s < 10) ? '0' + s : s; }
+        var d = new Date(inputFormat);
+        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
+    }
+    $(document).ready(function () {
+
+        var n = '@ViewData.ModelState.Any()';
+
+        if (n === 'True') {
+            $('#buscar-afiliaciones').prop('disabled', true);
+        }
+
+        $('select#Comisiona').select2({ placeholder: 'Seleccione una o varias opciones (click para opciones)' });
+        $('select#Novedad').select2({ placeholder: 'Seleccione una o varias novedades (click para opciones)' });
+        $('select#EstBenef').select2({ placeholder: 'Seleccione uno o varios estados de beneficiaro (click para opciones)' });
+        $('select#TipContrato').select2({ placeholder: 'Seleccione uno o varios tipos de contrato (click para opciones)' });
+
+        $("select#Comisiona,select#Novedad,select#EstBenef,select#TipContrato").on("change", function () {
+            var parent = $(this).closest("div.form-group");
+            if ($(this).val() != null) {
+                $(parent).removeClass("has-error");
+                $(parent).find("p.help-block").addClass("hide");
+            } else {
+                $(parent).addClass("has-error");
+                $(parent).find("p.help-block").removeClass("hide");
+            }
+        });
+
+        $("input#buscar-afiliaciones").on("click", function () {
+            var enviar = true;
+            if ($('select#Comisiona').val() !== undefined) {
+                enviar = $('select#Comisiona').val() != null && enviar ? true : false;
+            }
+            if ($('select#Novedad').val() !== undefined) {
+                enviar = $('select#Novedad').val() != null && enviar ? true : false;
+            }
+            if ($('select#EstBenef').val() !== undefined) {
+                enviar = $('select#EstBenef').val() != null && enviar ? true : false;
+            }
+            if ($('select#TipContrato').val() !== undefined) {
+                enviar = $('select#TipContrato').val() != null && enviar ? true : false;
+            }
+            if (enviar) {
+                $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+                $("form#consulta-form input[name=TipoInforme]").val("D");
+                $("#modalProcesando").modal('show');
+                $.ajax({
+                    dataType: 'html',
+                    type: 'POST',
+                    url: '@Url.Action("Index")',
+                    data: $("form#consulta-form").serialize(),
+                    success: function (rs) {
+                        $("div#seccion-resumen").html(rs);
+                        $("#modalProcesando").modal('hide');
+                    }
+                });
+            } else {
+                new PNotify({
+                    title: 'Error en formulario',
+                    text: 'Por favor selecciona una opción como mínimo para cada filtro.',
+                    type: 'error',
+                    icon: false
+                });
+            }
+
+        });
+
+    });
+</script>

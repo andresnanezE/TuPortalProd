@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KHEIRON_LOGSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EMB_NORMALIZA_DIRECCIONES_LOG">
+          <Key>
+            <PropertyRef Name="idLogDirecciones" />
+          </Key>
+          <Property Name="idLogDirecciones" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idAplicacion" Type="varchar" MaxLength="200" />
+          <Property Name="idErrorLog" Type="varchar" MaxLength="20" />
+          <Property Name="descripcionError" Type="varchar" MaxLength="1000" />
+          <Property Name="fechaHora" Type="datetime" />
+          <Property Name="usuarioLog" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityContainer Name="KHEIRON_LOGSModelStoreContainer">
+          <EntitySet Name="EMB_NORMALIZA_DIRECCIONES_LOG" EntityType="Self.EMB_NORMALIZA_DIRECCIONES_LOG" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KHEIRON_LOGSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EMB_NORMALIZA_DIRECCIONES_LOG">
+          <Key>
+            <PropertyRef Name="idLogDirecciones" />
+          </Key>
+          <Property Name="idLogDirecciones" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAplicacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="idErrorLog" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcionError" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="fechaHora" Type="DateTime" Precision="3" />
+          <Property Name="usuarioLog" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="LogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EMB_NORMALIZA_DIRECCIONES_LOG" EntityType="Self.EMB_NORMALIZA_DIRECCIONES_LOG" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KHEIRON_LOGSModelStoreContainer" CdmEntityContainer="LogEntities">
+          <EntitySetMapping Name="EMB_NORMALIZA_DIRECCIONES_LOG">
+            <EntityTypeMapping TypeName="KHEIRON_LOGSModel.EMB_NORMALIZA_DIRECCIONES_LOG">
+              <MappingFragment StoreEntitySet="EMB_NORMALIZA_DIRECCIONES_LOG">
+                <ScalarProperty Name="idLogDirecciones" ColumnName="idLogDirecciones" />
+                <ScalarProperty Name="idAplicacion" ColumnName="idAplicacion" />
+                <ScalarProperty Name="idErrorLog" ColumnName="idErrorLog" />
+                <ScalarProperty Name="descripcionError" ColumnName="descripcionError" />
+                <ScalarProperty Name="fechaHora" ColumnName="fechaHora" />
+                <ScalarProperty Name="usuarioLog" ColumnName="usuarioLog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

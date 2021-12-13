@@ -1,0 +1,267 @@
+﻿@{ Layout = null; }
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/fuente.css" rel="stylesheet" />
+    <link href="~/Content/css/Reclutamiento.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/png" href="~/Image/icono.png" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="~/Scripts/knockout-3.5.0.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.3.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>Herramientas Comerciales</title>
+</head>
+<body>
+
+    <div id="ov-loading" style="display: none;">
+        <div class="wrap">
+            <div class="loading">
+                <div class="bounceball"></div>
+                <div class="text">Procesando Información</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dv-loading" class="dv-loading">
+        <div class="dv-loading-">
+            <div class="loader">Loading...</div>
+            <img class="img-responsive center-block" src="/Content/images/logo-emermedica.svg" style="width: 225px;" />
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 1em;">
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="center-block" src="~/Content/images/logo-emermedica.svg" style="width: 225px;" />
+            </div>
+            <div class="col-sm-8 text-center" style="margin-top: 10px; line-height: 1.2">
+                <p class="tx-indx">¡Únete a nuestro equipo comercial como asesor independiente!</p>
+                <p class="tx-indx-">Maneja tu tiempo y obtén ingresos sin límites.</p>
+                <p class="tx-indx--">Déjanos tus datos para contactarte.</p>
+            </div>
+            <div class="col-sm-12" style="margin-top: 30px;">
+                <div class="row">
+                    <div class="col-sm-6" id="dv-img">
+                        <img class="img-responsive center-block" src="~/Content/images/logo-asesor.svg" />
+                    </div>
+                    <div id="cnt-form" class="col-sm-5">
+                        <div class="row">
+                            <div id="dv-form" class="col-sm-12 bx-shwd">
+                                <div class="form-horizontal">
+                                    <div class="form-group text-center mr-title" style="margin-top: 15px;">
+                                        <span id="tt-form" class="sp-title-form">
+                                            Registro solicitud nuevo corredor comercial.
+                                        </span>
+                                    </div>
+                                    <div class="form-group fr-hidden text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="tipoIdentificacion">Tipo Identificación:</label>
+                                        <div class="col-sm-9">
+                                            <select id="tipoIdentificacion" class="form-control" data-bind="options: tipoIdentificacion, optionsText: 'Descripcion', value: 'Id', optionsCaption: 'Seleccione...', event:{ change: tipoIdentificacionChanged }, value: tipoIdentificacionSelected"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="cedula">N° Cédula:</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cedula" placeholder="Ingrese cédula" name="cedula" data-bind="value: noCedula" maxlength="10">
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right">
+                                        <label id="t-name" class="control-label col-sm-3 pr-0">Nombres:</label>
+                                        <label id="t-pass" class="control-label col-sm-3 pr-0" for="password" style="display: none">Contraseña:</label>
+                                        <div id="dv-name" class="col-sm-9">
+                                            <input type="text" class="form-control" id="nombres" placeholder="Ingrese nombres" data-bind="value: nombres">
+                                        </div>
+                                        <div id="dv-pass" class="col-sm-9" style="display: none">
+                                            <input type="password" class="form-control" id="password" placeholder="Ingrese Contraseña" name="contraseña" data-bind="value: contrasenia">
+                                        </div>
+                                    </div>
+                                    <div class="form-group fr-hidden text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="apellidos">Apellidos:</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="apellidos" placeholder="Ingrese apellidos" name="apellidos" data-bind="value: apellidos">
+                                        </div>
+                                    </div>
+                                    <div class="form-group fr-hidden text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="email">Correo:</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" id="email" placeholder="Ingrese correo electrónico" name="email" data-bind="value: correo">
+                                        </div>
+                                    </div>
+                                    <div class="form-group fr-hidden text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="telefono">Teléfono ó celular:</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="telefono" placeholder="Ingrese número de teléfono" name="telefono" data-bind="value: telefono" maxlength="10">
+                                        </div>
+                                    </div>
+                                    <div class="form-group fr-hidden text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="telefono">Ciudad:</label>
+                                        <div class="col-sm-9">
+                                            <select id="ciudades" class="form-control" data-bind="options: ciudades, optionsText: 'Nombre', value: 'Id', optionsCaption: 'Seleccione...', event:{ change: ciudadesChanged }, value: ciudadId"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group fr-hidden text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="telefono">Gestionado por:</label>
+                                        <div class="col-sm-9">
+                                            <select id="referidos" disabled class="form-control" data-bind="options: referidos, optionsText: 'NombresApellidos', value: 'Id', optionsCaption: 'Seleccione...', event:{ change: referidosChanged }, value: referidoSelected"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group fr-hidden text-right">
+                                        <label class="control-label col-sm-3 pr-0" for="director">Director:</label>
+                                        <div class="col-sm-9">
+                                            <select id="directores" disabled class="form-control" data-bind="options: directores, optionsText: 'nom_usr', value: 'id_usr', optionsCaption: 'Seleccione...', event:{ change: directorChanged }, value: directorSelected"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @if (ViewBag.ActivateCaptcha == "1")
+                                        {
+                                            <div style="display: table;margin: 0 auto;">
+                                                <div class="g-recaptcha" data-sitekey="@ViewBag.PublicSecurityKey">
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="form-group fr-hidden">
+                                        <div class="control-label col-sm-2 pr-0"></div>
+                                        <div class="col-sm-9">
+                                            <label class="ctnr">
+                                                Acepto las
+                                                <a href="https://www.emermedica.com.co/wp-content/uploads/2019/06/POLITICA_PRIVACIDAD_DATOS_Normativa-Local.pdf" target="_blank" style="color: rgb(0,62,119)">
+                                                    Políticas de protección de datos personales
+                                                </a>
+                                                <input type="checkbox" checked="" data-bind="checked: terminosCondiciones;">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <div class="col-sm-12">
+                                            <button id="btn-registrar" class="btn btn-block btn-primary btn-rg-rc" data-bind="click: registrarUsuario.bind($data)">Registrarme</button>
+                                            <a id="btn-ingresar" class="btn btn-block btn-lg btn-primary btn-rg-rc" data-bind="click: ingresoProspecto.bind($data)" style="display: none;">Ingresar</a>
+                                            <a id="btn-enviar" class="btn btn-block btn-lg btn-primary btn-rg-rc" data-bind="click: enviar.bind($data)" style="display: none;">Enviar</a>
+                                        </div>
+                                        <div id="dv-recovery" class="col-sm-12 text-center" style="display: none" data-bind="click: recoveryPassword.bind($data)">
+                                            <a>
+                                                <span>
+                                                    Recuperar o cambiar mi contraseña
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div id="dv-back" class="col-sm-12 text-center" style="display: none" data-bind="click: back.bind($data)">
+                                            <a>
+                                                <span>
+                                                    Volver
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-center" style="margin-top: 20px; padding: 0px; ">
+                                <button id="btn-verificar" class="btn btn-lg btn-primary btn-block" data-bind="click: ingresoSolicitud.bind($data, null);">
+                                    <span id="sp-verify">Verificar mi solicitud</span>&nbsp;
+                                    <i id="i-arrow" class="fa fa-arrow-right f-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="mdl-fnsh" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body mdl-bd-up">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3 class="h-md-up" data-bind="text: titleModal"></h3>
+                            <hr class="hr-up">
+                        </div>
+                        <div id="msg-success" class="col-sm-12 mt-2-up- text-center hidden">
+                            <span>Bienvenido/a</span>
+                            <p class="sp-title-form">
+                                <span data-bind="text: nombres"></span>&nbsp;
+                                <span data-bind="text: apellidos"></span>
+                            </p>
+                            <p>
+                                Se ha enviado la información de tu solicitud al siguiente correo:
+                            </p>
+                            <p class="bold" data-bind="text: correo"></p>
+                            <p>
+                                Verifica tu correo te hemos enviado tu <strong>usuario</strong> y <strong>contraseña</strong> para que puedas acceder.
+                            </p>
+                            <p>
+                                Agradecemos tu interés por querer ser parte de nuestro equipo de asesores, ahora ingresa los documentos necesarios para tu vinculación.
+                            </p>
+                        </div>
+                        <div class="col-sm-12 mdl-ft-up text-right">
+                            <button id="btn-cont-mdl" class="btn btn-block btn-primary" data-bind="click: clearData.bind($data,0)">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mdl-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body mdl-bd-up">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3 class="h-md-up" data-bind="text: titleModal"></h3>
+                            <hr class="hr-up">
+                        </div>
+                        <div id="msg-error" class="col-sm-12 mt-2-up- text-center hidden">
+                            <span data-bind="text: textModal"></span>&nbsp;
+                            <span id="emailMdl" class="hidden bold" data-bind="text: textModalEmail"></span>
+                        </div>
+                        <div class="col-sm-12 mdl-ft-up text-right">
+                            <button id="btn-cont-mdl" class="btn btn-block btn-primary" data-dismiss="modal">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mdl-recovery" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body mdl-bd-up">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3 class="h-md-up" data-bind="text: titleModal"></h3>
+                            <hr class="hr-up">
+                        </div>
+                        <div id="msg-success" class="col-sm-12 mt-2-up- text-center">
+                            <span>Gracias.</span>
+                            <p class="sp-title-form">
+                                <span data-bind="text: nombres"></span>&nbsp;
+                                <span data-bind="text: apellidos"></span>
+                            </p>
+                            <p style="padding-top: 12%;">
+                                Se envió un email a tu cuenta asociada para que puedas recuperar tu contraseña, sigue las indicaciones que están en el email.
+                            </p>
+                            <p style="padding-bottom: 20%;padding-top: 10%;" class="bold" data-bind="text: correo"></p>
+                        </div>
+                        <div class="col-sm-12 mdl-ft-up text-right">
+                            <button id="btn-cont-mdl" class="btn btn-block btn-primary" data-bind="click: recoveryModal.bind($data)">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/App/Transversal/general.js"></script>
+    <script src="~/App/Reclutamiento/indexViewModel.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
+</body>
+</html>

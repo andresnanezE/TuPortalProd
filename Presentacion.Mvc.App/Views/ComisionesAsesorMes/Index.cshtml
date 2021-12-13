@@ -1,0 +1,266 @@
+﻿@model Presentacion.Mvc.App.Models.ComisionesAsesorMes
+
+@{
+    ViewBag.Title = "Histórico extracto comisiones asesor.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*
+    j0HNn3LS0N r0DRIGU3Z
+    2016-10-25
+*@
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+<br />
+<div class="col-md-12">
+
+    @using (Html.BeginForm())
+    {
+
+    @Html.HiddenFor(model => model.NOMBRE_REPORTE, new { Value = "RTE HISTÓRICO COMISIONES.xls" })
+    @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <h4><strong>@ViewBag.Title</strong></h4>
+        </div>
+
+        <div class="form-horizontal col-md-offset-2" style="padding: 100px">
+
+            @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-info alert-head" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @*<a class="close" data-dismiss="alert">×</a>*@
+                    @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                    @modelError.ErrorMessage<br />
+                            }
+                </div>
+            </div>
+                }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ANIO, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ANIO, new SelectList(ViewBag.Anios), "Seleccionar", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ANIO, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Fecha procesos", new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    <select id="ID_PROC" name="ID_PROC" class="form-control" required="required"></select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <input type="button" class="btn btn-primary reporte" data-action="GenerarReporte"
+                           id="informe-consolidado" value="Descargar informe" disabled="disabled" />
+                    <br /><br />
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-9 alert alert-info" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign "></span> Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de administración de ventas.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    }
+
+    <!-- Modal Alert -->
+    <div class="modal fade" id="modalAlert" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <span class="modal-msg-alert"></span>
+                    <div id="ajax-container"></div>
+                </div>
+                <div class="modal-footer footer-alert">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        //$.wait('AÑOS DISPONOBLES...');
+
+        $('#ANIO option').remove();
+        $('#ANIO').append('<option value="">Seleccionar</option>');
+
+        $('#ID_PROC option').remove();
+        $('#ID_PROC').append('<option value="">Seleccionar</option>');
+
+        loadyears();
+
+        //$("#informe-consolidado").prop("disabled", true);
+
+        $('#ANIO').on('change', function (event2) {
+
+            quitarOcultarMesesAnioActual();
+            var anio = '';
+
+            $("#ANIO option:selected").each(function () {
+                anio = $(this).text();
+            });
+
+            //$.wait('CARGANDO PROCESOS...');
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "@Url.Action("Procesos")",
+                data: "{'mes':'0','anio':'" + anio + "'}",
+                dataType: "json"
+            }).done(function (data) {
+
+                $('#ID_PROC option').remove();
+                $('#ID_PROC').append('<option value="">Seleccionar</option>');
+
+                if (data.length > 0) {
+
+                    data = data.reverse();
+
+                    for (var f in data) {
+                        var dateI = new Date(parseInt(data[f].FECHA_INI.substr(6)));
+                        dateI = formatDate(dateI).dia + '/' + formatDate(dateI).mes;
+                        var dateF = new Date(parseInt(data[f].FECHA_FIN.substr(6)));
+                        dateF = formatDate(dateF).dia + '/' + formatDate(dateF).mes;
+                        $('#ID_PROC').append('<option value="' + data[f].ID_PROC + '">[' + dateI + '] - [' + dateF + ']</option>');
+                    }
+
+                } else {
+                    validar();
+                }
+
+                //$.closeWait();
+
+            }).fail(function () {
+                //$.closeWait();
+
+                $("#informe-consolidado").prop("disabled", true);
+                validar();
+            });
+
+            $("select").on("change", function (event) {
+
+                if ($("#ANIO option:selected").text() != "Seleccionar" && $("#ID_PROC option:selected").text() != "Seleccionar") {
+                    $("#informe-consolidado").prop("disabled", false);
+                }
+                else {
+                    $("#informe-consolidado").prop("disabled", true);
+                }
+
+                if ($("#ANIO option:selected").text() == "Seleccionar") {
+                    $('#ID_PROC option').remove();
+                    $('#ID_PROC').append('<option value="">Seleccionar</option>');
+                }
+
+                event.preventDefault();
+
+            });
+
+            event2.preventDefault();
+
+        });
+
+        function formatDate(d) {
+
+            var dd = d.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            var mm = d.getMonth() + 1;
+            if (mm < 10) mm = '0' + mm;
+
+            var fecha =
+            {
+                dia: dd,
+                mes: mm,
+                anio: d.getFullYear(),
+                format: dd + '/' + mm + '/' + d.getFullYear()
+            };
+
+            return fecha;
+        }
+
+        function quitarOcultarMesesAnioActual() {
+
+            var fecha = new Date();
+            var mes = fecha.getMonth();
+            var anio = fecha.getFullYear();
+
+            if (anio == $('#ANIO').val()) {
+                $('#MES option').each(function () {
+                    if (+$(this).val() > mes) {
+                        $(this).css('display', 'none');
+                    }
+                });
+            } else {
+                $('#MES option').css('display', 'inline');
+            }
+
+        }
+
+        function validar() {
+            var error = new PNotify({
+                title: 'Mensaje',
+                text: 'No se encontraron procesos para este Año-mes.',
+                type: 'error'
+            });
+        }
+
+        function loadyears() {
+
+            $.ajax({
+                url: "@Url.Action("Procesos")",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: "{'mes':'0','anio':'0'}",
+                dataType: "json"
+            }).done(function (data) {
+
+                if (data.length > 0) {
+
+                    data = data.reverse();
+
+                    for (var f in data) {
+                        $('#ANIO').append('<option value="' + data[f].ID_PROC + '">' + data[f].ANIO + '</option>');
+                    }
+
+                } else {
+                    validar();
+                }
+
+                //$.closeWait();
+
+            }).fail(function () {
+                //$.closeWait();
+
+                $("#informe-consolidado").prop("disabled", true);
+                validar();
+            });
+        }
+
+    });
+</script>
+
+@Scripts.Render("~/bundles/modal")

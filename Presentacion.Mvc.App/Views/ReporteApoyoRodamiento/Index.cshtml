@@ -1,0 +1,77 @@
+﻿@model Presentacion.Mvc.App.Models.ApoyoRodamientoModel
+@{
+    ViewBag.Title = "Consulta de liquidación de apoyo de rodamiento y transporte.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <form id="consulta-form" action="@Url.Action("ExportarRteApoyoRodamiento")" method="POST" target="_blank">
+        <input type="hidden" name="ExportarFormato" value="excel" />
+        <input type="hidden" id="path-controler" name="path-controler" data-path="@Url.Action("PeriodosNoDefinitivos")" />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <h3 class=" text-success" style="padding-left: 20px">
+                    @Html.DisplayTextFor(model => model.Mensaje)
+                </h3>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="alert alert-info" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            Si su fecha de activación está entre el 15 y el 31 su primer mes se cumplirá al cierre del mes siguiente de la activación, sumando las ventas en el campo afiliaciones mes cerrado.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Fecha Inicial", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <select id="PeriodoIni" name="PeriodoIni" class="form-control" required="required"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Fecha Final", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <select id="PeriodoFin" name="PeriodoFin" class="form-control" required="required"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Definitivo", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.Definitivo, new List<SelectListItem> { new SelectListItem() { Text = "No", Value = "N" }, new SelectListItem() { Text = "Si", Value = "S" } }, new { @disabled = "disabled", @class = "form-control" })
+
+                        @Html.HiddenFor(model => model.Definitivo)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="button" class="btn btn-primary" id="informe-consolidado" value="Descargar informe" />
+                        <br /><br />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-3">
+                        <div class="alert alert-dismissable" role="alert">
+                            <p>Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de administración de ventas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <select id="_hideselect" name="_hideselect" hidden="hidden"></select>
+        </div>
+    </form>
+</div>
+
+<div id="seccion-resumen">
+</div>
+
+@Scripts.Render("~/bundles/rtes")

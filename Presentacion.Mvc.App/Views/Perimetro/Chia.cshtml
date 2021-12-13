@@ -1,0 +1,19 @@
+﻿@using Presentacion.Mvc.App.Models
+@{
+    ViewBag.Title = "Perimetro Chia";
+}
+
+@{  @Html.Hidden("PerimetroUrlChia", ConfiguracionesGlobales.PerimetroUrlChia)  }
+
+<h2 id="log" class="col-md-12 ajax-file-upload-green">Abriendo perimetro Chía... Por favor permitir abrir ventanas emergentes, Gracias</h2>
+
+@*<div style="margin-left:150px;">
+        <iframe src="https://mapsengine.google.com/maps/d/embed?mid=19G3-1k_vu4w0i__-mvo_lo2Eabw" width="500" height="450"></iframe></p>
+    </div>*@
+
+<script>
+    //window.open('https://www.google.com/maps/d/viewer?mid=18-eOv4vIKE6-jqp1jR7D7yzf2N8&ll=4.864758403151858%2C-74.05091794999998&z=14');
+    window.open($("#PerimetroUrlChia").val());
+    var url = '@Url.Action("Index","Home")';
+    window.setTimeout($('#log').empty(), 30000);
+</script>

@@ -1,0 +1,807 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Registrar NIT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/NitReserve.css" rel="stylesheet" />
+
+@* Formularío Consulta NIT  *@
+<form id="form-busquedaNit" action="@Url.Action("ConsultarNIT")" method="post">
+    <div id="cnt-nit" class="col-md-12 col-lg-12">
+        <div class="row pd-rw-nit">
+            <div class="col-md-12 col-lg-12 text-center" style="padding: 0 0 1% 0;">
+                <span class="title-nit">Reservar Nit</span>
+            </div>
+            <div class="col-md-12 col-lg-12">
+                <img class="img-responsive center-block img-nit" src="~/Image/nit-cliente.svg">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12 text-center">
+                <div class="col-md-7 col-sm-8 dv-gradient-nit">
+                    <div class="row">
+
+                        <div class="col-md-12 pd-dv-gradient">
+                            <span class="sb-title-nit">Ingrese el NIT del cliente</span>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row rw-nit">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="inner-addon left-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        @Html.EditorFor(model => model.NIT, new
+                                   {
+                                       htmlAttributes = new
+                                       {
+                                           title= "",
+                                           style = "padding-left: 50px;",
+                                           id = "input-nit",
+                                           @class = "form-control ipt-nit",
+                                           onfocus = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(this.minlength, this.maxLength);",
+                                           type = "text",
+                                           maxlength = "10",
+                                           minlengt = "6",
+                                           onpaste = "return true",
+                                           placeholder = "",
+                                           required = "required",
+                                           pattern = "[0-9]{6,10}"
+
+                                       }
+                                   })
+                                        @Html.ValidationMessageFor(model => model.NIT, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-left" style="">
+                                    <span class="tx-dv-nit">D.V. </span>
+                                    <span class="tx-dv-nit-">@Model.DV</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pd-dv-gradient">
+                            <button class="btn-consulta-nit" type="submit">Consultar</button>
+                        </div>
+
+                        <input type=hidden id='validarModalReserva' value='@Html.DisplayTextFor(model => model.validarModalReserva)'>
+
+                        @* Modal Alertas *@
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content pd-mdl-content">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <p class="title-mdl">
+                                                    @if (Model.nombreEmpresa != null)
+                                                    {
+                                                        @Model.nombreEmpresa
+                                                    }
+                                                </p>
+                                                <p class="tx-modal-">
+                                                    NIT: @Model.NIT
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 text-center mg-dv-image">
+                                                <img class="img-responsive center-block" src="~/Image/escudo-modal.png" style="width: 55%">
+                                            </div>
+                                            <div class="col-md-9 text-center dv-info-modal">
+                                                <p class="tx-modal--">
+                                                    <div class="col-md-12">
+                                                        <ul style="overflow-y: auto !important;">
+                                                            @foreach (var item in Model.lstMensajeReserva)
+                                                            {
+                                                                <li style="margin-bottom: 10px;">
+                                                                    <span class="tx-modal--">@item</span>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type=hidden id='validarFormularioReserva' value='@Html.DisplayTextFor(model => model.validarFormularioReserva)'>
+
+                                    <div class="modal-footer mdl-footer-nit">
+                                        <button type="button" class="btn-modal btn-modal-cancel" onclick="location.href='@Url.Action("Index", "BloqueoNit")'">Editar</button>
+                                        <button type="button" class="btn-modal btn-modal-nit" data-dismiss="modal">Aceptar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="dv-footer" class="col-md-12 col-lg-12 text-center">
+            </div>
+        </div>
+    </div>
+</form>
+
+@* Formularío Registro NIT *@
+@using (Html.BeginForm("Index", "BloqueoNit", FormMethod.Post, new { id = "form-RegistroNit", style = "display:none" }))
+{
+
+    @Html.HiddenFor(model => model.NIT)
+    @Html.HiddenFor(model => model.DV)
+    @Html.HiddenFor(model => model.ciudad)
+    @Html.HiddenFor(model => model.canal)
+    @Html.HiddenFor(model => model.anotacion)
+
+    <div class=" col-xs-12 col-md-12" style="padding: 2% 0 2% 0;">
+        <div class="row">
+            <div class="col-sm-1 col-lg-1"></div>
+            <div class="col-sm-10 col-lg-10" style="padding: 0 3% 0 3%;">
+                <div class="row">
+                    <div class="col-xs-4 col-md-3">
+                        <button class="btn-back-nit" onclick="location.href='@Url.Action("Index", "BloqueoNit")'"></button>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" style="font-weight: bold;" for="nit">NIT: </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control ipt-form text-center" id="nit" name="nit" value="@Model.NIT" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-md-3">
+                        <label class="control-label col-sm-2 tx-form" style="font-weight: bold; top: 8px;">D.V.</label>&nbsp;
+                        <label class="control-label col-sm-2" style="font-weight: bold; top: 8px;">@Model.DV</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 ">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" for="nombreEmpresa" style="right: 8%;text-align: right;font-weight: bold; font-family: Arial;">Nombre o razón social:</label>
+                                <div class="col-sm-10" style="right: 8.5%;">
+                                    @Html.EditorFor(model => model.nombreEmpresa, new
+                               {
+
+                                   htmlAttributes = new
+                                   {
+
+                                       title = "Este campo no puede ser vacío",
+                                       @class = "form-control ipt-form",
+                                       type = "text",
+                                       placeholder = "Nombre empresa",
+                                       name = "nombreEmpresa",
+                                       id = "txNombreEmpresa",
+                                        required = "required",
+                                   }
+                               })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 ">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" for="Contacto" style="right: 8%;">Nombre de contacto:</label>
+                                <div class="col-sm-10" style="right: 8.3%">
+                                    <div class="inner-addon right-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        @Html.EditorFor(model => model.Contacto, new
+                                   {
+                                       htmlAttributes = new
+                                       {
+
+                                           title = "Este campo no puede ser vacío",
+                                           @class = "form-control ipt-form",
+                                           type = "text",
+                                           placeholder = "Nombre del contacto en la empresa",
+                                           name = "Contacto",
+                                           id = "txContacto",
+                                           required = "required",
+                                       }
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 ">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" for="Cargo">Cargo:</label>
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Cargo, new
+                               {
+
+                                   htmlAttributes = new
+                                   {
+                                       title = "Este campo no puede ser vacío",
+                                       @class = "form-control ipt-form",
+                                       placeholder = "Cargo en la empresa de su contacto",
+                                       name = "Cargo",
+                                       id = "txCargo",
+                                       required = "required"
+                                   }
+                               })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" for="telefono">Teléfono:</label>
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(model => model.telefono, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       title = "Este campo no puede ser vacío",
+                                       name = "telefono",
+                                       @class = "form-control ipt-form",
+                                       placeholder = "N° teléfono fijo de la empresa",
+                                       id = "txTelefono",
+                                       type = "text",
+                                       maxlength = "10",
+                                       minlengt = "7",
+                                       onpaste = "return true",
+                                       required = "required",
+                                       pattern = "[0-9]{7,10}"
+
+                                   }
+                               })
+                                </div>
+                                <label class="control-label col-sm-1 tx-form" for="ext">Ext:</label>
+                                <div class="col-sm-3">
+                                    @Html.EditorFor(model => model.TelefonoExt, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @type = "text",
+                                       @class = "form-control ipt-form",
+                                       placeholder = "Ext",
+                                       name = "ext",
+                                       id = "txExt",
+                                       minlength = "0",
+                                       maxlength = "5"
+                                   }
+                               })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" for="ciudad">Ciudad:</label>
+                                <div class="col-sm-4">
+                                    <div class="ciudad">
+                                        <input type="text" class="form-control ipt-form" id="txCiudad" value="@Model.ciudad" disabled />
+                                    </div>
+                                </div>
+                                <label class="control-label col-sm-2 tx-form" for="canal">Canal:</label>
+                                <div class="col-sm-4">
+                                    <div class="canal">
+                                        <input type="text" class="form-control ipt-form" id="txCanal" value="@Model.canal" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 ">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" for="email">Email:</label>
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.correoElectronico, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       title = "Este campo no puede ser vacío",
+                                       @class = "form-control ipt-form",
+                                       placeholder = "Correo electrónico del contacto",
+                                       name = "correoElectronico",
+                                       id = "txCorreoElectronico",
+                                       type = "email",
+                                       required = "required"
+
+                                   }
+                               })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 tx-form" for="celular">Celular:</label>
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.celular, new
+                               {
+
+                                   htmlAttributes = new
+                                   {
+
+                                       required = "required",
+                                       title = "Este campo no puede ser vacío",
+                                       @class = "form-control ipt-form ValidacionOnlyNumber",
+                                       placeholder = "N° celular del contacto",
+                                       name = "celular",
+                                       id = "txCelular",
+                                       type = "text",
+                                       maxlength = "10",
+                                       minlengt = "10",
+                                       onpaste = "return true",
+                                       pattern = "[0-9]{10}"
+
+                                   }
+                               })
+                                </div>
+                            </div>
+                            @if (Model != null)
+                            {
+                                <div class="form-group">
+                                    @Html.Label("Producto: ", new { @class = "control-label col-sm-2 tx-form" })
+                                    <div class="col-sm-10">
+                                        <div class="select">
+                                            @Html.DropDownListFor(model => model.productoSelectName, new SelectList(Model.listadoProductos,
+                                            "NombreProducto", "NombreProducto"), new
+                                                {
+                                               htmlAttributes = new
+                                               {
+                                                   title = "",
+                                                   id = "dpProducto",
+                                                   @class = "form-control ipt-form",
+                                                   AutoPostBack = "True",
+                                                   OnSelectedIndexChanged = "Selection_Change",
+                                                   name = "productoSelectID",
+                                                   required = "required"
+
+                                               }
+                                           })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 ">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="email" class="control-label col-sm-1 tx-form">Añadir nota:</label>
+                                <div class="col-sm-11">
+                                    <textarea rows="4" id="comment" class="form-control ipt-form-text" placeholder="Escriba una nota aclaratoria o de recordatoria..." style="padding-left: 50px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 text-center">
+                        <button type="submit" class="btn btn-reservar-cliente" id="btn-reservar-cliente">Reservar</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-1 col-lg-1"></div>
+            <input type=hidden id='validMsgErrorReservaNit' value='@Html.DisplayTextFor(model => model.validMsgErrorReservaNit)'>
+            <input type=hidden id='msgErrorReservaNit' value='@Html.DisplayTextFor(model => model.msgErrorReservaNit)'>
+        </div>
+    </div>
+
+    @* Modal Datos Registro NIT *@
+    <div class="modal fade" id="myModal1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 65%;">
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <span class="tx-mdl-confirmacion">Verifica los datos de tu cliente</span>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <img class="img-responsive center-block" src="~/Image/mdl-confirmacion.png">
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <p class="title-mdl" id="nombreEmpresa">@Model.nombreEmpresa</p>
+                            <p class="tx-modal-">@Model.NIT-@Model.DV</p>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <span style="font-weight: bold" class="tx-modal---">Contacto: </span>&nbsp;
+                            <span class="mContacto tx-modal---" id="mContacto"></span>
+                            <br>
+                            <span style="font-weight: bold" class="tx-modal---">Cargo: </span>&nbsp;
+                            <span class="tx-modal---" id="cargo"></span>
+                            <br>
+                            <span style="font-weight: bold" class="tx-modal---">Teléfono: </span>&nbsp;
+                            <span class="tx-modal---" id="telefono"></span>&nbsp;
+                            <span class="tx-modal---">Ext:</span>&nbsp;
+                            <span class="tx-modal---" id="ext"></span>
+                            <br>
+                            <span style="font-weight: bold" class="tx-modal---">Celular: </span>&nbsp;
+                            <span class="tx-modal---" id="celular"></span>
+                            <br>
+                            <span style="font-weight: bold" class="tx-modal---">Correo: </span>&nbsp;
+                            <span class="tx-modal---" id="correoElectronico"></span>
+                            <br>
+                            <span style="font-weight: bold" class="tx-modal---">Ciudad: </span>&nbsp;
+                            <span class="tx-modal---" id="ciudad">@Model.ciudad</span>
+                            <br>
+                            <span style="font-weight: bold" class="tx-modal---">Producto: </span>&nbsp;
+                            <span class="tx-modal---" id="producto"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center !important;" class="modal-footer mdl-footer-nit">
+                    <button type="button" class="btn-modal btn-modal-editar" data-dismiss="modal" style="margin-right: 14%;">Editar</button>
+                    <button type="submit" class="btn-modal-nit">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@* Modal Post Registro  *@
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 65%;">
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <span class="tx-mdl-confirmacion">¡Cliente Reservado Exitosamente!</span>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <img class="img-responsive center-block" src="~/Image/mdl-exitoso.png" />
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <p class="title-mdl">@Model.nombreEmpresa</p>
+                        <p class="tx-modal-">@Model.NIT  -@Model.DV</p>
+                    </div>
+                    <div class="col-md-12 text-center ">
+                        <span class="tx-modal---">@Model.mensaje</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 text-center" style="padding: 5% 0 0 0;">
+                    <button type="button" class="btn-modal btn-modal-post" data-dismiss="modal" onclick="location.href='@Url.Action("Index", "BloqueoNit")'">Finalizar Reserva</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 text-center" style="padding: 5% 0 0 0;">
+                    <button type="button" class="btn-modal btn-modal-post-cotizar" data-dismiss="modal" onclick="location.href = '@Url.Action("MisCotizaciones", "BloqueoNit")'">Cotizar ahora</button>
+                    @*<button type="button" class="btn-modal btn-modal-post-cotizar" data-dismiss="modal" onclick="location.href='@Url.Action("Index", "BloqueoNit")'">Cotizar Ahora</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(ViewBag.Mensaje))
+{
+    <div class="alert alert-success">
+        <p align="center">
+            <strong><font size="6">@ViewBag.Mensaje</font></strong>
+        </p>
+    </div>
+}
+
+<script type="text/javascript" src="~/Scripts/OpenMod.js"></script>
+<script type="text/javascript" src="~/Scripts/toastr.js"></script>
+<script type="text/javascript" src="~/Scripts/reservaNIT.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+            var openModal = '@ViewBag.ModalOpen';
+            if (openModal === 'True') {
+                $('#myModal').modal('hide');
+                $('#myModal2').modal('show');
+            }
+
+            var validMsgErrorReservaNit = $('#validMsgErrorReservaNit').attr("value");
+
+            if (parseInt(validMsgErrorReservaNit) == 1) {
+                var msgErrorReservaNit = $('#msgErrorReservaNit').attr("value");
+                MostrarMensajeError(msgErrorReservaNit);
+            }
+
+            var hfooter = $("body").innerHeight() - $("#content").height() - 124;
+            $("#dv-footer").css("height", hfooter + "px");
+
+            var validarModalReserva = $('#validarModalReserva').attr("value");
+            if (validarModalReserva === 'True' && openModal === "") {
+                openMod('/Mensaje/Emergente/', '');
+            }
+
+        });
+
+    function validateNum(evt) {
+        evt = evt.replace("-", "");
+            evt = evt.replace("e", "");
+            evt = evt.replace("E", "");
+            alert(evt);
+            return evt;
+        }
+
+    $('#input-nit').qtip({
+        content: 'Aquí debes ingresar el número de identificación del cliente o NIT. Asegúrate de ingresar mínimo 6  y máximo 10 digitos. ',
+        show: 'focus',
+        hide: 'blur',
+        style: {
+            classes: 'qtip-blue qtip-bootstrap'
+        }
+    });
+
+    $('#txNombreEmpresa').qtip({
+        content: 'Aquí debes ingresar el nombre o razón social del cliente que deseas crear.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+
+    $('#txContacto').qtip({
+        content: 'Aquí debes ingresar el nombre completo del contacto asociado a la empresa. ',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+
+    $('#txCargo').qtip({
+        content: 'Aquí debes ingresar el cargo del contacto en la empresa.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+
+    $('#txCorreoElectronico').qtip({
+        content: 'Aquí debes ingresar el correo electrónico del contacto. Completa este campo con la estructura adecuada de e-mail, EJEMPLO: example@correo.com',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+
+    $('#txTelefono').qtip({
+        content: 'Aquí debes ingresar el número telefónico del contacto en la empresa. Este campo solo permite ingresar números, completa este campo y verifica que sean mínimo 7, máximo 10 dígitos.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+
+    $('#txCelular').qtip({
+        content: 'Aquí debes ingresar el número celular del contacto en la empresa. Este campo solo permite ingresar números, completa este campo y verifica que sean 10 dígitos.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+    $('#txExt').qtip({
+        content: 'Aquí debes ingresar el número de extensión del telefono fijo en la empresa. Este campo solo permite ingresar números, completa este campo y verifica que sean maximo 5 dígitos.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+    $('#productoSelectName').qtip({
+        content: 'Aquí debes seleccionar de la lista desplegable el producto con el cual deseas registrar el cliente.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+    $('#txCanal').qtip({
+        content: 'Aquí debes ingresar el canal del asesor.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+    $('#txCiudad').qtip({
+        content: 'Aquí debes ingresar la ciudad.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+
+    $('#comment').qtip({
+        content: 'Aquí debes ingresar información relevante para el pricing y que se debe tener en cuenta al momento de realizar la cotización.',
+        style: { classes: 'qtip-blue qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+
+        function MostrarMensajeError(valueMsg) {
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": false,
+                "positionClass": "toast-bottom-full-width",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "500",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error(valueMsg);
+
+       }
+
+        function openMod(postbck, messa) {
+            //var TeamDetailPostBackURL = '../Mensaje/Emergente/';
+            var TeamDetailPostBackURL = '@Url.Action("Emergente", "Mensaje")';
+            var id = messa;
+            var options = { "backdrop": "static", keyboard: true };
+
+            $("#myModal").on('hidden.bs.modal', function () {
+
+                //Validar se muestra el formulario según la respuesta de Consultar NIT.
+                var validarFormularioReserva = $('#validarFormularioReserva').attr("value");
+                if (validarFormularioReserva == 'False') {
+                    $("#form-RegistroNit").show();
+                    $("#cnt-nit").hide();
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ "title": "Restricciones vigentes", "mess": id }),
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+
+                error: function (xhr, error) {
+                    console.debug(xhr); console.debug(error);
+                    alert('Error.' + error);
+
+                }
+            });
+        }
+
+
+    $('#btn-reservar-cliente').click(function (event) {
+
+        /* when the button in the form, display the entered values in the modal */
+        event.preventDefault();
+
+        localStorage.removeItem("dataEmpresa")
+
+        var infoModal = {
+            'nombreEmpresa': $("#txNombreEmpresa").val(),
+            'contacto': $("#txContacto").val(),
+            'cargo': $("#txCargo").val(),
+            'telefono': $("#txTelefono").val(),
+            'ext': $("#txExt").val(),
+            'correoElectronico': $("#txCorreoElectronico").val(),
+            'celular': $("#txCelular").val(),
+            'producto': $("#productoSelectName").val(),
+            'ciudad': $("#txCiudad").val(),
+            'canal': $("#txCanal").val(),
+            'anotacion': $("#comment").val()
+        }
+
+        localStorage.setItem('dataEmpresa', JSON.stringify(infoModal));
+
+        var dataE = JSON.parse(localStorage.getItem("dataEmpresa"));
+
+        console.log("data e", dataE);
+
+        $("#nombreEmpresa").text(dataE.nombreEmpresa);
+        $("#mContacto").text(dataE.contacto);
+        $("#cargo").text(dataE.cargo);
+        $("#telefono").text(dataE.telefono);
+        $("#ext").text(dataE.ext);
+        $("#celular").text(dataE.celular);
+        $("#correoElectronico").text(dataE.correoElectronico);
+        $("#producto").text(dataE.producto);
+        $("#ciudad").text(dataE.ciudad);
+
+        if ($('#txNombreEmpresa').val() === '') {
+            toastr.error("Por favor ingresa el nombre de la empresa", "Aviso");
+        }
+        if ($('#txContacto').val() === '') {
+            toastr.error("Por favor ingresa el nombre de contacto", "Aviso");
+        }
+        if ($('#txCargo').val() === '') {
+            toastr.error("Por favor ingresa el cargo del contacto", "Aviso");
+        }
+        if ($('#txCorreoElectronico').val() === '') {
+            toastr.error("Por favor ingresa el correo electrónico del contacto", "Aviso");
+        }
+
+        if ($('#txTelefono').val() === '') {
+            toastr.error("Por favor ingresa el número telefónico de la empresa", "Aviso");
+        }
+        if ($('#txTelefono').val().length <= 6) {
+            toastr.warning("Ingresa de 7 a 10 dígitos en el campo Teléfono", "Advertencia");
+        }
+        if ($('#txCelular').val() === '') {
+            toastr.error("Por favor ingresa el número movil de la empresa", "Aviso");
+        }
+        if ($('#txCelular').val().length != 10) {
+            toastr.warning("Ingresa 10 dígitos en el campo Celular", "Advertencia");
+        }
+        if ($('#txCiudad').val() === '') {
+            toastr.error("Por favor ingresa la ciudad", "Aviso");
+        }
+        if ($('#productoSelectName').val() === '') {
+
+            toastr.error("Por favor seleccione un producto", "Aviso");
+        }
+        if ($('#TxCanal').val() === '') {
+
+            toastr.error("Por favor digite el canal", "Aviso");
+        }
+
+        if ($('#txNombreEmpresa').val() === '' || $('#txContacto').val() === '' || $('#txCargo').val() === '' || $('#txCorreoElectronico').val() === '' || $('#txTelefono').val() === '' || $('#txCelular').val() === '' || $('#txCiudad').val() === '' || $('#productoSelectName').val() === '' || $('#TxCanal').val() === '' || $('#txTelefono').val().length <= 6 || $('#txCelular').val().length != 10) {
+            $('#myModal1').modal('hide');
+        } else {
+
+            $('#myModal1').modal();
+        }
+
+        //importamos configuraciones de toastr
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "500",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+        });
+
+</script>
+
+

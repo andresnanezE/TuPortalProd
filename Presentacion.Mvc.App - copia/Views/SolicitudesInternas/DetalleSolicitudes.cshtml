@@ -1,0 +1,253 @@
+﻿
+@using Microsoft.Ajax.Utilities
+@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.ListaSolicitudesViewModel
+
+@{
+    ViewBag.Title = "Consulta de solicitudes";
+}
+
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <h4><strong>@ViewBag.Title</strong></h4>
+        </div>
+        <br />
+
+        @Html.Hidden("urlActionGetNotes", Url.Action("GetNotes"))
+
+        @if (Model.Mensaje != null && !string.IsNullOrEmpty(Model.Mensaje))
+        {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @Model.Mensaje
+                </div>
+            </div>
+        }
+
+        <div style="margin-left:20px;">
+            <table class="table   table-bordered dataTables_scroll" id="tblTickets" style="width: 95% !important">
+                <thead style="font-size: .8em;">
+                    <tr>
+                        <th>Ver Detalle</th>
+                        <th>
+                            Nro. Solicitud
+                        </th>
+                        <th>
+                            Asunto
+                        </th>
+                        <th>
+                            Área
+                        </th>
+                        <th>
+                            Tipo de requerimiento
+                        </th>
+                        <th>
+                            Ciudad
+                        </th>
+                        <th>
+                            Fecha Creación
+                        </th>
+                        <th>
+                            Fecha Finalización
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Solicitudes)
+                    {
+                        <tr>
+                            <td>
+                                <input type="button" class="d-detalle" name="detalle" value="Detalle" data-displayid="@item.display_id" data-subject="@item.subject" data-ciudad="@item.custom_field.ciudad_110623"
+                                       data-id="@item.id" data-area="@item.custom_field.area_110623" data-treq="@item.custom_field.trequerimiento_110623" data-fcrea="@item.created_at" data-ffin="@item.updated_at"
+                                       data-status="@item.status_name" data-url_attach="@item.attachment_url" data-content_file_name="@item.content_file_name" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.display_id)
+                            </td>
+                            <td>
+                                @string.Format("{0}{1}", item.subject.Count() > 16 ? item.subject.Substring(0, 17) : item.subject, "...");
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.custom_field.area_110623)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.custom_field.trequerimiento_110623)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.custom_field.ciudad_110623)
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.created_at).ToString().Substring(0, 10)
+                            </td>
+                            <td>
+                                @if (item.status_name.Equals("Cerrado") || item.status_name.Equals("Solucionado") || item.status_name.Equals("Pendiente"))
+                                {
+                                    @Html.DisplayFor(modelItem => item.updated_at).ToString().Substring(0, 10)
+
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.status_name)
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.url_attach)
+                                </td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @*@Html.PagedListPager(Model.ListaContratos, page => Url.Action("Paginador", new { page, Model.Codigo }))*@
+        </div>
+    </div>
+</div>
+
+  @*Modal alert*@
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Importante</h4>
+            </div>
+            <div class="modal-body">
+                <p class="modal-alert"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="modalDetalle" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <form id="notas-form" action="@Url.Action("AddNoteToTicket", "SolicitudesInternas")" method="POST" enctype="multipart/form-data">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Agregar notas...</h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-2 ruler"><b>Fecha Creación:</b></div>
+                            <div class="col-md-2 ruler fcrea"></div>
+                            <div class="col-md-3 ruler"><b>Fecha Finalización:</b></div>
+                            <div class="col-md-3 ruler ffin"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 ruler"><b>Área:</b></div>
+                            <div class="col-md-2 ruler area"></div>
+                            <div class="col-md-3 ruler"><b>Tipo Solicitud:</b></div>
+                            <div class="col-md-3 ruler treq"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 ruler"><b>Ciudad:</b></div>
+                            <div class="col-md-2 ruler ciudad"></div>
+                            <div class="col-md-3 ruler"><b>Asunto:</b></div>
+                            <div class="col-md-3 ruler subject"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 ruler"><b>No. Solicitud:</b></div>
+                            <div class="col-md-2 ruler id"></div>
+                            <div class="col-md-3 ruler"><b>Adjuntos:</b></div>
+                            <div class="col-md-3 ruler"><select id="url_attach"></select></div>
+                        </div>
+                        <div class="row ruler">
+                            <b>Notas recientes:</b>
+                        </div>
+                        <div class="row" id="notas">
+                        </div>
+                        <div class="row ruler-bottom">
+                            <b>Agregar nota:</b>
+                        </div>
+
+                        <input type="hidden" name="IdTicket" id="IdTicket" value="" />
+
+                        <div class="col-md-12"><textarea name="Nota" id="Nota" cols="115" rows="3"></textarea></div>
+
+                        <div class="col-md-8">
+                            <input type="file" name="Attach" id="Attach" data-jfiler-changeInput multiple="multiple">
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="modal-wait" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Enviando...</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Espera un momemto, estamos enviando la nota...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="validar()" class="btn btn-primary">Enviar nota</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+<style>
+    a {
+        text-decoration: underline;
+        -moz-text-decoration-color: blue; /* Code for Firefox */
+        text-decoration-color: blue;
+    }
+
+
+    .ruler {
+        border-bottom: 1px solid #d8d5d5;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .ruler-bottom {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    #notas {
+        overflow-y: scroll;
+        height: 200px;
+        border: solid 1px #D1D1D1;
+        padding-left: 10px;
+    }
+
+    
+</style>
+
+
+
+@Scripts.Render("~/bundles/filer")
+@Scripts.Render("~/bundles/DetalleSolicitud")
+@Styles.Render("~/Styles/filer")
+
+

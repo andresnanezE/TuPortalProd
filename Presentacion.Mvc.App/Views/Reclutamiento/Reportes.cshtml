@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/Reclutamiento.css" rel="stylesheet" />
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row" style="text-align: center;margin: 27px 0px;">
+                <h2 style="font-weight: bold;color: #053A6C;">
+                    Reporte Administrador
+                </h2>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <table style="width: 60%;">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">Fecha Inicio:</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group ip-gr date">
+                                            <input id="fechaInicio" type="text" class="form-control fr-brd-" data-bind="value: fechaInicio">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-th"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">Fecha Fin:</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group ip-gr date">
+                                            <input id="fechaFin" type="text" class="form-control fr-brd-" data-bind="value: fechaFin">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-th"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            <button class="btn btn-primary" data-bind="click: generarReporte.bind($data)">
+                                Generar Reporte
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdl-error" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body mdl-bd-up">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h3 class="h-md-up" data-bind="text: titleModal"></h3>
+                        <hr class="hr-up">
+                    </div>
+                    <div id="msg-error" class="col-sm-12 mt-2-up- text-center">
+                        <span data-bind="text: textModal"></span>
+                    </div>
+                    <div class="col-sm-12 mdl-ft-up text-right">
+                        <button id="btn-cont-mdl" class="btn btn-block btn-primary" data-dismiss="modal">Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/App/Transversal/general.js"></script>
+    <script src="~/App/Reclutamiento/reportesViewModel.js"></script>
+}

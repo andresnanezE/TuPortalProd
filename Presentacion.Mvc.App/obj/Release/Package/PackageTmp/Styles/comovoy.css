@@ -1,0 +1,55 @@
+﻿body {
+}
+
+.meta {
+    background-color: #1C5CA6;
+    color: #fff;
+    border-top-right-radius: 35px;
+    border-bottom-left-radius: 35px;
+    height: 160px;
+    width: 80%;
+    margin: 10px;
+    padding-left: 5px;
+    padding-top: 10px;
+    font-size: 17px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
+}
+
+.texto {
+    width: 55%;
+    padding-left: 15px;
+    float: left;
+    padding-top: 10%;
+}
+
+#capa2Estatus {
+    width: 60%;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 15px;
+}
+
+b {
+    font-size: 24px;
+}
+
+.container {
+    margin-top: 5%;
+}
+
+.imgCapa2 {
+    padding-top: 70px;
+    padding-right: 10px;
+    display: none;
+}
+
+#imgCapa1Ganapim {
+    margin-bottom: 100px;
+}
+
+.imgCapa1 {
+    position: absolute;
+    left: 200px;
+    top: 40px;
+    width: 80px;
+}

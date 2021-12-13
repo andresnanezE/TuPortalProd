@@ -1,0 +1,745 @@
+﻿@using Microsoft.Ajax.Utilities
+@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.ContratosModel
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*//
+    // j0HNn3LS0N r0DRIGU3Z
+    // 2016-10-25*@
+<style>
+    .dataTables_scroll {
+        overflow: auto;
+    }
+
+    td {
+        font-size: 10px;
+    }
+</style>
+<form id="busquedaComision-form" action="@Url.Action("Index")" method="POST">
+    <br />
+    <br />
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Consulta de Contratos</h4>
+            </div>
+            <div class="form-horizontal">
+                <br />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("Buscar", new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Criterio, new { @class = "form-control  ", @type = "text", @min = 1, @required = "required", alt = "" })
+                        @Html.ValidationMessageFor(model => model.Criterio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="submit" value="Buscar" class="btn btn-primary" id="Buscar" />
+                        <a class="btn btn-info" id="Nuevo" href="@Url.Action("Index")"> Nueva Consulta</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @if (Model != null && Model.ListaContratos != null && Model.ListaContratos.Any())
+    {
+        <div class="col-md-12">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h4 class="text-center"> Contratos</h4>
+                </div>
+                <br />
+                <br />
+                <div style="margin-left:20px;">
+                    <table id="ListadoProcesos" class="table   table-bordered dataTables_scroll" style="width: 95% !important">
+                        <thead style="font-size: .8em;">
+                            <tr>
+                                <th>
+                                    Detalle
+                                </th>
+                                <th>
+                                    Núm. Cont. / Id Cont.
+                                </th>
+                                <th>
+                                    No. Identificación
+                                </th>
+                                <th>
+                                    Contratante
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Cantidad Afiliados
+                                </th>
+                                <th>
+                                    Asesor
+                                </th>
+                                <th>
+                                    Director
+                                </th>
+                                <th>
+                                    Telefono Director
+                                </th>
+
+                                <th>
+                                    Canal
+                                </th>
+
+                                <th>
+                                    Ciudad Asesor
+                                </th>
+                                <th>
+                                    Telefono Asesor
+                                </th>
+                                <th>
+                                    Estado Asesor
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ListaContratos)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @{
+                                            if (!ViewBag.busquedaPorTexto)
+                                            {
+                                                if (item.MostrarBoton)
+                                                {
+                                                    <a title="Ver" class="btn btn-default" onclick=" Validar() " href="@Url.Action("DetalleContrato", new { prefijo = item.PrefijoCont, busqueda = Model.Criterio, rmt = item.RmtCont, contratante = item.Identificacion, tipoContrato = item.TipoContrato, tipoBusqueda = @item.Tipo, nombreContratante = item.Nombre, numCont = item.Num_cont })">@Html.DisplayFor(modelItem => item.TipoContrato)</a>
+                                                }
+                                                else
+                                                {
+                                                    <a title="Ver" class="btn btn-default emr-disabled" onclick=" Validar() " href="@Url.Action("DetalleContrato", new { prefijo = item.PrefijoCont, busqueda = Model.Criterio, rmt = item.RmtCont, contratante = item.Identificacion, tipoContrato = item.TipoContrato, tipoBusqueda = @item.Tipo, nombreContratante = item.Nombre, numCont = item.Num_cont })">@Html.DisplayFor(modelItem => item.TipoContrato)</a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (item.MostrarBoton)
+                                                {
+                                                    <a title="Ver" class="btn btn-default" onclick=" Validar() " href="@Url.Action("DetalleContrato", new { prefijo = item.PrefijoCont, busqueda = item.RmtCont, rmt = item.RmtCont, contratante = item.Identificacion, tipoContrato = item.TipoContrato, tipoBusqueda = @item.Tipo, nombreContratante = item.Nombre, numCont = item.Num_cont })">@Html.DisplayFor(modelItem => item.TipoContrato)</a>
+                                                }
+                                                else
+                                                {
+                                                    <a title="Ver" class="btn btn-default emr-disabled" onclick=" Validar() " href="@Url.Action("DetalleContrato", new { prefijo = item.PrefijoCont, busqueda = item.RmtCont, rmt = item.RmtCont, contratante = item.Identificacion, tipoContrato = item.TipoContrato, tipoBusqueda = @item.Tipo, nombreContratante = item.Nombre, numCont = item.Num_cont })">@Html.DisplayFor(modelItem => item.TipoContrato)</a>
+                                                }
+                                            }
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.PrefijoCont)-
+                                        @Html.DisplayFor(modelItem => item.Num_cont) / @Html.DisplayFor(modelItem => item.RmtCont)
+                                    </td>
+                                    <td class="text-center">
+                                        @item.Identificacion.ToString("0")
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.Estado)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.num_pers)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.nom_comp)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.NombreDirector)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.TelDirector)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.SubCanal)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.CiudadAsesor)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.TelAsesor)
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => item.EstadoAsesor)
+                                    </td>
+                                </tr>
+                                            }
+                        </tbody>
+                    </table>
+                    @Html.PagedListPager(Model.ListaContratos, page => Url.Action("Paginador", new { page, Model.Codigo }))
+                </div>
+            </div>
+        </div>
+                                            }
+</form>
+<div class="modal fade" tabindex="-1" role="dialog" id="modalProcesando" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                <h4 class="modal-title">Espera por favor</h4>
+            </div>
+            <div class="modal-body">
+                <style>
+                    .windows8 {
+                        position: relative;
+                        width: 60px;
+                        height: 60px;
+                        margin: auto;
+                    }
+
+                        .windows8 .wBall {
+                            position: absolute;
+                            width: 57px;
+                            height: 57px;
+                            opacity: 0;
+                            transform: rotate(225deg);
+                            -o-transform: rotate(225deg);
+                            -ms-transform: rotate(225deg);
+                            -webkit-transform: rotate(225deg);
+                            -moz-transform: rotate(225deg);
+                            animation: orbit 4.2325s infinite;
+                            -o-animation: orbit 4.2325s infinite;
+                            -ms-animation: orbit 4.2325s infinite;
+                            -webkit-animation: orbit 4.2325s infinite;
+                            -moz-animation: orbit 4.2325s infinite;
+                        }
+
+                            .windows8 .wBall .wInnerBall {
+                                position: absolute;
+                                width: 7px;
+                                height: 7px;
+                                background: rgb(0,0,0);
+                                left: 0px;
+                                top: 0px;
+                                border-radius: 7px;
+                            }
+
+                        .windows8 #wBall_1 {
+                            animation-delay: 0.926s;
+                            -o-animation-delay: 0.926s;
+                            -ms-animation-delay: 0.926s;
+                            -webkit-animation-delay: 0.926s;
+                            -moz-animation-delay: 0.926s;
+                        }
+
+                        .windows8 #wBall_2 {
+                            animation-delay: 0.183s;
+                            -o-animation-delay: 0.183s;
+                            -ms-animation-delay: 0.183s;
+                            -webkit-animation-delay: 0.183s;
+                            -moz-animation-delay: 0.183s;
+                        }
+
+                        .windows8 #wBall_3 {
+                            animation-delay: 0.3665s;
+                            -o-animation-delay: 0.3665s;
+                            -ms-animation-delay: 0.3665s;
+                            -webkit-animation-delay: 0.3665s;
+                            -moz-animation-delay: 0.3665s;
+                        }
+
+                        .windows8 #wBall_4 {
+                            animation-delay: 0.5495s;
+                            -o-animation-delay: 0.5495s;
+                            -ms-animation-delay: 0.5495s;
+                            -webkit-animation-delay: 0.5495s;
+                            -moz-animation-delay: 0.5495s;
+                        }
+
+                        .windows8 #wBall_5 {
+                            animation-delay: 0.743s;
+                            -o-animation-delay: 0.743s;
+                            -ms-animation-delay: 0.743s;
+                            -webkit-animation-delay: 0.743s;
+                            -moz-animation-delay: 0.743s;
+                        }
+
+
+
+                    @@keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            transform: rotate(180deg);
+                            animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            transform: rotate(300deg);
+                            animation-timing-function: linear;
+                            origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            transform: rotate(410deg);
+                            animation-timing-function: ease-in-out;
+                            origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            transform: rotate(645deg);
+                            animation-timing-function: linear;
+                            origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            transform: rotate(770deg);
+                            animation-timing-function: ease-out;
+                            origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            transform: rotate(900deg);
+                            animation-timing-function: ease-out;
+                            origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-o-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -o-transform: rotate(180deg);
+                            -o-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -o-transform: rotate(300deg);
+                            -o-animation-timing-function: linear;
+                            -o-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -o-transform: rotate(410deg);
+                            -o-animation-timing-function: ease-in-out;
+                            -o-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -o-transform: rotate(645deg);
+                            -o-animation-timing-function: linear;
+                            -o-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -o-transform: rotate(770deg);
+                            -o-animation-timing-function: ease-out;
+                            -o-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -o-transform: rotate(900deg);
+                            -o-animation-timing-function: ease-out;
+                            -o-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -o-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -o-transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-ms-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -ms-transform: rotate(180deg);
+                            -ms-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -ms-transform: rotate(300deg);
+                            -ms-animation-timing-function: linear;
+                            -ms-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -ms-transform: rotate(410deg);
+                            -ms-animation-timing-function: ease-in-out;
+                            -ms-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -ms-transform: rotate(645deg);
+                            -ms-animation-timing-function: linear;
+                            -ms-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -ms-transform: rotate(770deg);
+                            -ms-animation-timing-function: ease-out;
+                            -ms-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -ms-transform: rotate(900deg);
+                            -ms-animation-timing-function: ease-out;
+                            -ms-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -ms-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -ms-transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-webkit-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -webkit-transform: rotate(180deg);
+                            -webkit-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -webkit-transform: rotate(300deg);
+                            -webkit-animation-timing-function: linear;
+                            -webkit-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -webkit-transform: rotate(410deg);
+                            -webkit-animation-timing-function: ease-in-out;
+                            -webkit-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -webkit-transform: rotate(645deg);
+                            -webkit-animation-timing-function: linear;
+                            -webkit-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -webkit-transform: rotate(770deg);
+                            -webkit-animation-timing-function: ease-out;
+                            -webkit-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -webkit-transform: rotate(900deg);
+                            -webkit-animation-timing-function: ease-out;
+                            -webkit-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -webkit-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -webkit-transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-moz-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -moz-transform: rotate(180deg);
+                            -moz-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -moz-transform: rotate(300deg);
+                            -moz-animation-timing-function: linear;
+                            -moz-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -moz-transform: rotate(410deg);
+                            -moz-animation-timing-function: ease-in-out;
+                            -moz-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -moz-transform: rotate(645deg);
+                            -moz-animation-timing-function: linear;
+                            -moz-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -moz-transform: rotate(770deg);
+                            -moz-animation-timing-function: ease-out;
+                            -moz-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -moz-transform: rotate(900deg);
+                            -moz-animation-timing-function: ease-out;
+                            -moz-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -moz-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -moz-transform: rotate(900deg);
+                        }
+                    }
+                </style>
+                <div class="windows8">
+                    <div class="wBall" id="wBall_1">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_2">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_3">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_4">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_5">
+                        <div class="wInnerBall"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    function load() {
+        $("#modalProcesando").modal('hide');
+        if ('@Model.Mensaje' == 'a') {
+            var a = new PNotify({
+                title: 'Contratos',
+                text: 'No se encontraron resultados para esta búsqueda.',
+                type: 'error',
+                icon: false
+            });
+            return;
+        }
+        @*if ('@Model.Mensaje' == '8') {
+            var a = new PNotify({
+                title: 'Contratos',
+                text: 'Señor asesor usted no tiene los privilegios para realizar la consulta de este contrato',
+                type: 'error',
+                icon: false
+            });
+            return;
+        }
+        if ('@Model.Mensaje' == '7') {
+            var a = new PNotify({
+                title: 'Contratos',
+                text: 'Señor director usted no tiene los privilegios para realizar la consulta de este contrato',
+                type: 'error',
+                icon: false
+            });
+            return;
+        }*@
+
+        @*if ("@ViewBag.ButtonsDisable" == "TRUE") {
+            $('.emr-disabled').attr('disabled', 'disabled');
+        }*@
+
+        $('.emr-disabled').attr('disabled', 'disabled');
+
+        if ($('#Codigo').val() != '0' && $('#Codigo').val() != undefined &&
+            $('.emr-disabled').length > 0) {
+            var a = new PNotify({
+                title: 'Contratos',
+                text: 'Por favor seleccione una opción dsponible para ver el detalle.',
+                type: 'success',
+                icon: false
+            });
+        } else {
+            var a = new PNotify({
+                title: 'Contratos',
+                text: 'Por favor Ingrese Información a buscar.',
+                type: 'success',
+                icon: false
+            });
+        }
+    }
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function Validar() {
+        $("#modalProcesando").modal('show');
+        var a = new PNotify({
+            title: 'Contratos',
+            text: 'Abriendo Contrato...',
+            type: 'success',
+            icon: false
+        });
+    }
+    window.onload = load;
+    $('form').submit(function () {
+        $("#modalProcesando").modal('show');
+        var a = new PNotify({
+            title: 'Contratos',
+            text: 'Buscando...',
+            type: 'success',
+            icon: false
+        });
+        //  a.show();
+    });
+    //debugger;
+    $('#Criterio').qtip({
+        content: 'Aquí puedes consultar la información de tus contratos, buscándolos por: Id Contrato (Rmt_Cont) o número de contrato; por identificación o nombres del contratante y beneficiario.',
+        style: { classes: 'qtip-tipsy qtip-shadow' },
+        position: {
+
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+        }
+    });
+    function Eliminar(ben, rmt) {
+
+        var listaA = JSON.stringify({ 'contrato': rmt, 'usuario': ben });
+        $.ajax(
+        {
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            data: listaA,
+            url: '@Url.Action("Anular", "Beneficiarios")',
+            success: function (data) {
+
+                if (data == "") {
+
+
+                    Command: toastr["success"]("Listo, Solicitud anulada", "Aplicación");
+                    window.setTimeout(window.location = '@Url.Action("Index", "Beneficiarios")', 3000);
+                }
+                else {
+                    Command: toastr["error"](data, "Aplicación");
+
+                }
+
+            }
+        });
+
+    }
+
+    $(document).ready(function () {
+
+
+        $('#Buscar').click(function () {
+
+            var rmt = $('#RmtCont').val();
+            var fin = $('#FechaFin').val();
+            var inicio = $('#FechaInicio').val();
+
+            if (inicio != '' && fin == '') {
+                Command: toastr["error"]("Debe ingresar Fecha final de la busqueda", "Aplicación");
+                return false;
+            }
+
+            if (rmt == '' || rmt == '0') {
+                Command: toastr["error"]("Debe ingresar Número de contrato", "Aplicación");
+                return false;
+            }
+
+
+
+        });
+        $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+        $('#FechaInicio').datepicker({
+            language: 'es',
+            maxDate: "+1m +1w"
+        });
+
+        $('#FechaFin').datepicker({
+            language: 'es',
+            maxDate: "+1m +1w"
+        });
+
+        $('#FechaInicio').on("changeDate", function () {
+            $('#FechaFin').datepicker('setStartDate', $('#FechaInicio').val());
+            $('#FechaFin').val('');
+        });
+
+        $('#ListadoProcesos').dataTable({
+            oLanguage: {
+                sEmptyTable: "No se encuentran datos para esta búsqueda"
+            },
+            scrollX: false,
+            //sScrollX: "100%",
+            //sScrollXInner: "900px",
+            scrollCollapse: false,
+            bFilter: false,
+            bInfo: false,
+            bPaginate: false
+        });
+
+
+
+    });
+</script>

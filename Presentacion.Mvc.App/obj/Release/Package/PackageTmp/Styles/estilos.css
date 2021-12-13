@@ -1,0 +1,282 @@
+﻿.p-login {
+    margin-top: 15px;
+    border: 1px solid rgb(216,216,216);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.panel-heading {
+    padding: 5px 15px;
+}
+
+.panel-footer {
+    padding: 1px 15px;
+    color: #A0A0A0;
+}
+
+.profile-imgLogin {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.alignCenter {
+    text-align: center;
+}
+
+.profile-img {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.field-validation-error {
+    color: #ff0000;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.alto {
+    height: 500px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+body {
+}
+
+.tb-info-mp > thead > tr {
+    background-color: rgb(24,60,99) !important;
+}
+
+    .tb-info-mp > thead > tr > th {
+        text-align: center !important;
+        color: rgb(255,255,255) !important;
+    }
+
+.tb-info-mp > tbody > tr > td {
+    font-weight: normal !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.btn-accion {
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    color: rgb(255,255,255) !important;
+    background-color: rgb(34,85,141) !important;
+}
+
+.btn-accion- {
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    color: rgb(255,255,255) !important;
+    background-color: rgb(233,27,38) !important;
+}
+
+.lb-frm {
+    font-size: 1.7rem !important;
+    color: rgb(17,72,133) !important;
+    font-weight: bold !important;
+}
+
+.ip-fm {
+    padding: 5px 12px !important;
+}
+
+.ul-wzrd {
+    background-color: transparent !important;
+    /*border: 1px solid #c3c3c3;*/
+    display: -webkit-flex !important;
+    -webkit-justify-content: center !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.sw-theme-circles > ul.step-anchor {
+    margin-bottom: 0 !important;
+}
+
+    .sw-theme-circles > ul.step-anchor::before {
+        width: 150px !important;
+        margin-left: 2% !important;
+        background-color: rgb(24,60,99) !important;
+    }
+
+.sw-theme-circles .step-content {
+    background-color: transparent !important;
+}
+
+.sw-theme-circles > ul.step-anchor > li > a {
+    color: rgb(0,0,0) !important;
+    border: 2px solid rgb(24,60,99) !important;
+    border-top-color: rgb(24, 60, 99) !important;
+    border-right-color: rgb(24, 60, 99) !important;
+    border-bottom-color: rgb(24, 60, 99) !important;
+    border-left-color: rgb(24, 60, 99) !important;
+    box-shadow: inset 0px 0px 0px 3px rgb(24,60,99) !important;
+}
+
+.validationMessage {
+    color: #E71B27 !important;
+    font-weight: bold !important;
+    font-size: 1.3rem !important;
+}
+
+.sw-theme-circles > ul.step-anchor > li > a {
+    width: 33px !important;
+    height: 33px !important;
+    padding: 8px 0px !important;
+}
+
+.sw-theme-circles > ul.step-anchor > li.active > a {
+    background: rgb(24,60,99) !important;
+    border-color: rgb(24,60,99) !important;
+}
+
+.sw-theme-circles > ul.step-anchor > li.done > a {
+    border-color: rgb(24,60,99) !important;
+    background: rgb(24,60,99) !important;
+}
+
+.sml-wzrd {
+    color: rgb(24,60,99) !important;
+    font-weight: bold !important;
+}
+
+input[type=radio] {
+    border: 2px solid rgb(171,171,172) !important;
+    padding: 0.5em !important;
+    margin: 1px 0 0 !important;
+    -webkit-appearance: none !important;
+    border-radius: 5px !important;
+}
+
+    input[type=radio]:checked {
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAAAAACoWZBhAAAABGdBTUEAALGPC/xhBQAAAAJiS0dEAP+Hj8y/AAAAB3RJTUUH4woEEQUNh/QNxQAAAHdJREFUCNdjeAcCb75edlvAAGK9ffM9W9aH4e2bd+9e/V6mYryf4d2XN28+37FTaP/L8Ob8t5c/CxR8X79nyNPZ+H+Vhs6uH68ZwpRNV/jI1/1+/Y7hdayynrbL0w9v3zF8fhGhpb315+t37xhefXniUfILyHoHAGBSRYJo0KDXAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTEwLTA0VDE3OjA1OjEzLTA3OjAw1d2HAwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0xMC0wNFQxNzowNToxMy0wNzowMKSAP78AAAAASUVORK5CYII=) no-repeat center center !important;
+        background-size: 10px 10px !important;
+    }
+
+    input[type=radio]:focus {
+        outline-color: transparent !important;
+    }
+
+.tb-act-inf {
+    width: 50% !important;
+    margin-left: 3% !important;
+}
+
+    .tb-act-inf > tbody > tr > td {
+        padding: 2% 0px !important;
+    }
+
+
+
+
+/*#region COOKIES*/
+
+.boton-subir,
+.politicas-cookie {
+    position: fixed;
+}
+
+.politicas-cookie {
+    display: none;
+    background: #0A3B6D;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+}
+
+.info-cookie {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.link-politica-cookie {
+    color: #fff;
+    margin: 0 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+.boton-cookie {
+    display: flex;
+    color: #fff;
+    background: #FF91A6;
+    border-radius: 15px;
+    margin-left: 5px;
+    padding: 4px 10px;
+    text-decoration: none;
+    transition: .5s;
+}
+
+    .boton-cookie:hover {
+        background: #F95977;
+    }
+
+.p-5px {
+    padding: 5px;
+}
+
+.p-15px {
+    padding: 15px;
+}
+
+/*#endregion COOKIES*/
+

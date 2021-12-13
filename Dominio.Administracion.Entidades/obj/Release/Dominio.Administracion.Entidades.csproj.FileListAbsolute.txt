@@ -1,0 +1,17 @@
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Dominio.Administracion.Entidades.dll.config
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Dominio.Administracion.Entidades.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Dominio.Administracion.Entidades.pdb
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\EntityFramework.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Microsoft.Owin.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Microsoft.Owin.Security.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Owin.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\EntityFramework.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Microsoft.Owin.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Release\Microsoft.Owin.Security.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Release\Dominio.Administracion.Entidades.csproj.AssemblyReference.cache
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Release\Dominio.Administracion.Entidades.csproj.CoreCompileInputs.cache
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Release\Dominio.Administracion.Entidades.csproj.CopyComplete
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Release\Dominio.Administracion.Entidades.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Release\Dominio.Administracion.Entidades.pdb

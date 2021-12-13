@@ -1,0 +1,229 @@
+﻿@model Presentacion.Mvc.App.Models.AfiliacionesModel
+@{
+    ViewBag.Title = "Resumen Afiliaciones";
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+@if (Model.ListaResultadoResumen.Any())
+{
+
+    @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h4><strong>Resultados de tu consulta</strong></h4>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="form-horizontal">
+
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="form-group-sm">
+                                @Html.Label("Fechas:", new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().PERIODO_INICIO a @Model.ListaResultadoResumen.FirstOrDefault().PERIODO_FINAL </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-horizontal">
+                        .
+                        <div class="row">
+                            <div class="form-group-sm">
+
+                                @Html.Label("Fecha de digitación", new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().ACT_HORA_MAENO </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.ListaResultadoResumen.FirstOrDefault().NIVEL_DEL_ASESOR))
+                    {
+                        <div class="row">
+                            <div class="form-group-sm">
+                                @Html.Label("Estatus asesor:", new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().NIVEL_DEL_ASESOR</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.ListaResultadoResumen.FirstOrDefault().DIRECTOR_PRODUCTO))
+                    {
+                        <div class="row">
+                            <div class="form-group-sm">
+                                @Html.Label("Director:", new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().DIRECTOR_PRODUCTO</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.ListaResultadoResumen.FirstOrDefault().DIRECTOR_COLPATRIA))
+                    {
+                        <div class="row">
+                            <div class="form-group-sm">
+                                @Html.Label("Director Colpatria:", new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().DIRECTOR_COLPATRIA</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.ListaResultadoResumen.FirstOrDefault().CIUDAD))
+                    {
+                        <div class="row">
+                            <div class="form-group-sm">
+                                @Html.Label("Ciudad:", new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().CIUDAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <table class="table table-condensed " id="tabla-datos" style="font-size: 1em;">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" class="text-center">
+                                        <h4 style="display: inline-block;"><strong>Resumen</strong></h4>
+
+                                    </th>
+                                </tr>
+                                <tr class="filtros">
+                                    <th class="col-md-4 text-center" @if (Model.ListaResultadoResumen.FirstOrDefault().FAMILIAR < 0) { @: style="display: none;"
+                                                                                                                                                                                                                     }>Familiar</th>
+
+                                    <th class="col-md-4 text-center" @if (Model.ListaResultadoResumen.FirstOrDefault().PMP < 0) { @: style=" display none;"
+                                                                                                                                                                                                                                                         }>PPE</th>
+
+                                    <th class="col-md-4 text-center" @if (Model.ListaResultadoResumen.FirstOrDefault().AREAS_PROTEGIDAS < 0) { @: style="display: none;"
+                                                                                                                                                                                                                                                         }>Áreas Protegidas</th>
+                                    <th class="col-md-4 text-center">Total</th>
+
+
+                                </tr>
+                            </thead>
+
+
+                            <tbody id="panel-tabla" style="font-size: 1.1em;">
+                                <tr class="text-center">
+                                    <td @if (Model.ListaResultadoResumen.FirstOrDefault().FAMILIAR < 0) { @: style="display: none;"
+                                                                                                                                                                                                                                            }>
+                                        @(Model.ListaResultadoResumen.FirstOrDefault().FAMILIAR == null ? "NO APLICA" : Model.ListaResultadoResumen.FirstOrDefault().FAMILIAR.ToString())
+                                    </td>
+                                    <td @if (Model.ListaResultadoResumen.FirstOrDefault().PMP < 0) { @: style="display: none;"
+                                                                                                                                                                                                                                            }>
+                                        @(Model.ListaResultadoResumen.FirstOrDefault().PMP == null ? "NO APLICA" : Model.ListaResultadoResumen.FirstOrDefault().PMP.ToString())
+                                    </td>
+                                    <td @if (Model.ListaResultadoResumen.FirstOrDefault().AREAS_PROTEGIDAS < 0) { @: style="display: none;"
+                                                                                                                                                                                                        }>
+                                        @(Model.ListaResultadoResumen.FirstOrDefault().AREAS_PROTEGIDAS == null ? "NO APLICA" : Model.ListaResultadoResumen.FirstOrDefault().AREAS_PROTEGIDAS.ToString())
+                                    </td>
+                                    <td>
+                                        @{
+                                            var suma = Model.ListaResultadoResumen.FirstOrDefault().FAMILIAR + Model.ListaResultadoResumen.FirstOrDefault().AREAS_PROTEGIDAS + Model.ListaResultadoResumen.FirstOrDefault().PMP;
+                                        }
+                                        @suma
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group text-center">
+                    <input type="button" class="btn btn-primary" data-action="@Url.Action("ExportarInforme")" id="informe-detallado" value="Descarga tu detalle" />
+                    <input type="button" class="btn btn-primary" data-action="@Url.Action("ExportarInforme")" id="resumen-pdf" value="Descarga tu resumen" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+        <!-- Modal Alert -->
+                                            <div class="modal fade" id="modalAlert" role="dialog">
+                                                <div class="modal-dialog modal-sm">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title"></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <span class="modal-msg-alert"></span>
+                                                            <div id="ajax-container"></div>
+                                                        </div>
+                                                        <div class="modal-footer footer-alert">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $("input#informe-detallado").on("click", function () {
+                                                        $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+                                                        $("form#consulta-form input[name=TipoInforme]").val("D");
+
+
+                                                        $.descargarreporte(
+           {
+
+               action_report: $(this).data('action'),
+               action_download: $('#actiondownload').val(),
+               confirm: $(this).data('confirm'),
+               confirm_html: '<b>JOhn</b>',
+               contenttype: $(this).data('contenttype')
+
+           });
+
+                                                    });
+
+                                                    //$("input#resumen-excel").on("click", function () {
+                                                    //    $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+                                                    //    $("form#consulta-form input[name=TipoInforme]").val("R");
+                                                    //});
+
+                                                    $("input#resumen-pdf").on("click", function () {
+                                                        $("form#consulta-form input[name=ExportarFormato]").val("Pdf");
+                                                        $("form#consulta-form input[name=TipoInforme]").val("R");
+
+                                                        $.descargarreporte(
+           {
+
+               action_report: $(this).data('action'),
+               action_download: $('#actiondownload').val(),
+               confirm: $(this).data('confirm'),
+               confirm_html: '<b>JOhn</b>',
+               contenttype: $(this).data('contenttype')
+
+           });
+
+
+                                                    });
+                                                });
+                                            </script>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-succes text-center" role="alert" style="color: #3c763d !important; background-color: #dff0d8 !important; border-color: #d6e9c6 !important; ">
+                                                        <strong>No se encontraron afiliaciones para esa combinación de filtros</strong>
+                                                    </div>
+                                                </div>
+                                            }

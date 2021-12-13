@@ -1,0 +1,49 @@
+﻿
+@model Presentacion.Mvc.App.Models.ClausuladoContratoModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Consultas y Descargas";
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+<br />
+<div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal">
+                <br />
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <p>Clausulado Contrato</p>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <p>Aquí puedes descargar el clausulado de tu contrato</p>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        
+                        <a class="btn btn-danger" href=@Url.Action("DescargarArchivo", "ClausuladoContrato", new
+                                                                                                                         {
+                                                                                                                             Model.Archivo
+                                                                                                                         })>
+                            <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Descargar
+                        </a>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

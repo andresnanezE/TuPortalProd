@@ -1,0 +1,1061 @@
+﻿@using System.Configuration
+@using Presentacion.Mvc.App.Models
+@model DatosPlaceToPay
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="row" data-bind="ifnot: mostrarIvr" style="background-color: transparent !important; margin-left: 30px">
+    <div class="col-sm-12" style="margin-top: 15px">
+        <div id="smartwizard">
+            <ul class="ul-wzrd">
+                <li><a href="#step-1">1<br /></a></li>
+                <li><a href="#step-2">2<br /></a></li>
+                <li><a href="#step-3">3<br /></a></li>
+            </ul>
+            <div>
+                <div id="step-1" style="visibility:visible !important">
+                    <div class="row">
+                        <div class="col-sm-12 text-left" style="margin-top: 15px;">
+                            <div class="row col-md-12">
+                                <label class="lb-frm">Ingrese el número de contrato o el nombre del cliente:</label>
+                            </div>
+                            <div class="row">
+                                <div></div>
+                                <div class="col-md-4">
+                                    <input data-bind="value: filtro, valueUpdate: 'afterkeydown'" type="text" class="form-control ip-fm" placeholder="Filtro">
+                                </div>
+                                <div class="col-md-8">
+                                    <button data-bind="click:getInfoMedioPago" class="btn" style="padding: 5px 40px;background-color: rgb(34,85,141);color: rgb(255,255,255)!important;font-size: 1.5rem;font-weight: 600;">
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-bind="if: verData">
+                            <div class="col-sm-12 text-left" style="margin-top: 15px;">
+                                <span style="color: rgb(8,67,119);font-weight: bold;font-size: 2.5rem;">
+                                    <span style="color: rgb(199,33,42);">
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                    </span>
+                                    Selecciona el plan a modificar:
+                                </span>
+                            </div>
+                            <div class="col-sm-12" style="margin-top: 15px;">
+                                <table id="tb-info-mp" class="tb-info-mp table-hover nowrap stripe row-border order-column text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Detalle
+                                            </th>
+                                            <th>
+                                                Núm. Cont. / Id Cont.
+                                            </th>
+                                            <th>
+                                                No. Identificación
+                                            </th>
+                                            <th>
+                                                Contratante
+                                            </th>
+                                            <th>
+                                                Estado
+                                            </th>
+                                            <th>
+                                                Cantidad Afiliados
+                                            </th>
+                                            <th>
+                                                Asesor
+                                            </th>
+                                            <th>
+                                                Director
+                                            </th>
+                                            <th>
+                                                Teléfono Director
+                                            </th>
+                                            <th>
+                                                Canal
+                                            </th>
+                                            <th>
+                                                Ciudad Asesor
+                                            </th>
+                                            <th>
+                                                Teléfono Asesor
+                                            </th>
+                                            <th>
+                                                Estado Asesor
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- ko foreach: planesVigentes -->
+                                        <tr>
+                                            <td class="text-center">
+                                                <div data-bind="if: $root.busquedaPorTexto">
+                                                    <button class="btn btn-accion" data-bind="visible: MostrarBoton, click: $root.direccionarPorNombre.bind($data)">
+                                                        Cambiar
+                                                    </button>
+
+                                                    <button class="btn btn-accion" data-bind="visible: !MostrarBoton, click: $root.direccionarPorNombre.bind($data)">
+                                                        Cambiar
+                                                    </button>
+                                                </div>
+                                                <div data-bind="ifnot: $root.busquedaPorTexto">
+                                                    <button class="btn btn-accion" data-bind="visible: MostrarBoton, click: $root.direccionarPorContrato.bind($data)">
+                                                        Cambiar
+                                                    </button>
+
+                                                    <button class="btn btn-accion" data-bind="visible: !MostrarBoton, click: $root.direccionarPorContrato.bind($data)">
+                                                        Cambiar
+                                                    </button>
+                                                </div>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <span data-bind="text: PrefijoCont"></span> -
+                                                <span data-bind="text: Num_cont"></span> /
+                                                <span data-bind="text: RmtCont"></span>
+                                            </td>
+
+
+                                            <td class="text-center" data-bind="text: Identificacion"></td>
+
+
+                                            <td class="text-center" data-bind="text: Nombre"></td>
+
+
+                                            <td class="text-center" data-bind="text: Estado"></td>
+
+
+                                            <td class="text-center" data-bind="text: num_pers"></td>
+
+
+                                            <td class="text-center" data-bind="text: nom_comp"></td>
+
+
+                                            <td class="text-center" data-bind="text: NombreDirector"></td>
+
+
+                                            <td class="text-center" data-bind="text: TelDirector"></td>
+
+
+                                            <td class="text-center" data-bind="text: SubCanal"></td>
+
+
+                                            <td class="text-center" data-bind="text: CiudadAsesor"></td>
+
+
+                                            <td class="text-center" data-bind="text: TelAsesor"></td>
+
+
+                                            <td class="text-center" data-bind="text: EstadoAsesor"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-2" style="visibility:visible !important">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 text-center" style="margin-top: 15px;">
+                                <span style="color: rgb(71,71,71);font-weight: bold;font-size: 1.6rem;">
+                                    Tu medio de pago actual es:
+                                </span>&emsp;
+                                <span style="color: rgb(71,71,71);font-weight: bold;font-size: 1.6rem; text-decoration: underline;" data-bind="text:medioPagoActual"></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px;margin-bottom: 1%;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <span style="color: rgb(8,67,119);font-weight: bold;font-size: 2.5rem;">
+                                    <span style="color: rgb(199,33,42);">
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                    </span>
+                                    Seleccionar nuevo medio de pago
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table style="margin: auto;width: auto;">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" style="vertical-align: baseline;" value="tc" name="optradio" checked>
+                                            <label class="radio-inline" style="vertical-align: baseline;">
+                                                Tarjeta de crédito
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="radio" style="vertical-align: baseline;" value="ta" name="optradio">
+                                            <label class="radio-inline" style="vertical-align: baseline;">
+                                                Cuenta de ahorros / Corriente
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <hr style="border: 1px solid rgb(213,214,216);">
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 1% 0;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <span style="color: rgb(8,67,119);font-weight: bold;font-size: 2.5rem;">
+                                    <span style="color: rgb(199,33,42);">
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                    </span>
+                                    Actualiza la información de notificación
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <table class="tb-act-inf">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 35%">
+                                                <label class="lb-frm" for="telefono">Celular:</label>
+                                            </td>
+                                            <td style="width: 65%">
+                                                <input data-bind="value: telefono, valueUpdate: 'afterkeydown'" type="text" class="form-control ip-fm" id="telefono" name="telefono" autocomplete="off" placeholder="Agregar número de teléfono">
+                                            </td>
+                                        </tr>
+                                        @*<tr>
+                                                <td>
+                                                    <label class="lb-frm" for="direccion">Dirección:</label>
+                                                </td>
+                                                <td>
+                                                    <input data-bind="value: direccion, valueUpdate: 'afterkeydown'" type="text" class="form-control ip-fm" id="direccion" name="direccion" placeholder="Agregar dirección">
+                                                </td>
+                                            </tr>*@
+                                        <tr>
+                                            <td>
+                                                <label class="lb-frm" for="email">Email:</label>
+                                            </td>
+                                            <td>
+                                                <input data-bind="value: email, valueUpdate: 'afterkeydown'" type="text" class="form-control ip-fm" id="email" name="email" autocomplete="off" placeholder="Agregar email">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <button class="btn btn-block btn-accion" style="padding: 7px 0;" data-bind="click: actualizarInformacion">
+                                                    Continuar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <form id="place-t-p" method="post" action="@string.Format(ConfigurationManager.AppSettings["UrlPasarela"],"Shoping")">
+                            @Html.TextBoxFor(m => m.Identifiquer, new { @class = "form-control", data_bind = "value: identifiquer", type = "hidden" })
+                            @Html.TextBoxFor(m => m.IdentificationType, new { @class = "form-control", type = "hidden" })
+                            @Html.TextBoxFor(m => m.IdentificationNumber, new { @class = "form-control", type = "hidden" })
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", data_bind = "value: nombre", type = "hidden" })
+                            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", data_bind = "value: apellido", type = "hidden" })
+                            @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", data_bind = "value: telefonoTP", type = "hidden" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", data_bind = "value: emailTP", type = "hidden" })
+                            @Html.TextBoxFor(m => m.Application, new { @class = "form-control", Value = ConfigurationManager.AppSettings["Application"], type = "hidden" })
+                            @Html.TextBoxFor(m => m.PaymentAmount, new { @class = "form-control", data_bind = "value: 1000", type = "hidden" })
+                            @Html.TextBoxFor(m => m.Description, new { @class = "form-control", Value = "", type = "hidden" })
+                            @Html.TextBoxFor(m => m.IsCreditCard, new { @class = "form-control", Value = "true", type = "hidden" })
+                            @Html.TextBoxFor(m => m.SavingsCard, new { @class = "form-control", Value = "false", type = "hidden" })
+                            @Html.TextBoxFor(m => m.RecurringPayment, new { @class = "form-control", Value = "true", type = "hidden" })
+                            @Html.TextBoxFor(m => m.RequiredRecurringPayment, new { @class = "form-control", Value = "true", type = "hidden" })
+                            @Html.TextBoxFor(m => m.UrlReturn, new { @class = "form-control", Value = ConfigurationManager.AppSettings["UrlResponseToPay"], type = "hidden" })
+                        </form>
+                    </div>
+                </div>
+                <div id="step-3" style="visibility:visible !important">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 text-center" style="margin-top: 15px;">
+                                <span style="color: rgb(8,67,119);font-weight: bold;font-size: 2.5rem;">
+                                    Ingresa los datos de tu nuevo medio de pago
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px;margin-bottom: 1%;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <span style="color: rgb(8,67,119);font-weight: bold;font-size: 2.5rem;">
+                                    <span style="color: rgb(199,33,42);">
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                    </span>
+                                    Tipo de cuenta
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table style="margin: auto;width: auto;">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" style="vertical-align: baseline;" value="D" name="opTjRadio" checked>
+                                            <label class="radio-inline" style="vertical-align: baseline;">
+                                                Cuenta corriente
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="radio" style="vertical-align: baseline;" value="B" name="opTjRadio">
+                                            <label class="radio-inline" style="vertical-align: baseline;">
+                                                Cuenta de ahorros
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <hr style="border: 1px solid rgb(213,214,216);">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <table class="tb-act-inf">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 35%">
+                                                <label class="lb-frm" for="banco">Banco:</label>
+                                            </td>
+                                            <td style="width: 65%">
+                                                <select style="padding: 5px 12px;" data-bind="options: tipoBancos, optionsText: 'Banco', optionsValue: 'CodigoBanco', value: tipoBancoId, event:{ change: onChageBancos}" class="form-control" id="banco" name="banco"></select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label class="lb-frm" for="email">Cuenta:</label>
+                                            </td>
+                                            <td>
+                                                <input data-bind="value: numeroBanco, valueUpdate: 'afterkeydown'" type="text" class="form-control ip-fm" id="banco" name="banco">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 4%;">
+                            <div class="col-sm-12 text-center">
+                                <span style="color: rgb(172,172,173); font-weight: bold;">
+                                    Las cuentas de pensionados y/o compartidas no son aceptadas.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 append"></div>
+                            <div class="col-sm-10">
+                                <table class="tb-act-inf">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 35%"></td>
+                                            <td style="width: 65%">
+                                                <button class="btn btn-block btn-accion-" style="margin: 10px 0 0 0; padding: 6px 0;" data-bind="click: actualizarInformacion.bind($data,'d')">
+                                                    ACTUALIZAR
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" data-bind="if: mostrarIvr" style="background-color: transparent !important; margin-left: 30px">
+    <div class="col-sm-12 text-center" style="margin-top: 30px">
+        <div class="row">
+            <div class="col-md-12">
+                <p style="font-size: 2.5rem;font-weight: 600;color: rgb(20,69,116);">Tokenizar tarjeta de crédito</p>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <div class="form-control" style="margin-left:25px; height: 60px !important;">
+                    <label>Referencia:</label><br />
+                    <label>
+                        <span>RMTCONT</span>
+                        <span data-bind="text: rmtCont">12345</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <img src="~/Image/ivr.png" />
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-2 col-md-offset-4">
+                    <label class="form-control">Sesión</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" data-bind="value: numeroSesion" class="form-control ip-fm" />
+                    <br />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-3 col-md-offset-3">
+                    <button data-bind="click: mostarModalIvrRechazado" class="btn" style="padding: 5px 40px;background-color: rgb(171,44,40);color: rgb(255,255,255) !important;font-size: 1.5rem;font-weight: 600;">
+                        Rechazado
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button data-bind="click: mostarModalIvrAprobado" class="btn" style="padding: 5px 40px;background-color: rgb(34,85,141);color: rgb(255,255,255)!important;font-size: 1.5rem;font-weight: 600;">
+                        Aprobado
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalle-->
+<div class="modal fade" id="detalle-medio-pago" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" style="overflow-y: scroll;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Detalle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <br />
+                    <div style="margin-left: auto; margin-right: auto; float: inherit; max-width: 800px;">
+                        <div class="well">
+                            <div style="text-align: center">
+                                <h4 style="font-weight: bold" data-bind="text: titulo"></h4><br />
+                                <div><label>Núm. Cont. / Id Cont.</label></div>
+
+                                <div class="col-md-12">
+                                    <span data-bind="text: numCont"></span> /
+                                    <span data-bind="text: rmtCont"></span>
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Identificación Contratante", new { @class = "control-label " })
+                                        <br />
+                                        <span data-bind="text: identificacion"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Contratante", new { @class = "control-label " })
+                                        <br />
+                                        <span data-bind="text: contratante"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Datos Contacto Contratante", new { @class = "control-label" })
+                                        <br />
+                                        <span data-bind="text: telefonoContratante"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Estado Contrato", new { @class = "control-label" })
+                                        <br />
+                                        <span data-bind="text: estado"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Asesor", new { @class = "control-label" })
+                                        <br />
+                                        <span data-bind="text: asesor"></span>(
+                                        <span data-bind="text: estadoAse"></span>
+                                        )
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Datos Contacto Asesor", new { @class = "control-label" })
+                                        <br />
+                                        <span data-bind="text: telefonoAse"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Forma de Pago", new { @class = "control-label" })
+                                        <br />
+                                        <span data-bind="text: formaPago"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Modalidad de Pago", new { @class = "control-label" })
+                                        <br />
+                                        <span data-bind="text: modoPago"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @Html.Label("Fecha Inicial", new { @class = "control-label" })
+
+                                        <br />
+                                        <span data-bind="text: fechaInicio"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("Fecha Vencimiento", new { @class = "control-label" })
+
+                                        <br />
+                                        <span data-bind="text: fechaFin"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-bind="if:viewBene">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            @Html.Label("Identificación Beneficiario", new { @class = "control-label " })
+                                            <br />
+                                            <span data-bind="text: num_idenBen"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.Label("Nombre Beneficiario", new { @class = "control-label " })
+                                            <br />
+                                            <span data-bind="text: nom_bene"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            @Html.Label("Fecha Nacimiento", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: fec_naciBen"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.Label("Datos Contacto Beneficiario", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: tel_bene"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-bind="if:viewPMP">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            @Html.Label("Cantidad Afiliados", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: cantidad"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.Label("Cuota Mensual", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: cuotaMensual"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            @Html.Label("Valor Contratado", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: valorContrato"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.Label("Valor Cartera", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: valorCartera"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-bind="if:viewAP">
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            @Html.Label("Valor Contratado", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: valorContrato"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.Label("Valor Cartera", new { @class = "control-label" })
+                                            <br />
+                                            <span data-bind="text: valorCartera"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <div class="ac">
+                                    <div class="ac-con">
+                                        <button type="button" class="btn btn-primary" data-bind="click: mostarModalAceptacionMedioPago" id="btnSi">Actualización Forma Pago</button>
+                                        @*<a data-bind="click: mostarModalAceptacionMedioPago" href="#">
+                                                <div class="col-md-5" style="align-content:end">
+                                                    <img src="~/Image/IconosContratos/Afiliados.png" style="width:70px">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <br /> Actualización <br />Forma Pago
+                                                </div>
+                                            </a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Confirm estado Ivr-->
+<div class="modal fade" id="confirmar-estado-ivr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Tokenizar tarjeta de crédito</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    <span>su transacción será </span>
+                    <span data-bind="text: estadoIvr"></span>
+                    <span>, para finalizar de clic en enviar.</span>
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bind="click: guardarEstadoIvr" id="btnEnviar">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Confirm medio pago-->
+<div class="modal fade" id="confirmar-medio-pago" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confidencialidad de la información</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    Toda la información de este documento, así como los anexos, son de carácter estrictamente confidencial, por ende está prohibida su revelación, divulgación o impresión. El uso indebido de la misma está sancionado de acuerdo con las normas legales aplicables. ¿Deseas continuar?
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bind="click: cambiarMedioPago" id="btnSi">Si</button>
+                <a class="btn btn-danger btn-ok" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalProcesando" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                <h4 class="modal-title">Espera por favor</h4>
+            </div>
+            <div class="modal-body">
+                <style>
+                    .windows8 {
+                        position: relative;
+                        width: 60px;
+                        height: 60px;
+                        margin: auto;
+                    }
+
+                        .windows8 .wBall {
+                            position: absolute;
+                            width: 57px;
+                            height: 57px;
+                            opacity: 0;
+                            transform: rotate(225deg);
+                            -o-transform: rotate(225deg);
+                            -ms-transform: rotate(225deg);
+                            -webkit-transform: rotate(225deg);
+                            -moz-transform: rotate(225deg);
+                            animation: orbit 4.2325s infinite;
+                            -o-animation: orbit 4.2325s infinite;
+                            -ms-animation: orbit 4.2325s infinite;
+                            -webkit-animation: orbit 4.2325s infinite;
+                            -moz-animation: orbit 4.2325s infinite;
+                        }
+
+                            .windows8 .wBall .wInnerBall {
+                                position: absolute;
+                                width: 7px;
+                                height: 7px;
+                                background: rgb(0,0,0);
+                                left: 0px;
+                                top: 0px;
+                                border-radius: 7px;
+                            }
+
+                        .windows8 #wBall_1 {
+                            animation-delay: 0.926s;
+                            -o-animation-delay: 0.926s;
+                            -ms-animation-delay: 0.926s;
+                            -webkit-animation-delay: 0.926s;
+                            -moz-animation-delay: 0.926s;
+                        }
+
+                        .windows8 #wBall_2 {
+                            animation-delay: 0.183s;
+                            -o-animation-delay: 0.183s;
+                            -ms-animation-delay: 0.183s;
+                            -webkit-animation-delay: 0.183s;
+                            -moz-animation-delay: 0.183s;
+                        }
+
+                        .windows8 #wBall_3 {
+                            animation-delay: 0.3665s;
+                            -o-animation-delay: 0.3665s;
+                            -ms-animation-delay: 0.3665s;
+                            -webkit-animation-delay: 0.3665s;
+                            -moz-animation-delay: 0.3665s;
+                        }
+
+                        .windows8 #wBall_4 {
+                            animation-delay: 0.5495s;
+                            -o-animation-delay: 0.5495s;
+                            -ms-animation-delay: 0.5495s;
+                            -webkit-animation-delay: 0.5495s;
+                            -moz-animation-delay: 0.5495s;
+                        }
+
+                        .windows8 #wBall_5 {
+                            animation-delay: 0.743s;
+                            -o-animation-delay: 0.743s;
+                            -ms-animation-delay: 0.743s;
+                            -webkit-animation-delay: 0.743s;
+                            -moz-animation-delay: 0.743s;
+                        }
+
+                    @@keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            transform: rotate(180deg);
+                            animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            transform: rotate(300deg);
+                            animation-timing-function: linear;
+                            origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            transform: rotate(410deg);
+                            animation-timing-function: ease-in-out;
+                            origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            transform: rotate(645deg);
+                            animation-timing-function: linear;
+                            origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            transform: rotate(770deg);
+                            animation-timing-function: ease-out;
+                            origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            transform: rotate(900deg);
+                            animation-timing-function: ease-out;
+                            origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-o-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -o-transform: rotate(180deg);
+                            -o-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -o-transform: rotate(300deg);
+                            -o-animation-timing-function: linear;
+                            -o-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -o-transform: rotate(410deg);
+                            -o-animation-timing-function: ease-in-out;
+                            -o-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -o-transform: rotate(645deg);
+                            -o-animation-timing-function: linear;
+                            -o-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -o-transform: rotate(770deg);
+                            -o-animation-timing-function: ease-out;
+                            -o-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -o-transform: rotate(900deg);
+                            -o-animation-timing-function: ease-out;
+                            -o-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -o-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -o-transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-ms-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -ms-transform: rotate(180deg);
+                            -ms-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -ms-transform: rotate(300deg);
+                            -ms-animation-timing-function: linear;
+                            -ms-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -ms-transform: rotate(410deg);
+                            -ms-animation-timing-function: ease-in-out;
+                            -ms-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -ms-transform: rotate(645deg);
+                            -ms-animation-timing-function: linear;
+                            -ms-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -ms-transform: rotate(770deg);
+                            -ms-animation-timing-function: ease-out;
+                            -ms-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -ms-transform: rotate(900deg);
+                            -ms-animation-timing-function: ease-out;
+                            -ms-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -ms-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -ms-transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-webkit-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -webkit-transform: rotate(180deg);
+                            -webkit-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -webkit-transform: rotate(300deg);
+                            -webkit-animation-timing-function: linear;
+                            -webkit-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -webkit-transform: rotate(410deg);
+                            -webkit-animation-timing-function: ease-in-out;
+                            -webkit-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -webkit-transform: rotate(645deg);
+                            -webkit-animation-timing-function: linear;
+                            -webkit-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -webkit-transform: rotate(770deg);
+                            -webkit-animation-timing-function: ease-out;
+                            -webkit-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -webkit-transform: rotate(900deg);
+                            -webkit-animation-timing-function: ease-out;
+                            -webkit-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -webkit-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -webkit-transform: rotate(900deg);
+                        }
+                    }
+
+                    @@-moz-keyframes orbit {
+                        0% {
+                            opacity: 1;
+                            z-index: 99;
+                            -moz-transform: rotate(180deg);
+                            -moz-animation-timing-function: ease-out;
+                        }
+
+                        7% {
+                            opacity: 1;
+                            -moz-transform: rotate(300deg);
+                            -moz-animation-timing-function: linear;
+                            -moz-origin: 0%;
+                        }
+
+                        30% {
+                            opacity: 1;
+                            -moz-transform: rotate(410deg);
+                            -moz-animation-timing-function: ease-in-out;
+                            -moz-origin: 7%;
+                        }
+
+                        39% {
+                            opacity: 1;
+                            -moz-transform: rotate(645deg);
+                            -moz-animation-timing-function: linear;
+                            -moz-origin: 30%;
+                        }
+
+                        70% {
+                            opacity: 1;
+                            -moz-transform: rotate(770deg);
+                            -moz-animation-timing-function: ease-out;
+                            -moz-origin: 39%;
+                        }
+
+                        75% {
+                            opacity: 1;
+                            -moz-transform: rotate(900deg);
+                            -moz-animation-timing-function: ease-out;
+                            -moz-origin: 70%;
+                        }
+
+                        76% {
+                            opacity: 0;
+                            -moz-transform: rotate(900deg);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            -moz-transform: rotate(900deg);
+                        }
+                    }
+                </style>
+                <div class="windows8">
+                    <div class="wBall" id="wBall_1">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_2">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_3">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_4">
+                        <div class="wInnerBall"></div>
+                    </div>
+                    <div class="wBall" id="wBall_5">
+                        <div class="wInnerBall"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="~/App/MedioPago/IndexViewModel.js"></script>
+
+
+

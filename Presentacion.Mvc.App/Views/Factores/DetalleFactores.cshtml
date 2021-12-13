@@ -1,0 +1,1036 @@
+﻿@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.DetalleFactoresModel
+
+@{
+    ViewBag.Title = "Detalle Factores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    dl {
+        display: inline-block;
+        margin-left: 2em;
+    }
+
+    #tblDetalleFactor {
+        margin-bottom: 0px !important;
+    }
+</style>
+<link href="~/Content/css/Factores.css" rel="stylesheet" />
+
+@* Listado Detalle Por Factor *@
+<div class="col-xs-12 col-sm-12 col-md-12" style="top:30px">
+    <button class="btn-back-factor" onclick="location.href='@Url.Action("Index", "Factores")'"></button>
+    <br />
+
+    @* Aplica solo para los factores dinamicos*@
+    @if (Model.IdTipoFactor == 2)
+    {
+        <div class="panel panel-default-color" style="width: auto; margin-top: 5px;">
+            @*Banner Titulo*@
+            <div class="panel-heading-color" ALIGN="center">
+                <label style="color: white; font-size: 23px; margin-top: 5px;">Edición de Constante / Exponente&nbsp;<b class="title-factor">@Model.Factor</b></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7 col-xs-7" style="margin-top: 20px;">
+                @using (Html.BeginForm("DetalleFactores", "Factores", FormMethod.Post))
+                {
+                    @Html.HiddenFor(model => model.IdFactor)
+                    @Html.HiddenFor(model => model.IdTipoFactor)
+                    @Html.HiddenFor(model => model.Factor)
+
+                    <div class="form-horizontal">
+                        <div class="row">
+                            @* Campo Valor Constante *@
+                            <div class="col-md-5 col-xs-5" style="margin-top: 10px; right: 10%">
+                                <div class="form-horizontal" style="margin-top: -10px">
+                                    <div class="form-group">
+                                        <label class="label-modal col-xs-4" id="lbl-cnstnt" for="ValorConstanteFactor">Valor Constante: </label>
+                                        <div class="col-xs-6">
+                                            @Html.EditorFor(model => model.ValorConstanteFactorString, new
+                                       {
+                                           htmlAttributes = new
+                                           {
+                                               title = "Valor Detalle Factor",
+                                               required = "required",
+                                               type = "text",
+                                               @class = "form-control ipt-form",
+                                               placeholder = "Ingrese un valor",
+                                               name = "ValorConstanteFactor",
+                                               id = "txtValorConstanteFactor",
+                                               oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice            (0, this.maxLength);",
+                                               maxlength = "10"
+                                           }
+                                       })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @* Campo Valor Exponente *@
+                            <div class="col-md-5 col-xs-5" style="margin-top: 10px;">
+                                <div class="form-horizontal" style="margin-top: -10px">
+                                    <div class="form-group">
+                                        <label class="label-modal col-sm-4" id="lbl-xpnt" for="ValorExponenteFactor">Valor Exponente: </label>
+                                        <div class="col-sm-6">
+                                            @Html.EditorFor(model => model.ValorExponenteFactorString, new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    title = "Valor Detalle Factor",
+                                                    required = "required",
+                                                    type = "text",
+                                                    @class = "form-control ipt-form",
+                                                    placeholder = "Ingrese un valor",
+                                                    name = "ValorExponenteFactor",
+                                                    id = "txtValorExponenteFactor",
+                                                    oninput = "javascript: if(this.value.length>this.maxLength) this.value =                                this.value.slice(0, this.maxLength);",
+                                                    maxlength = "10"
+                                                }
+                                            })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Guardar Información *@
+                            <div class="col-md-2 col-xs-2">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-5 col-xs-5">
+                <div class="alert alert-warning" role="alert"><h5><strong>Formula, @Model.Factor: </strong>frecuencia x severidad x (1 + factor de seguridad)</h5></div>
+            </div>
+        </div>
+    }
+
+    @*Tabla del detalle*@
+    <div class="panel panel-default-color" style="width: auto; margin-top: 5px;">
+        @*Banner Titulo*@
+        <div class="panel-heading-color" ALIGN="center">
+            <label style="color: white; font-size: 23px; margin-top: 14px;">Detalle De Factores&nbsp;<b class="title-factor">@Model.Factor</b></label>
+        </div>
+    </div>
+    <div style="margin-top: -15px; width:auto">
+        <div class="col-md-12 col-xs-10 col-sm-10" style="padding:0px">
+            <table id="tblDetalleFactor" class="table table-bordered table-responsive">
+                <thead>
+                    <tr style="background-color: #22558d;">
+                        <th class="title-factor-table text-center" style="vertical-align: top;" width="100px">
+                            <label for="Nombre">Nombre</label>
+                        </th>
+                        <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                            <label for="Valor">Valor</label>
+                        </th>
+                        @if (Model.IdTipoFactor != 2)
+                        {
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="Valor">Valor Constante (C)</label>
+                            </th>
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="Valor">Valor Exponente (E)</label>
+                            </th>
+                        }
+
+                        @if (Model.IdFactor == 2)
+                        {
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="FactorAjuste">Valor Factor Ajuste Y</label>
+                            </th>
+                        }
+                        @if (Model.IdFactor == 3)
+                        {
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="ValorIndicadorFuga">% Valor Indicador Fuga </label>
+                            </th>
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="GastosAdministrativos">% Gastos Administrativos</label>
+                            </th>
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="GastosComerciales">% Gastos Comerciales</label>
+                            </th>
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="FactorUtilidad">% Factor Utilidad</label>
+                            </th>
+                            <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                                <label for="ValorMinimoCotizacion">Valor mínimo</label>
+                            </th>
+                        }
+
+                        <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                            <label for="Estado">Estado</label>
+                        </th>
+
+                        <th class="title-factor-table" style="vertical-align: top; text-align: center;">
+                            <label for="Editar">Editar</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListadoFactores)
+                    {
+                    <tr>
+                        <td class="title-factor-table-tr" width="100" style="font-size: 13px !important;">
+                            <div class="row" style="margin-left: 10px;margin-right: 10px;">
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </div>
+                        </td>
+
+                        <td class="title-factor-table-tr" style="text-align:center; font-size: 14px !important;">
+                            @Html.DisplayFor(modelItem => item.Valor)
+                        </td>
+                        @if (Model.IdTipoFactor != 2)
+                        {
+                            <td class="title-factor-table-tr" style="text-align:center; font-size: 14px !important;">
+                                @Html.DisplayFor(modelItem => item.Valor_Constante)
+                            </td>
+
+                            <td class="title-factor-table-tr" style="text-align:center; font-size: 14px !important;">
+                                @Html.DisplayFor(modelItem => item.Valor_Exponencial)
+                            </td>
+                        }
+                        @if (Model.IdFactor == 2)
+                        {
+                            <td class="title-factor-table-editar">
+                                @Html.DisplayFor(modelItem => item.Factor_Ajuste)
+                            </td>
+                        }
+                        @if (Model.IdFactor == 3)
+                        {
+                            <td class="title-factor-table-editar">
+                                @Html.DisplayFor(modelItem => item.ValorIndicadorFuga)<span>&nbsp;%</span>
+                            </td>
+                            <td class="title-factor-table-editar">
+                                @Html.DisplayFor(modelItem => item.GastosAdministrativos)<span>&nbsp;%</span>
+                            </td>
+                            <td class="title-factor-table-editar">
+                                @Html.DisplayFor(modelItem => item.GastosComerciales)<span>&nbsp;%</span>
+                            </td>
+                            <td class="title-factor-table-editar">
+                                @Html.DisplayFor(modelItem => item.FactorUtilidad)<span>&nbsp;%</span>
+                            </td>
+                            <td class="title-factor-table-editar">
+                                <span>$&nbsp;</span>@Html.DisplayFor(modelItem => item.ValorMinimoCotizacion)
+                            </td>
+                        }
+                        <td class="title-factor-table-editar">
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+                        <td style="text-align:center; font-size: 16px; ">
+                            <button type="button" class="btn btn-default" id="btnEditar"
+                                    onclick="cargarModal('@item.Id', '@item.IdFactor', `@item.Nombre`, '@item.Valor', '@item.Valor_Constante', '@item.Valor_Exponencial', '@item.Factor_Ajuste', '@item.Estado', '@item.ValorIndicadorFuga', '@item.GastosAdministrativos', '@item.GastosComerciales', '@item.FactorUtilidad', '@item.ValorMinimoCotizacion')">
+                                <i class="fa  glyphicon glyphicon-edit" style="margin-bottom: 6px; color: #ffffff;"></i>&nbsp; Editar
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            @* Paginación de listado de factores *@
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.PagedListPager(Model.ListadoFactores, page => Url.Action("Paginador", new
+                   {
+                       page,
+                       Model.IdFactor
+                   }))
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                    <h5><i class="fa  glyphicon glyphicon-list" style="margin-bottom: 6px; color: #22558d;"></i>&nbsp;<b>Total:</b>&nbsp;<span style="background-color: #22558d;" class="badge">@Model.ListadoFactores.Count</span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type=hidden id='validModal' value='@Html.DisplayTextFor(model => model.ValidarMdDetalleFactor)'>
+    <input type=hidden id='validMsg' value='@Html.DisplayTextFor(model => model.ValidarMsgDetalleFactor)'>
+</div>
+
+@* Modal Detalle Factor / Editar *@
+<div class="modal fade" id="myModal" role="dialog" style="padding:0;">
+    <div class="modal-dialog  modal-lg" style="top: 50%;
+    transform: translateY(-50%) !important;">
+        <div class="modal-content pd-mdl-content">
+            <div class="modal-body">
+
+                @using (Html.BeginForm("ModalDetalleValor", "Factores", FormMethod.Post))
+                {
+                    <div class="panel panel-default">
+
+                        @*Banner Titulo*@
+                        <div class="panel-heading-modal" ALIGN="center">
+                            <label class="title-modal">@Model.Factor</label>
+                        </div>
+
+                        <div class="panel-body">
+
+                            @Html.HiddenFor(model => model.ValorDetalleFactor, new { @Value = Model.ValorDetalleFactor })
+                            @Html.HiddenFor(model => model.IdFactor, new { @Value = Model.IdFactor })
+                            @Html.HiddenFor(model => model.IdTipoFactor, new { @Value = Model.IdTipoFactor })
+                            @Html.HiddenFor(model => model.Factor, new { @Value = Model.Factor })
+                            @Html.HiddenFor(model => model.IdDetalleFactor, new { @Value = Model.IdDetalleFactor })
+
+                            <div class="form-horizontal">
+                                @* Campo Nombre *@
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 ">
+                                        <div class="form-horizontal" style="margin-top: 10px;">
+                                            <div class="form-group">
+                                                <label class="label-modal col-sm-4" for="Nombre">
+                                                    Nombre
+                                                </label>
+                                                <div class="col-sm-7">
+                                                    @Html.EditorFor(model => model.NombreDetalleFactor, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           required = "required",
+                                                           title = "Nombre Detalle Factor",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form ValidacionOnlyletter",
+                                                           placeholder = "",
+                                                           name = "NombreDetalleFactor",
+                                                           id = "txtNombreDetalleFactor"
+
+                                                       }
+                                                   })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* Campo Valor Actual *@
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 ">
+                                        <div class="form-horizontal" style="margin-top: -10px">
+                                            <div class="form-group">
+                                                <label class="label-modal col-sm-4" for="Nombre">Valor Actual</label>
+                                                <div class="col-sm-7">
+                                                    @Html.EditorFor(model => model.ValorDetalleFactorString, new
+                                                    {
+
+                                                        htmlAttributes = new
+                                                        {
+                                                            title = "Valor Detalle Factor",
+                                                            required = "required",
+                                                            type = "text",
+                                                            @class = "form-control ipt-form",
+                                                            placeholder = "Ingrese un valor",
+                                                            name = "ValorDetalleFactor",
+                                                            id = "txtValorActual",
+                                                            oninput = "javascript: if (this.value.length > this.maxLength) this.value =                             this.value.slice(0, this.maxLength);",
+                                                            maxlength = "12"
+                                                        }
+
+                                                    })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* Campo Estado Actual *@
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 ">
+                                        <div class="form-horizontal" style="margin-top: -10px">
+                                            <div class="form-group">
+                                                <abel class="label-modal col-sm-4" for="Nombre">Estado</abel>
+                                                <div class="col-sm-7">
+                                                    @Html.DropDownListFor(model => model.EstadoDetalleFactorID, new SelectList(Model.ListEstadosDetalleFactor,
+                                                       "Value", "Text"),
+                                                        new
+                                                             {
+                                                            @class = "form-control",
+                                                            required = "required",
+                                                            id = "txtEstado"
+                                                        })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.IdTipoFactor != 2)
+                                {
+                                    @* Campo Valor Constante *@
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="Nombre">Valor Constante (C)</label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.ValorDetalleConstanteString, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Valor Detalle Constante",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "ValorDetalleConstante",
+                                                           id = "txValorDetalleConstante"
+
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @* Campo Valor Exponente *@
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="Nombre">Valor Exponente (E)</label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.ValorDetalleExponencialString, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Valor Detalle Exponecial",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "ValorDetalleExponencial",
+                                                           id = "txValorDetalleExponencial",
+
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @*Campo Factor ajuste Y en Factor sector economico*@
+                                @if (Model.IdFactor == 2)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="ValorFactorAjuste">
+                                                        Valor Factor Ajuste ( Y )
+                                                    </label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.ValorFactor_AjusteString, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Valor Detalle Exponecial",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "ValorFactorAjuste",
+                                                           id = "txValorFactorAjuste"
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (Model.IdFactor == 3)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="ValorIndicadorFuga">
+                                                        % Valor indicador fuga
+                                                    </label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.ValorIndicadorFuga, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Valor indicador fuga",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form input-modal-factor porcentaje-ciudad",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "ValorIndicadorFuga",
+                                                           id = "txValorIndicadorFuga"
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="GastosAdministrativos">
+                                                        % Gastos Administrativos
+                                                    </label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.GastosAdministrativos, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Gastos Administrativos",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form input-modal-factor porcentaje-ciudad",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "GastosAdministrativos",
+                                                           id = "txGastosAdministrativos"
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="GastosComerciales">
+                                                        % Gastos Comerciales
+                                                    </label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.GastosComerciales, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Gastos Comerciales",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form input-modal-factor porcentaje-ciudad",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "GastosComerciales",
+                                                           id = "txGastosComerciales"
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="FactorUtilidad">
+                                                        % Factor Utilidad
+                                                    </label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.FactorUtilidad, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Factor Utilidad",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form input-modal-factor porcentaje-ciudad",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "FactorUtilidad",
+                                                           id = "txFactorUtilidad"
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 ">
+                                            <div class="form-horizontal" style="margin-top: -10px">
+                                                <div class="form-group">
+                                                    <label class="label-modal col-sm-4" for="ValorMinimoCotizacion">
+                                                        Valor Mínimo
+                                                    </label>
+                                                    <div class="col-sm-7">
+                                                        @Html.EditorFor(model => model.ValorMinimoCotizacion, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           title = "Valor Mínimo",
+                                                           required = "required",
+                                                           type = "text",
+                                                           @class = "form-control ipt-form input-modal-factor minimo-ciudad",
+                                                           placeholder = "Ingrese un valor",
+                                                           name = "ValorMinimoCotizacion",
+                                                           id = "txValorMinimoCotizacion"
+                                                       }
+                                                   })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button style="width:100%" type="button" class="btn btn-danger1" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button style="width:100%;" id="btnGuardarInfo" onclick="" type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Scripts *@
+<script type="text/javascript">
+    function cargarModal(id, idFactor, nombre, valor, valorConstante, valorExponencial, valorFactorAjuste, estado, valorIndicadorfuga, gastosAdminsitrativos, gastosComerciales, factorUtilidad, valorMinimo) {
+
+        var estadoId = estado == "Activo" ? 1 : 0;
+
+        $("#txtNombreDetalleFactor").val(nombre);
+        $("#txtValorActual").val(valor.replace(".", ","));
+        $("#txValorDetalleConstante").val(valorConstante.replace(".", ","));
+        $("#txValorDetalleExponencial").val(valorExponencial.replace(".", ","));
+        $("#txValorFactorAjuste").val(valorFactorAjuste.replace(".", ","));
+        $("#txtEstado").val(estadoId);
+
+
+        $("#IdFactor").val(idFactor);
+        $("#IdDetalleFactor").val(id);
+
+        if (idFactor == 3) {
+            $("#txValorIndicadorFuga").val(valorIndicadorfuga);
+            $("#txGastosAdministrativos").val(gastosAdminsitrativos);
+            $("#txGastosComerciales").val(gastosComerciales);
+            $("#txFactorUtilidad").val(factorUtilidad);
+            $("#txValorMinimoCotizacion").val(valorMinimo);
+        }
+
+        var options = { "backdrop": "static", keyboard: true };
+        $('#myModal').modal(options);
+        $('#myModal').modal('show');
+
+    }
+
+    $(document).ready(function () {
+        $("#txtValorActual").keyup(function (event) {
+            let currentValue = $(this).val();
+            $(this).val(currentValue.replace(".",","));
+        });
+        $("#txtValorActual").keydown(function (event) {
+
+            // Desactivamos cualquier combinación con shift
+            //if (event.shiftKey)
+            //    event.preventDefault();
+            /*
+                No permite ingresar pulsaciones a menos que sean los siguientes
+                KeyCode Permitidos
+                keycode 8 Retroceso
+                keycode 37 Flecha Derecha
+                keycode 39  Flecha Izquierda
+                keycode 46 Suprimir
+            */
+
+            if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+                return true;
+
+            //No permite mas de 18 caracteres Numéricos
+            if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                if ($(this).val().length >= 18)
+                    event.preventDefault();
+
+            //// Solo Numeros del 0 a 9
+            if (event.keyCode < 48 || event.keyCode > 57 && event.keyCode != 188 && event.keyCode != 9)
+                //Solo Teclado Numerico 0 a 9
+                if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9)
+                    /*
+                        No permite ingresar pulsaciones a menos que sean los siguietes
+                        KeyCode Permitidos
+                        keycode 8 Retroceso
+                        keycode 37 Flecha Derecha
+                        keycode 39  Flecha Izquierda
+                        keycode 46 Suprimir
+                        keycode 44 Coma
+                    */
+                    if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                        event.preventDefault();
+        });
+
+        $("#txValorDetalleConstante").keyup(function (event) {
+            let currentValue = $(this).val();
+            $(this).val(currentValue.replace(".", ","));
+        });
+        $("#txValorDetalleConstante").keydown(function (event) {
+            // Desactivamos cualquier combinación con shift
+            //if (event.shiftKey)
+            //    event.preventDefault();
+
+            /*
+                No permite ingresar pulsaciones a menos que sean los siguientes
+                KeyCode Permitidos
+                keycode 8 Retroceso
+                keycode 37 Flecha Derecha
+                keycode 39  Flecha Izquierda
+                keycode 46 Suprimir
+            */
+            if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+                return true;
+
+            //No permite mas de 18 caracteres Numéricos
+            if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                if ($(this).val().length >= 18)
+                    event.preventDefault();
+
+            // Solo Numeros del 0 a 9
+            if (event.keyCode < 48 || event.keyCode > 57 && event.keyCode != 188 && event.keyCode != 9)
+                //Solo Teclado Numerico 0 a 9
+                if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9)
+                    /*
+                        No permite ingresar pulsaciones a menos que sean los siguietes
+                        KeyCode Permitidos
+                        keycode 8 Retroceso
+                        keycode 37 Flecha Derecha
+                        keycode 39  Flecha Izquierda
+                        keycode 46 Suprimir
+                    */
+                    if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                        event.preventDefault();
+
+        });
+
+        $("#txValorDetalleExponencial").keyup(function (event) {
+            let currentValue = $(this).val();
+            $(this).val(currentValue.replace(".", ","));
+        });
+        $("#txValorDetalleExponencial").keydown(function (event) {
+
+            if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+                return true;
+
+            let currentValue = $(this).val();
+
+            if ((event.keyCode == 109 || event.keyCode == 189) && currentValue.length > 0) {
+                if (currentValue.indexOf("-") != -1)
+                    event.preventDefault();
+                else {
+                    $(this).val("-" + currentValue);
+                    event.preventDefault();
+                }
+            }
+
+            if (![189, 109, 46, 8, 37, 39, 9].includes(event.keyCode))
+                if ($(this).val().length >= 18)
+                    event.preventDefault();
+
+            if (event.keyCode < 48 || event.keyCode > 57 && ![188, 9, 109, 189].includes(event.keyCode))
+
+                if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9) {
+                    /*
+                        No permite ingresar pulsaciones a menos que sean los siguietes
+                        KeyCode Permitidos
+                        keycode 8 Retroceso
+                        keycode 37 Flecha Derecha
+                        keycode 39  Flecha Izquierda
+                        keycode 46 Suprimir
+                    */
+                    if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                        event.preventDefault();
+                }
+
+        });
+
+        $("#txtValorConstanteFactor").keyup(function (event) {
+            let currentValue = $(this).val();
+            $(this).val(currentValue.replace(".", ","));
+        });
+        $("#txtValorConstanteFactor").keydown(function (event) {
+            // Desactivamos cualquier combinación con shift
+            //if (event.shiftKey)
+            //    event.preventDefault();
+
+            /*
+                No permite ingresar pulsaciones a menos que sean los siguientes
+                KeyCode Permitidos
+                keycode 8 Retroceso
+                keycode 37 Flecha Derecha
+                keycode 39  Flecha Izquierda
+                keycode 46 Suprimir
+            */
+            if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+                return true;
+
+            //No permite mas de 18 caracteres Numéricos
+            if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                if ($(this).val().length >= 18)
+                    event.preventDefault();
+
+            // Solo Numeros del 0 a 9
+            if (event.keyCode < 48 || event.keyCode > 57 && event.keyCode != 188 && event.keyCode != 9)
+                //Solo Teclado Numerico 0 a 9
+                if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9)
+                    /*
+                        No permite ingresar pulsaciones a menos que sean los siguietes
+                        KeyCode Permitidos
+                        keycode 8 Retroceso
+                        keycode 37 Flecha Derecha
+                        keycode 39  Flecha Izquierda
+                        keycode 46 Suprimir
+                    */
+                    if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                        event.preventDefault();
+
+        });
+
+        $("#txtValorExponenteFactor").keyup(function (event) {
+            let currentValue = $(this).val();
+            $(this).val(currentValue.replace(".", ","));
+        });
+        $("#txtValorExponenteFactor").keydown(function (event) {
+            // Desactivamos cualquier combinación con shift
+            //if (event.shiftKey)
+            //    event.preventDefault();
+
+            /*
+                No permite ingresar pulsaciones a menos que sean los siguientes
+                KeyCode Permitidos
+                keycode 8 Retroceso
+                keycode 37 Flecha Derecha
+                keycode 39  Flecha Izquierda
+                keycode 46 Suprimir
+                keycode 109 Resta (simbolo)
+            */
+            if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+                return true;
+
+            let currentValue = $(this).val();
+
+            if ((event.keyCode == 109 || event.keyCode == 189) && currentValue.length > 0 && currentValue.indexOf("-") != -1) {
+                event.preventDefault();
+            }
+
+            //No permite mas de 18 caracteres Numéricos
+            if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9 && event.keyCode != 109 && event.keyCode != 189)
+                if ($(this).val().length >= 18)
+                    event.preventDefault();
+
+            // Solo Numeros del 0 a 9
+            if (event.keyCode < 48 || event.keyCode > 57 && event.keyCode != 188 && event.keyCode != 9 && event.keyCode != 109 && event.keyCode != 189)
+                //Solo Teclado Numerico 0 a 9
+                if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9 && event.keyCode != 109)
+                    /*
+                        No permite ingresar pulsaciones a menos que sean los siguietes
+                        KeyCode Permitidos
+                        keycode 8 Retroceso
+                        keycode 37 Flecha Derecha
+                        keycode 39  Flecha Izquierda
+                        keycode 46 Suprimir
+                    */
+                    if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9 && event.keyCode != 109 && event.keyCode != 189)
+                        event.preventDefault();
+
+        });
+
+        $("#txValorFactorAjuste").keyup(function (event) {
+            let currentValue = $(this).val();
+            $(this).val(currentValue.replace(".", ","));
+        });
+        $("#txValorFactorAjuste").keydown(function (event) {
+
+            //// Desactivamos cualquier combinación con shift
+            //if (event.shiftKey)
+            //    event.preventDefault();
+            /*
+                No permite ingresar pulsaciones a menos que sean los siguientes
+                KeyCode Permitidos
+                keycode 8 Retroceso
+                keycode 37 Flecha Derecha
+                keycode 39  Flecha Izquierda
+                keycode 46 Suprimir
+            */
+            if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+                return true;
+
+            //No permite mas de 18 caracteres Numéricos
+            let currentValue = $(this).val();
+
+            if ((event.keyCode == 109 || event.keyCode == 189) && currentValue.length > 0 && currentValue.indexOf("-") != -1) {
+                event.preventDefault();
+            }
+
+            if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9 && event.keyCode != 109 && event.keyCode != 189)
+                if ($(this).val().length >= 18)
+                    event.preventDefault();
+
+            //// Solo Numeros del 0 a 9
+            if (event.keyCode < 48 || event.keyCode > 57 && event.keyCode != 188 && event.keyCode != 9 && event.keyCode != 109 && event.keyCode != 189)
+                //Solo Teclado Numerico 0 a 9
+                if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9 && event.keyCode != 109 && event.keyCode != 189)
+                    /*
+                        No permite ingresar pulsaciones a menos que sean los siguietes
+                        KeyCode Permitidos
+                        keycode 8 Retroceso
+                        keycode 37 Flecha Derecha
+                        keycode 39  Flecha Izquierda
+                        keycode 46 Suprimir
+                        keycode 44 Coma
+                    */
+                    if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 109)
+                        event.preventDefault();
+        });
+        var validModal = $('#validModal').attr("value");
+        var validMsg = $('#validMsg').attr("value");
+
+        //Abrir Modal
+        if (validModal != "False") {
+
+            var options = { "backdrop": "static", keyboard: true };
+            $('#myModal').modal(options);
+            $('#myModal').modal('show');
+
+        }
+
+        //Mostrar Alerta, con el mensaje de modificación de valores.
+        if (parseInt(validMsg) == 1 || parseInt(validMsg) == 2) {
+            motrarAlerta(validMsg);
+        }
+
+        $('table#tblDetalleFactor').DataTable({
+            oLanguage: {
+                sEmptyTable: "No hay datos para mostrar",
+                sInfo: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando 0 a 0 de 0 registros",
+                sInfoFiltered: "(Friltrado desde _MAX_ registros totales)",
+                //  sLengthMenu: "Mostrar _Cotizacion_ registros por pagina",
+                sLoadingRecords: "Cargando...",
+                sProcessing: "Procesando...",
+                sSearch: "Buscar:",
+                sZeroRecords: "No se encontraron registros que coincidan",
+                oPaginate: {
+                    sFirst: "Primera",
+                    sLast: "Ultima",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
+                }
+            },
+            "autoWidth": false,
+            "processing": false,
+            "searching": false,
+            "paging": false,
+            "info": false,
+
+        });
+
+    });
+
+    $(".porcentaje-ciudad").keyup(function (event) {
+        let currentValue = $(this).val();
+        $(this).val(currentValue.replace(".", ","));
+    });
+    $(".porcentaje-ciudad").keydown(function (event) {
+
+        if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+            return true;
+
+        let currentValue = $(this).val();
+
+        if ((event.keyCode == 109 || event.keyCode == 189) && currentValue.length > 0 && currentValue.indexOf("-") != -1) {
+            event.preventDefault();
+        }
+
+        if (![189, 109, 46, 8, 37, 39, 9].includes(event.keyCode))
+            if ($(this).val().replace("-", "").replace(",", "").length >= 5)
+                event.preventDefault();
+
+        if (event.keyCode < 48 || event.keyCode > 57 && ![188, 9, 109, 189].includes(event.keyCode))
+
+            if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9) {
+
+                if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                    event.preventDefault();
+            }
+
+    });
+
+    $("#txValorMinimoCotizacion").keyup(function (event) {
+        let currentValue = $(this).val();
+        $(this).val(currentValue.replace(".", ","));
+    });
+    $("#txValorMinimoCotizacion").keydown(function (event) {
+        // Desactivamos cualquier combinación con shift
+        //if (event.shiftKey)
+        //    event.preventDefault();
+
+        /*
+            No permite ingresar pulsaciones a menos que sean los siguientes
+            KeyCode Permitidos
+            keycode 8 Retroceso
+            keycode 37 Flecha Derecha
+            keycode 39  Flecha Izquierda
+            keycode 46 Suprimir
+        */
+        if ((event.keyCode == 86 || event.keyCode == 67) && (event.ctrlKey === true))
+            return true;
+
+        if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+            if ($(this).val().length >= 16)
+                event.preventDefault();
+        
+        // Solo Numeros del 0 a 9
+        if (event.keyCode < 48 || event.keyCode > 57 && event.keyCode != 188 && event.keyCode != 9)
+            //Solo Teclado Numerico 0 a 9
+            if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 188 && event.keyCode != 9)
+                /*
+                    No permite ingresar pulsaciones a menos que sean los siguietes
+                    KeyCode Permitidos
+                    keycode 8 Retroceso
+                    keycode 37 Flecha Derecha
+                    keycode 39  Flecha Izquierda
+                    keycode 46 Suprimir
+                */
+                if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 9)
+                    event.preventDefault();
+
+    });
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return (key >= 48 && key <= 57)
+    }
+    function motrarAlerta(tipoMsg) {
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-full-width",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        if (tipoMsg == 1) {
+            toastr.success("Se guardó correctamente la información");
+        } else if (tipoMsg == 2) {
+            toastr.error("No se guardó la información");
+        }
+
+    }
+
+</script>

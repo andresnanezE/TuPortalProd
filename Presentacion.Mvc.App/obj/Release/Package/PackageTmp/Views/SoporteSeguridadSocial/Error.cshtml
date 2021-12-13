@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "_Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #content {
+        background: url("../Image/BANNER-ERROR/BANNER ERROR-01.jpg") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    #btn-return {
+        position: absolute;
+        left: 40%;
+        top: 17%;
+        width: 10%;
+    }
+
+    #btn-inicio {
+        position: absolute;
+        left: 52%;
+        top: 17%;
+        width: 10%;
+    }
+</style>
+
+<a>
+    <img id="btn-inicio" src="~/Image/BANNER-ERROR/inicio.jpg" />
+</a>
+<a>
+    <img id="btn-return" src="~/Image/BANNER-ERROR/regresar.jpg" />
+</a>
+@*<button type="button" id="btn-return" class="btn btn-primary" onclick="goBack();"><span class="glyphicon glyphicon-chevron-left"></span>Regresar</button>
+    <button type="button" id="btn-home" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Inicio</button>*@
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

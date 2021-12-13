@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.456" height="187.034" viewBox="0 0 204.456 187.034">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" y1="-0.007" x2="0.5" y2="0.956" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3b3b3b"/>
+      <stop offset="1" stop-color="#202020"/>
+    </linearGradient>
+    <filter id="Trazado_323" x="0" y="0" width="204.456" height="187.034" filterUnits="userSpaceOnUse">
+      <feOffset dx="7" dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feFlood flood-color="#212b3c" flood-opacity="0.451"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-2" x1="0.5" y1="0.005" x2="0.5" y2="0.966" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e8cf44"/>
+      <stop offset="1" stop-color="#dea432"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.5" y1="-0.845" x2="0.5" y2="1.497" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Grupo_137" data-name="Grupo 137" transform="translate(269.448 205.769)">
+    <path id="Trazado_322" data-name="Trazado 322" d="M-238.911-33.7a26.717,26.717,0,0,1-23.377-13.5,26.712,26.712,0,0,1,0-26.991L-197.6-186.235a26.719,26.719,0,0,1,23.377-13.495,26.721,26.721,0,0,1,23.377,13.5l64.691,112.05a26.716,26.716,0,0,1,0,26.991,26.716,26.716,0,0,1-23.375,13.5Z" transform="translate(0 0)" fill="#7f7f7f"/>
+    <g transform="matrix(1, 0, 0, 1, -269.45, -205.77)" filter="url(#Trazado_323)">
+      <path id="Trazado_323-2" data-name="Trazado 323" d="M-238.911-32.739a26.717,26.717,0,0,1-23.377-13.5,26.712,26.712,0,0,1,0-26.991L-197.6-185.278a26.719,26.719,0,0,1,23.377-13.495,26.721,26.721,0,0,1,23.377,13.5l64.691,112.05a26.716,26.716,0,0,1,0,26.991,26.716,26.716,0,0,1-23.375,13.5Z" transform="translate(269.45 206.27)" fill="url(#linear-gradient)"/>
+    </g>
+    <path id="Trazado_324" data-name="Trazado 324" d="M-189.48-182.863-254.172-70.811a11.393,11.393,0,0,0,9.867,17.09H-114.92a11.393,11.393,0,0,0,9.867-17.09l-64.692-112.052A11.394,11.394,0,0,0-189.48-182.863Z" transform="translate(5.393 5.888)" fill="url(#linear-gradient-2)"/>
+    <g id="Grupo_136" data-name="Grupo 136" transform="translate(-183.43 -139.231)">
+      <path id="Trazado_325" data-name="Trazado 325" d="M-211.912-99.813a9.313,9.313,0,0,1,9.254-9.256,9.313,9.313,0,0,1,9.254,9.256,9.313,9.313,0,0,1-9.254,9.254A9.313,9.313,0,0,1-211.912-99.813Zm.487-40.818v-19.483h17.534v19.483l-2.921,24.354H-208.5Z" transform="translate(211.912 160.113)" fill="url(#linear-gradient-3)"/>
+    </g>
+  </g>
+</svg>

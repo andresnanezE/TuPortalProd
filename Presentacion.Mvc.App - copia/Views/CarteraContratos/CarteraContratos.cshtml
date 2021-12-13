@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Consultar cartera contratos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+<br />
+
+<div class="col-md-12">
+
+    @using (Html.BeginForm("CarteraContratos", "CarteraContratos", FormMethod.Post, new { id = "formCartera", enctype = "multipart/form-data" }))
+    {
+
+
+        @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+        @Html.Hidden("nomReporte", "CarteraContratos.xls")
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal">
+                <br />
+
+                @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                                @modelError.ErrorMessage<br />
+                            }
+                        </div>
+                    </div>
+                }
+
+
+                <div class="form-group">
+                    @Html.Label(" Rmt:", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <input type="text" onkeypress="return pulsar(event)" name="rmt_text" id="rmt_text" value="" class="form-control" required="required" />
+                        <label id="msg" class="hidden">Este valor debe ser un valor númerico.</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="button" class="btn btn-primary reporte" id="rmt" value="Descargar informe" />
+
+                        <br /><br />
+                    </div>
+                </div>
+
+
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 alert alert-info" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign "></span> Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de Administración de Ventas.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+
+</div>
+
+<!-- Modal Alert -->
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-msg-alert"></span>
+                <div id="ajax-container"></div>
+            </div>
+            <div class="modal-footer footer-alert">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $("#msg").hide();
+
+        $("#rmt").on("click",function (e) {
+
+            e.preventDefault();
+
+            if (!$.isNumeric($("#rmt_text").val())) {
+                $("#msg").show().css("color", "red");
+
+                return false;
+            }
+
+           // $("#formCartera").submit();
+
+
+        });
+    });
+
+    function pulsar(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        return (tecla != 13);
+    }
+</script>

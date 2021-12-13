@@ -1,0 +1,88 @@
+﻿<div class="form-horizontal" ng-if="(vm.formasPago.length > 0 || vm.iPersonas >1) && vm.template==0">
+    <label for="checkbox">Ver m&aacute;s informaci&oacute;n</label>
+    <input name="checkbox" id="checkbox" type="checkbox" ng-model="vm.checkbox" />
+
+    <div class="row" ng-if="vm.tarifa">
+        <div class="col-md-4">
+            <button class="btn btn-lg btn-primary btn-block active" id="liquidar-btn"
+                    ng-click="vm.template=1" type="button">
+                Liquidar
+            </button>
+        </div>
+        <div class="col-md-8">
+            <button type="button"
+                    class="btn btn-lg btn-default btn-block active">
+                Tu cliente ahorra {{ vm.tarifa.VALOR_AHORRO | currency:'$':0 }} al a&ntilde;o por afiliado
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-radio">
+            <thead>
+                <tr>
+                    <th class="columna-personas">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <object data="{{'../Image/personas/ep' + vm.iPersonas + '.png'}}" type="image/png">
+                                    <img src="../Image/personas/ep4.png" />
+                                </object>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6 personas">
+                                        <button id="iPersonas" type="button" class="btn btn-link">
+                                            {{ vm.iPersonas }}
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 operadores">
+                                        <button type="button" class="btn btn-link"
+                                                ng-click="vm.agregarPersona(true)">
+                                            <img src="../Image/btn-mas.png" />
+                                        </button>
+                                        <button type="button" class="btn btn-link"
+                                                ng-if="vm.iPersonas > 1"
+                                                ng-click="vm.agregarPersona(false)">
+                                            <img src="../Image/btn-menos.png" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                    <th ng-if="vm.msg != '' && vm.formasPago.length == 0">
+                        <h2>{{vm.msg}}</h2>
+                    </th>
+                    <th scope="col" ng-repeat="modalidadPago in vm.modalidadesPago" style="text-align:center">
+                        <object data="../Image/modalidadPago/{{ vm.removeDiacritics(modalidadPago) }}.png" type="image/png">
+                            <img src="../Image/modalidadPago/formapagodefecto.png" />
+                        </object>
+                        {{ modalidadPago }}
+                    </th>
+                </tr>
+            </thead>
+            <tfoot ng-if="vm.formasPago.length>0" class="table-radio">
+                <tr>
+                    <td colspan="{{ vm.modalidadesPago.length + 1 }}">
+                        <p class="center-block text-center">* Tarifas por mes antes de IVA por persona</p>
+                        <p class="center-block text-center">* Aplica &uacute;nicamente para afiliados nuevos a contratos familiares</p>
+                    </td>
+                </tr>
+            </tfoot>
+            <tbody>
+                <tr ng-repeat="formaPago in vm.formasPago">
+                    <th scope="row">{{ formaPago | uppercase}}</th>
+                    <td ng-repeat="modalidaPago in vm.modalidadesPago">
+                        <button data-toggle="tooltip" data-placement="top" class="btn btn-block center-block btn-link"
+                                ng-if="vm.tarifas[formaPago][modalidaPago]"
+                                ng-click="vm.tarifa = vm.tarifas[formaPago][modalidaPago]"
+                                ng-attr-title="{{vm.checkbox ==true?vm.tarifas[formaPago][modalidaPago].VALOR_comision :''}}"
+                                ng-class="{'active':vm.tarifa == vm.tarifas[formaPago][modalidaPago]}">
+                            {{ vm.tarifas[formaPago][modalidaPago].VALOR_TARIFA | currency:'$':0 }}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

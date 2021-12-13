@@ -1,0 +1,628 @@
+﻿@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/MisCotizaciones.css" rel="stylesheet" />
+
+<div id="ov-loading" style="display: none;">
+	<div class="wrap">
+		<div class="loading">
+			<div class="bounceball"></div>
+			<div class="text">Procesando Información</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12 text-center" style="margin:25px 0px;">
+	<label class="title-header">Mis Solicitudes De Cargue</label>
+</div>
+<span>@ViewBag.Id</span>
+
+
+<div class="col-sm-12">
+	<div id="rw-cnt-bsq" class="row pr-">
+		<div id="dv-cnt-bsq" class="col-sm-12 dv-cnt-bsq">
+			<table class="tbl-frm text-left">
+				<tbody>
+					<tr>
+						<td style="width: 30%">
+							<label class="control-label lb-frm-up">Por favor ingrese un dato para realizar la búsqueda:</label>
+							<div class="inner-addon right-addon dv-search">
+							</div>
+						</td>
+						<td style="width: 30%">
+							<label class="control-label lb-frm-up" id="dpk-start"> Fecha:</label>
+							<div id="sandbox-container">
+								<div class="input-daterange input-group" id="dt-pp">
+									<input id="dtIni" type="text" class="form-control" name="start" />
+									<span class="input-group-addon ip-addn">hasta</span>
+									<input id="dtFin" type="text" class="form-control" name="end" />
+								</div>
+							</div>
+						</td>
+						<td style="vertical-align: bottom;">
+							<button id="btn-clean" type="button" class="btn btn-cl-cr" data-bind="click: limpiarFiltros.bind($data)">Limpiar Búsqueda</button>
+						</td>
+						@if (ViewBag.IsAsesor)
+						{
+							<td style="vertical-align: bottom; width:11%;">
+								<button type="button" class="btn btn-nw-cr" data-toggle="modal" data-target="#mdl-upld">Nuevo Cargue</button>
+							</td>
+						}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="col-sm-12">
+	<div class="row pr-">
+		<div id="dv-loading-data" class="col-sm-12">
+			<div style="position: absolute;z-index: 12;color: rgb(255,255,255);width: 100%;height: 360px;top: 0;left: 0;">
+				<div style="position: relative;top: 50%;left: 50%;transform: translate(-50% , -50%);width: 59%;text-align: center;">
+					<label class="sp-loading-data" data-text="Obteniendo solicitudes…">Obteniendo solicitudes…</label>
+				</div>
+			</div>
+		</div>
+		<div id="dv-tb-ctzn" class="col-sm-12" style="display: none; padding: 0">
+			<table id="tb-ctzn" class="table table-hover stripe row-border order-column text-center tb-ctzn">
+				@*nowrap*@
+				<thead>
+					<tr>
+						@if (ViewBag.IsSac)
+						{
+							<th>Gestionar</th>
+						}
+						<th>Historial</th>
+						@if (ViewBag.IsAsesor)
+						{
+							<th>Editar</th>
+						}
+						<th>No. Formulario</th>
+						@*<th>Referencia</th>*@
+						<th class="hdr-ctzn">Asesor</th>
+						<th>Nombre asesor</th>
+						<th>Director</th>
+						<th>Contratante</th>
+						<th>N° Afiliados</th>
+						<th>Tipo Archivo</th>
+						<th>Fecha cargue</th>
+						<th>Fecha último cargue</th>
+						<th>Tipo de contrato</th>
+						<th>Medio de pago</th>
+						<th>Nombre(s) Archivo(s)</th>
+						<th>Link</th>
+						<th>Estado</th>
+						<th>Observaciones</th>
+						@if (ViewBag.IsAsesor)
+						{
+							<th>Causales de rechazo</th>
+						}
+					</tr>
+				</thead>
+				<tbody>
+					<!-- ko foreach: solicitudes -->
+					<tr>
+						@if (ViewBag.IsSac)
+						{
+							<td>
+								<input type="button" class="btn btn-cl-cr"
+									   data-bind="click:$root.gestionarSolicitudSac" value="Gestionar">
+								@*<input type="button" class="btn btn-cl-cr"
+									data-bind="click:$root.gestionarSolicitudSac.bind(),
+										visible: (Estado=='Ingresado' || Estado=='Actualizado')" value="Gestionar">*@
+							</td>
+						}
+						<td>
+							<input type="button" class="btn btn-cl-cr"
+								   data-bind="click:$root.verHistorialSolicitud.bind()" value="Historial">
+						</td>
+						@if (ViewBag.IsAsesor)
+						{
+							<td>
+								<input type="button" class="btn btn-cl-cr"
+									   data-bind="click: $root.gestionarSolicitud.bind(), visible:(Estado == 'Rechazado' ||
+                                       (Estado == 'Ingresado' && moment(FechaUltimoCargue).format('ll') == $root.fechaActual())
+                                       || Estado == 'Actualizado' && moment(FechaUltimoCargue).format('ll') == $root.fechaActual())" value="Editar">
+							</td>
+						}
+						<td data-bind="text: NumeroFormulario"></td>
+						<td data-bind="text: CedulaAsesor"></td>
+						<td data-bind="text: NombreAsesor"></td>
+						<td data-bind="text: Director"></td>
+						<td data-bind="text: CedulaContratante"></td>
+						<td data-bind="text: NumeroAfiliados"></td>
+						<td data-bind="text: TipoArchivo"></td>
+						<td data-bind="text: moment(FechaCargue).format('ll')"></td>
+						<td data-bind="text: moment(FechaUltimoCargue).format('ll')"></td>
+						<td data-bind="text: TipoContrato"></td>
+						<td data-bind="text: MedioPago === null ? 'Sin medio de pago' : MedioPago "></td>
+						<td class="text-left">
+							<!-- ko foreach: Archivos -->
+							<a data-bind="click: $root.getFiles.bind($data, RutaArchivo, NombreOriginal)">
+								<p class="p-tb-up" data-bind="text: '- ' + NombreOriginal"></p>
+							</a>
+							<!-- /ko -->
+						</td>
+						<td>
+							<!-- ko if: Link !== null -->
+							<a target="_blank" data-bind="text: Link, attr: { href: Link }"></a>
+							<!-- /ko -->
+							<!-- ko if: Link == null -->
+							<span>----</span>
+							<!-- /ko -->
+						</td>
+						<td data-bind="text: Estado"></td>
+						<td data-bind="text: Observaciones"></td>
+						@if (ViewBag.IsAsesor)
+						{
+							<td class="text-center">
+								<input type="button" class="btn btn-ver-causales"
+									   data-bind="click:$root.verCausalesSolicitud.bind()" value="Ver">
+							</td>
+						}
+					</tr>
+					<!-- /ko -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+@if (ViewBag.IsAsesor)
+{
+	<div id="mdl-causales-rechazo" class="modal fade" role="dialog" data-backdrop="static">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body mdl-bd-up">
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<h3 class="h-md-up">Causales de rechazo de solicitud</h3>
+							<hr class="hr-up">
+						</div>
+						<div class="col-sm-12 mt-2-up">
+							<form action="">
+								<div class="col-sm-12">
+									<div class="row pr-" style="height:200px; overflow-y:scroll">
+										<table id="tb-ctzn" class="table table-hover nowrap stripe row-border order-column text-left tb-ctzn">
+											<tbody data-bind="html: contentCausales">
+												@*<tr>
+														<td data-bind="text: Motivo"></td>
+													</tr>*@
+											</tbody>
+										</table>
+									</div>
+									<div class="col-sm-12 mdl-ft-up text-right">
+										<button type="button" class="btn btn-default btn-cancel-up" data-dismiss="modal">Cerrar</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="mdl-upld" class="modal fade" role="dialog" data-backdrop="static">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body mdl-bd-up">
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<h3 class="h-md-up">Nuevo cargue</h3>
+							<hr class="hr-up">
+						</div>
+						<div class="col-sm-12 mt-2-up">
+							<form action="" name="registration">
+								<div class="form-group col-sm-6">
+									<label for="noFormulario">1. Número de Formulario *</label>
+									@*<label for="noFormulario">1. Número de Referencia *</label>*@
+									<input type="text" onblur="validateNumber('noFormulario', 'rqr-1', 1);" class="form-control" name="noFormulario" id="noFormulario" data-bind=": noFormulario" placeholder="Ingrese n° formulario">
+									@*<input type="text" class="form-control" name="noFormulario" id="noFormulario" data-bind="value: noFormulario" placeholder="Ingrese n° referencia">*@
+									<span class="text text-danger" data-bind="text: numeroReferenciaRequired"></span>
+									<span id="rqr-1"></span>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="cedAsesor">2. Cédula del asesor *</label>
+									<input type="text" class="form-control" id="cedAsesor" data-bind="value: cedAsesor" placeholder="Ingrese n° cédula asesor" disabled>
+									<br />
+									<br />
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="cedContratante">3. Cédula ó NIT contratante *</label>
+									<input type="text" maxlength="12" onblur="validateNumber('cedContratante', 'rqr-2', 0);" class="form-control" id="cedContratante" data-bind="value: cedContratante" placeholder="Ingrese n° cédula contratante">
+									<span class="text text-danger" data-bind="text: cedRequired"></span>
+									<span id="rqr-2"></span>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="noAfiliados">4. Número de afiliados *</label>
+									<input type="text" class="form-control" onblur="validateNumber('noAfiliados', 'rqr-3', 0);" id="noAfiliados" data-bind="value: noAfiliados" placeholder="Ingrese n° afiliados">
+									<span id="rqr-3"></span>
+									<br />
+								</div>
+								<div class="form-group col-sm-12 no-padl-padr">
+									<div class="form-group col-sm-6">
+										<label for="sl-tipoContrato">5. Tipo de contrato *</label>
+										<select id="sl-tipoContrato" class="form-control" data-bind="event:{ change: changeTipoContrato }">
+											<option value="" selected>Seleccione una opción</option>
+											<option value="fam-nuevo">Familiar Nuevo</option>
+											<option value="fam-inc">Familiar Inclusión</option>
+											<option value="ap-nuevo">AP Nuevo</option>
+											<option value="ap-inc">AP Inclusión</option>
+											<option value="ppe-nuevo">PPE Nuevo</option>
+											<option value="ppe-inc">PPE Inclusión</option>
+										</select>
+									</div>
+									<div id="dv-num-contrato" class="form-group col-sm-6 hidden">
+										<label for="noContrato">6. Número de contrato *</label>
+										<input type="text" maxlength="9" class="form-control" onchange="validateNumber('noContrato', 'rqr-4', 0);" id="noContrato" data-bind="value: noContrato" placeholder="Ingrese n° de contrato">
+										<span class="text text-danger" data-bind="text: numeroContratoRequired"></span>
+										<span id="rqr-4"></span>
+									</div>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="noAfiliados">7. Tipo de archivo *</label>
+									<select id="sl-tipoArchivo" class="form-control" data-bind="event:{ change: changeTipoArchivo }">
+										<option value="" selected>Seleccione una opción</option>
+										<option value="1">Excel</option>
+										<option value="2">Imagen</option>
+									</select>
+								</div>
+								<div id="dv-link" class="form-group col-sm-6 hidden">
+									<label for="link">Link *</label>
+									<input type="text" class="form-control" id="link" data-bind="value: link">
+								</div>
+								<div id="dv-upload" class="form-group col-sm-12 hidden">
+									<label for="noAfiliados">8. Selecciona el archivo *</label>
+									<input data-bind="event:{ change: changeFiles}" id="fileInputIm" type="file" name="postedFiles" accept="image/*" multiple="multiple" />
+									<input data-bind="event:{ change: changeFiles}" id="fileInputEx" type="file" name="postedFiles" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+								</div>
+								<div id="dv-msg" class="col-sm-12 hidden">
+									<p id="tx-upd" class="tx-upd"></p>
+								</div>
+								<div class="col-sm-12 mdl-ft-up text-right">
+									<button id="fileButton" data-bind="click: loadFile.bind($data)" type="button" class="btn btn-default btn-upload">Realizar Cargue</button>
+									<button id="close" type="button" class="btn btn-default btn-cancel-up" data-bind="click: closeModal.bind($data)">Cancelar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="mdl-fnsh" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body mdl-bd-up">
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<h4 class="h-md-up" data-bind="text: titleModal"></h4>
+							<hr class="hr-up">
+						</div>
+						<div class="col-sm-12 mt-2-up-">
+							<span data-bind="text: textModal">
+							</span>
+						</div>
+						<div class="col-sm-12 mdl-ft-up text-right">
+							<button id="close" type="button" class="btn btn-default btn-cancel-up" data-dismiss="modal">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="mdl-fnsh" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body mdl-bd-up">
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<h4 class="h-md-up" data-bind="text: titleModal"></h4>
+							<hr class="hr-up">
+						</div>
+						<div class="col-sm-12 mt-2-up-">
+							<span data-bind="text: textModal"></span>
+						</div>
+						<div class="col-sm-12 mdl-ft-up text-right">
+							<button id="close" type="button" class="btn btn-default btn-cancel-up" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="mdl-gestion-solicitud" class="modal fade" role="dialog" data-backdrop="static">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body mdl-bd-up">
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<h3 class="h-md-up">Gestión de solicitud</h3>
+							<hr class="hr-up">
+						</div>
+						<div class="col-sm-12 mt-2-up">
+							<form action="" name="registration">
+								<div class="form-group col-sm-6">
+									<label for="noFormularioEdit">@*1. Número de Formulario **@</label>
+									<label for="noFormularioEdit">1. Número de Referencia *</label>
+									@*<input type="text" class="form-control" name="noFormularioEdit" id="noFormularioEdit" data-bind="value: noFormularioEdit" placeholder="Ingrese n° formulario">*@
+									<input type="text" class="form-control" name="noFormularioEdit" id="noFormularioEdit" data-bind="value: noFormularioEdit" placeholder="Ingrese n° referencia">
+									<span id="rqr-1"></span>
+									<span class="text text-danger" data-bind="text: numeroReferenciaRequired"></span>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="cedAsesorEdit">2. Cédula del asesor *</label>
+									<input type="text" class="form-control" id="cedAsesorEdit" data-bind="value: cedAsesor" placeholder="Ingrese n° cédula asesor" disabled>
+									<br />
+									<br />
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="cedContratanteEdit">3. Cédula ó NIT contratante *</label>
+									<input type="text" class="form-control" id="cedContratanteEdit" data-bind="value: cedContratanteEdit" placeholder="Ingrese n° cédula contratante">
+									<span class="text text-danger" data-bind="text: cedRequired"></span>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="noAfiliadosEdit">4. Número de afiliados *</label>
+									<input type="text" class="form-control" id="noAfiliadosEdit" data-bind="value: noAfiliadosEdit" placeholder="Ingrese n° afiliados">
+								</div>
+								<div class="form-group col-sm-12 no-padl-padr">
+									<div class="form-group col-sm-6">
+										<label for="sl-tipoContratoEdit">5. Tipo de contrato *</label>
+										<select id="sl-tipoContratoEdit" class="form-control" data-bind="event:{ change: changeTipoContratoEdit }">
+											<option value="" selected>Seleccione una opción</option>
+											<option value="fam-nuevo">Familiar Nuevo</option>
+											<option value="fam-inc">Familiar Inclusión</option>
+											<option value="ap-nuevo">AP Nuevo</option>
+											<option value="ap-inc">AP Inclusión</option>
+											<option value="ppe-nuevo">PPE Nuevo</option>
+											<option value="ppe-inc">PPE Inclusión</option>
+										</select>
+									</div>
+									<div id="dv-num-contrato-edit" class="form-group col-sm-6 hidden">
+										<label for="noContratoEdit">6. Número de contrato *</label>
+										<input type="text" class="form-control" maxlength="9" id="noContratoEdit" data-bind="value: noContratoEdit" placeholder="Ingrese n° de contrato">
+										<span class="text text-danger" data-bind="text: numeroContratoRequired"></span>
+									</div>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="sl-tipoArchivoEdit">7. Tipo de archivo *</label>
+									<select id="sl-tipoArchivoEdit" class="form-control" data-bind="event:{ change: changeTipoArchivoEdit }">
+										<option value="" selected>Seleccione una opción</option>
+										<option value="1">Excel</option>
+										<option value="2">Imagen</option>
+									</select>
+								</div>
+								<div id="dv-linkEdit" class="form-group col-sm-6 hidden">
+									<label for="linkEdit">Link *</label>
+									<input type="text" class="form-control" id="linkEdit" data-bind="value: linkEdit">
+								</div>
+								<div id="dv-uploadEdit" class="form-group col-sm-12 hidden">
+									<label for="noAfiliadosEdit">8. Selecciona el archivo *</label>
+									<input id="fileInputImEdit" type="file" name="postedFiles" accept="image/*" multiple="multiple" />
+									<input id="fileInputExEdit" type="file" name="postedFiles" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+								</div>
+								<div id="dv-msgEdit" class="col-sm-12 hidden">
+									<p id="tx-updEdit" class="tx-upd"></p>
+								</div>
+								<div id="dv-archivosEdit" class="form-group col-sm-12">
+									<!-- ko foreach: archivosPopUp -->
+									<div class="col-sm-12">
+										@*<div class="col-sm-1" style="float:left;background-color:orange">*@
+										<img style="float:left" data-bind="click: $root.deleteFiles.bind()" src="~/Image/delete-icon.png" />
+										@*</div>*@
+										<div class="col-sm-10" style="float:left">
+											<a data-bind="click: $root.getFiles.bind($data, RutaArchivo, NombreOriginal)">
+												<p class="p-tb-up" data-bind="text: '- ' + NombreOriginal"></p>
+											</a>
+										</div>
+									</div>
+									<!-- /ko -->
+								</div>
+								<div class="col-sm-12 mdl-ft-up text-right">
+									<button id="saveButtonEdit" data-bind="click: EditFile.bind($data)" type="button" class="btn btn-default btn-upload">Guardar</button>
+									<button id="closeEdit" type="button" class="btn btn-default btn-cancel-up" data-bind="click: closeModalEdit.bind($data)">Cancelar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+@if (ViewBag.IsSac)
+{
+	<div id="mdl-gestion-solicitud-sac" class="modal fade" role="dialog" data-backdrop="static">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body mdl-bd-up">
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<h3 class="h-md-up">Gestión de solicitud</h3>
+							<hr class="hr-up">
+						</div>
+						<div class="col-sm-12 mt-2-up">
+							<form action="" name="managing">
+								<div class="form-group col-sm-12 no-padl-padr">
+									<div class="form-group col-sm-6">
+										<label for="sl-tipoContratoGestion">Tipo de contrato</label>
+										<select class="form-control" id="sl-tipoContratoGestion"
+												data-bind="event:{ change: changeTipoContratoGestionSac }">
+											<option value="fam-nuevo">Familiar nuevo</option>
+											<option value="fam-inc">Familiar inclusión</option>
+											<option value="ap-nuevo">AP nuevo</option>
+											<option value="ap-inc">AP inclusión</option>
+											<option value="ppe-nuevo">PPE nuevo</option>
+											<option value="ppe-inc">PPE inclusión</option>
+										</select>
+										<span class="text text-danger" data-bind="text: tipoContratoRequired"></span>
+									</div>
+									<div id="dv-num-contrato-gestion" class="form-group  col-sm-6 hidden">
+										<label for="noContratoGestion">Número de contrato *</label>
+										<input type="text" class="form-control" id="noContratoGestion" maxlength="9" data-bind="value: NumeroContratoGestionada" placeholder="Ingrese n° de contrato">
+										<span class="text text-danger" data-bind="text: numeroContratoRequired"></span>
+									</div>
+								</div>
+								<span class="text text-danger" data-bind="text: accionRequired"></span><br />
+								<div class="form-group col-sm-12">
+									<label>Seleccione la acción a realizar:</label>
+								</div>
+								<div class="form-group col-sm-12 no-padl-padr">
+									<div class="form-group col-sm-6">
+										<table>
+											<tr>
+												<td>
+													<input type="radio" name="accion-solicitud" value="radicar"
+														   data-bind="event: { change: changeAccionSac}, checked: accionSeleccionada" />
+												</td>
+												<td>
+													<label style="padding-left:5px">Radicar</label>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div id="dv-medio-pago-gestion" class="form-group col-sm-6 hidden">
+										<b>Medio de pago: *</b><br />
+										<select class="form-control" id="sl-medioPagoGestion" data-bind="value: ClaveMedioPagoGestionada">
+											<option value="">Seleccione una opción</option>
+											<option value="sin-cuota">Sin primera cuota</option>
+											<option value="tc">Cobro TC</option>
+											<option value="pse">PSE</option>
+											<option value="cupon">Cupón de pago</option>
+											<option value="tokenizacion">Tokenización</option>
+										</select>
+										<span class="text text-danger" data-bind="text: medioPagoRequired"></span>
+									</div>
+								</div>
+								<div class="form-group col-sm-12">
+									<table>
+										<tr>
+											<td>
+												<input type="radio" name="accion-solicitud" value="rechazar"
+													   data-bind="event: { change: changeAccionSac}, checked: accionSeleccionada" />
+											</td>
+											<td><label style="padding-left:5px">Rechazar</label></td>
+										</tr>
+									</table>
+								</div>
+
+								<div class="col-sm-12" style="height:200px; overflow:scroll" data-bind="visible: causalesHabilitadas">
+									<div>
+										<table class="table">
+											<tr>
+												<th colspan="2">
+													<label>
+														<span>Seleccione los motivos de rechazo de la solicitud: </span>
+														<span class="text text-danger" data-bind="text: motivosRechazoRequired"></span>
+													</label>
+												</th>
+											</tr>
+											<!-- ko foreach: causales -->
+											<tr>
+												<td data-bind="text: Motivo"></td>
+												<td><input type="checkbox" data-bind="checked: Seleccionado" /></td>
+											</tr>
+											<!-- /ko -->
+										</table>
+									</div>
+								</div>
+								<div data-bind="visible: causalesHabilitadas">
+									<label><span>Observaciones: </span> <span class="text text-danger" data-bind="text: observacionesRequired"></span></label>
+									<textarea rows="4" class="form-control" maxlength="240" data-bind="value: observaciones" placeholder="Ingrese sus observaciones"></textarea>
+								</div>
+								<div class="col-sm-12 mdl-ft-up text-right">
+
+									<button data-bind="click: guardarGestion" type="button" class="btn btn-default btn-upload">Guardar</button>
+									<button id="close" data-bind="click: closeModalGestionSac" type="button" class="btn btn-default btn-cancel-up" data-dismiss="modal">Cancelar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+<div class="modal fade" id="mdl-fnsh-accept" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body mdl-bd-up">
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<h4 class="h-md-up" data-bind="text: titleModal"></h4>
+						<hr class="hr-up">
+					</div>
+					<div class="col-sm-12 mt-2-up-">
+						<span data-bind="text: textModal"></span>
+					</div>
+					<div class="col-sm-12 mdl-ft-up text-right">
+						<button type="button" class="btn btn-default btn-cancel-up" data-dismiss="modal">Aceptar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="mdl-historial-solicitud" class="modal fade" role="dialog" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body mdl-bd-up">
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<h3 class="h-md-up">Historial de estados de solicitud</h3>
+						<hr class="hr-up">
+					</div>
+					<div class="col-sm-12 mt-2-up">
+						<form action="">
+							<div class="col-sm-12">
+								<div class="row pr-" style="height:250px; overflow-y:scroll">
+									<table id="tb-ctzn" class="table table-hover nowrap stripe row-border order-column text-center tb-ctzn">
+										<thead>
+											<tr>
+												<th>Fecha</th>
+												<th class="hdr-ctzn">Estado</th>
+												<th>Causales de rechazo</th>
+												<th>Analista</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- ko foreach: historicosSolicitudSeleccionada -->
+											<tr>
+												<td data-bind="text: moment(Fecha).format('lll')"></td>
+												<td data-bind="text: Estado"></td>
+												<td class="text-justify txt-causales" data-bind="html: CausalesStr"></td>
+												<td data-bind="text: Analista"></td>
+											</tr>
+											<!-- /ko -->
+										</tbody>
+									</table>
+								</div>
+								<div class="col-sm-12 mdl-ft-up text-right">
+									<button type="button" class="btn btn-default btn-cancel-up" data-dismiss="modal">Cerrar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+      var isSac = @Html.Raw(Json.Encode(ViewBag.isSac));
+        var isDirector = @Html.Raw(Json.Encode(ViewBag.IsDirector));
+	</script>
+	<script src="~/Scripts/jquery.validate.js"></script>
+	<script src="~/App/Digitalizacion/indexViewModel.js"></script>
+}

@@ -1,0 +1,24 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Error";
+}
+
+<link href="~/Content/css/error.css" rel="stylesheet" />
+  
+
+
+<script>
+    $('#content').on('click', function () {
+        location = "/Home/";
+    });
+    function goBack() {
+        if ((typeof window.history.back() == 'undefined'))
+            location = "/Home/";
+    }
+    function goHome() {
+        location = "/Home/";
+    }
+
+   
+</script>

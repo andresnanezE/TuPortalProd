@@ -1,0 +1,43 @@
+﻿@using System.Configuration
+@model Guid?
+@{
+    ViewBag.Title = "Noticias";
+}
+
+<section id="main-content" class="container">
+    <div class="col-xs-12 col-sm-11">
+        <h1 class="title-noticias-listado">Noticias</h1>
+        <div id="listView" class="fixed-content"></div>
+        <div id="pager" class="k-pager-wrap"></div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var urlTraerNoticias = '@(Url.Action("TraerNoticias", "Noticias"))';
+        var urlDetalleNoticia = '@(Url.RouteUrl("Noticia"))/'
+        var urlImagenNoticia = '@(ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"] + ConfigurationManager.AppSettings["Imagen.Path.Noticias.Imagen"])';
+    </script>
+    <script id="noticias-template" type="text/x-kendo-template">
+        #
+        var fecha = new Date(FECHA);
+        #
+        <div class="square-cb">
+            <div class="col-xs-12 col-sm-4">
+                <img src="#= urlImagenNoticia + IMAGEN #" alt="" class="img-responsive">
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <div class="row">
+                    <h3>#= TITULO #</h3>
+                    <time>#= kendo.toString(fecha, 'D') #</time>
+                    <hr>
+                    <p>#= DESCRIPCION #</p>
+                    <a href="#= urlDetalleNoticia + TITULOQS #" class="btn btn-type-01" target="_blank">Ver más</a>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    @Scripts.Render("~/bundles/emermedica.noticias")
+}

@@ -1,0 +1,17 @@
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Dominio.Administracion.Entidades.dll.config
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Dominio.Administracion.Entidades.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Dominio.Administracion.Entidades.pdb
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\EntityFramework.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Microsoft.Owin.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Microsoft.Owin.Security.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Owin.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\EntityFramework.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Microsoft.Owin.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\bin\Debug\Microsoft.Owin.Security.xml
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Debug\Dominio.Administracion.Entidades.csproj.AssemblyReference.cache
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Debug\Dominio.Administracion.Entidades.csproj.CoreCompileInputs.cache
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Debug\Dominio.Administracion.Entidades.csproj.CopyComplete
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Debug\Dominio.Administracion.Entidades.dll
+C:\Users\ananez\source\Prod\Dominio.Administracion.Entidades\obj\Debug\Dominio.Administracion.Entidades.pdb

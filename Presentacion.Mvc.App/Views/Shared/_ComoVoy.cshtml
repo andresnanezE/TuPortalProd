@@ -1,0 +1,11 @@
+﻿@model List<Dominio.Administracion.Entidades.MapperDto.ComoVoyDto>
+
+<div class="container">
+    <div class="row">
+        @foreach (var n in @Model)
+        {
+            n.HTML = n.HTML.Replace("@", n.TEXTO);
+        @Html.Raw(n.HTML);
+        }
+    </div>
+</div>

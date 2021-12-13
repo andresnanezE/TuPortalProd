@@ -1,0 +1,16 @@
+﻿@using Presentacion.Mvc.App.Models
+@{
+    ViewBag.Title = "Perimetro Medellin";
+}
+@{ @Html.Hidden("PerimetroUrlMedellin", ConfiguracionesGlobales.PerimetroUrlMedellin) }
+
+
+<h2 id="log" class="col-md-12 ajax-file-upload-green">Abriendo perimetro Medellín... Por favor permitir abrir ventanas emergentes, Gracias</h2>
+
+<script>
+    window.open($("#PerimetroUrlMedellin").val());
+   // window.open('https://www.google.com/maps/d/viewer?mid=zRXBpRh6KJY8.kC8q9h2zC9b0&usp=sharing');
+    var url = '@Url.Action("Index","Home")';
+    window.setTimeout($('#log').empty(), 30000);
+</script>
+

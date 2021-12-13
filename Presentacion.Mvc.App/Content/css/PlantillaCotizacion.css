@@ -1,0 +1,125 @@
+﻿@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/CenturyGothic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'CenturyGothicBold';
+    src: url('../fonts/CenturyGothicBold.ttf') format('truetype'), url('../fonts/CenturyGothic.ttf') format('truetype');
+}
+
+.ff-century {
+    color: rgb(0,0,0);
+    font-size: 11px;
+    font-family: CenturyGothic;
+}
+
+#loading-bar .bar {
+    background-color: rgb(0,47,97) !important;
+    height: 8px !important;
+}
+
+div.col-xs-12:nth-child(1) > img:nth-child(1) {
+    width: 25%;
+}
+
+.bg {
+    background: url('../../Image/z-logo-pdf-em.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    height: 170px;
+}
+
+.bg- {
+    background: url('../../Image/z-logo-pdf-ep.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    height: 112px;
+}
+
+.bg-- {
+    background: url('../../Image/z-logo-pdf-ep-1.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+    height: 112px;
+}
+
+.px-4 {
+    padding: 0 6%;
+}
+
+.ul-prw {
+    list-style-image: url('../../Image/z-ul-ico.png');
+    padding: 0px 20px;
+    margin: 0px;
+}
+
+.ul-prw > li {
+    padding-left: 20px;
+}
+
+.ul-prw- {
+    list-style-image: url('../../Image/z-ul-ico-1.png');
+}
+
+.ul-prw-- {
+    list-style-image: url('../../Image/z-ul-ico.png');
+    padding: 0px 20px;
+    margin: 0px;
+}
+
+.ul-circle {
+    list-style-type: initial !important;
+}
+
+.ul-square {
+    list-style-type: square !important;
+}
+
+.tb-prec{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.tb-prec > thead > tr > th:first-child {
+    border: none;
+}
+
+    .tb-prec > thead > tr > th,
+    .tb-prec > tbody > tr > td {
+        text-align: center;
+        font-weight: bold;
+        /*border: 1px solid rgb(0,0,0);*/
+    }
+
+.fw-bld {
+    font-weight: 900;
+    color: rgb(0,0,0);
+    font-family: CenturyGothicBold;
+}
+
+
+.tx-date {
+    right: 0px;
+    bottom: 35px;
+    margin-right: 2%;
+    color: rgb(0,0,0);
+    font-weight: 900;
+    position: absolute;
+    font-family: CenturyGothicBold;
+}
+
+/*.form-inline {
+    font-size: 12px;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 80%;
+    margin: 10%;
+}
+
+div.col-sm-12:nth-child(3) {
+    top: 40px;
+}*/

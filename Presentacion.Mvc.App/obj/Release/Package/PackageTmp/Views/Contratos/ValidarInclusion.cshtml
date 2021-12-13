@@ -1,0 +1,307 @@
+﻿@model Presentacion.Mvc.App.Models.ValidarInclusionModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<style>
+    .dataTables_scroll {
+        overflow: auto;
+    }
+
+    td {
+        font-size: 10px;
+    }
+</style>
+<form id="validarInclusion-form" action="@Url.Action("ValidarInclusion")" method="POST">
+    <br />
+    <br />
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Validación de Inclusiones</h4>
+            </div>
+            <div class="form-horizontal">
+                <br />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("Buscar Por", new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @*<select id="tipoBusqueda" class="form-control">
+                                <option value="terc">Contratante</option>
+                                <option value="bene">Beneficiario</option>
+                            </select>*@
+                        @Html.DropDownListFor(e => e.TipoConsultaValor, Model.TipoConsulta, new { @class = "form-control", @name = "tipoBusqueda", @id = "tipoBusqueda" })
+                    </div>
+                </div>
+                <div class="form-group hidden" id="cont">
+                    @Html.Label("Contratante", new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.CodTerc, new { @class = "form-control", @type = "text", @min = 1, alt = "" })
+                        @Html.ValidationMessageFor(model => model.CodTerc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group hidden" id="bene">
+                    @Html.Label("Beneficiario", new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.CodBene, new { @class = "form-control", @type = "text", @min = 1, alt = "" })
+                        @Html.ValidationMessageFor(model => model.CodBene, "", new { @class = "text-danger" })
+                        <div class="alert alert-info" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Tip:</span>
+                            Para múltiples beneficiarios, separa los números de documento por comas ","
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input name="buscar-inclusiones" type="submit" value="Buscar" class="btn btn-primary" id="Buscar" />
+                        <a class="btn btn-info" id="Nuevo" href="@Url.Action("ValidarInclusion")"> Nueva Consulta</a>
+                    </div>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Mensaje))
+            {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @Html.DisplayFor(e => e.Mensaje)
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    @if (Model != null && Model.ContratanteList != null && Model.ContratanteList.Any())
+    {
+    <div class="col-md-12">
+        <div class="panel panel-default cont">
+            <div class="panel-heading">
+                <h4 class="text-center">Contratante</h4>
+            </div>
+            <br />
+            <br />
+            <div style="margin-left:20px;">
+                <table id="ListadoContratos" class="table   table-bordered dataTables_scroll" style="width: 95% !important">
+                    <thead style="font-size: .8em;">
+                        <tr>
+                            <th>
+                                Núm. Cont. / Id Cont.
+                            </th>
+                            <th>
+                                No. Identificación
+                            </th>
+                            <th>
+                                Contratante
+                            </th>
+                            <th>
+                                Estado Contrato
+                            </th>
+                            <th>
+                                Vigencia Contrato
+                            </th>
+                            <th>
+                                Cantidad Afiliados
+                            </th>
+                            <th>
+                                Forma de Pago
+                            </th>
+                            <th>
+                                Modalidad de Pago
+                            </th>
+                            <th>
+                                Tarifa
+                            </th>
+
+                            <th>
+                                Estado Cartera
+                            </th>
+                            <th>
+                                Observaciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ContratanteList)
+                            {
+                        <tr>
+                            <td class="text-center">
+                                @*@Html.DisplayFor(modelItem => item.PrefijoCont)-*@
+                                @Html.DisplayFor(modelItem => item.Num_Cont) / @Html.DisplayFor(modelItem => item.Rmt_Cont)
+                            </td>
+                            <td class="text-center">
+                                @item.Cod_Contra.ToString("0")
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Nom_Contra)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Est_Contt)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Vig_Cont)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Nro_Bene)
+                            </td>
+
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Tip_Pago)
+                            </td>
+
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Mod_PagoT)
+                            </td>
+
+                            <td class="text-center">
+                                @*@Html.DisplayFor(modelItem => item.Tar_Cont.ToString("C"))*@
+                                @item.Tar_Cont.ToString("C")
+                            </td>
+
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Con_Morat)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Cal_Terc)
+                            </td>
+                        </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    }
+
+    @if (Model != null && Model.BeneficiarioList != null && Model.BeneficiarioList.Any())
+    {
+    <div class="col-md-12">
+        <div class="panel panel-default bene">
+            <div class="panel-heading">
+                <h4 class="text-center">Beneficiarios</h4>
+            </div>
+            <br />
+            <br />
+            <div style="margin-left:20px;">
+                <table id="ListadoBeneficiarios" class="table   table-bordered dataTables_scroll" style="width: 95% !important">
+                    <thead style="font-size: .8em;">
+                        <tr>
+                            <th>
+                                Núm. Cont. / Id Cont.
+                            </th>
+                            <th>
+                                Estado Contrato
+                            </th>
+                            <th>
+                                No. Identificación
+                            </th>
+                            <th>
+                                Beneficiario
+                            </th>
+                            <th>
+                                Estado Beneficiario
+                            </th>
+                            <th>
+                                Vigencia Contrato
+                            </th>
+                            <th>
+                                Tarifa
+                            </th>
+                            <th>
+                                Estado Cartera
+                            </th>
+                            <th>
+                                Observaciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.BeneficiarioList)
+                            {
+                        <tr>
+                            <td class="text-center">
+                                @*@Html.DisplayFor(modelItem => item.PrefijoCont)-*@
+                                @Html.DisplayFor(modelItem => item.Num_Cont) / @Html.DisplayFor(modelItem => item.Rmt_Cont)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Est_Contt)
+                            </td>
+                            <td class="text-center">
+                                @item.Cod_bene.ToString("0")
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Nom_Comp_Bene)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Est_Benet)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Vig_Cont)
+                            </td>
+                            <td class="text-center">
+                                @*@Html.DisplayFor(modelItem => item.Tar_Bene)*@
+                                @item.Tar_Bene.ToString("C")
+                            </td>
+
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Con_Morat)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Cal_Bene)
+                            </td>
+                        </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    }
+</form>
+<script>
+    $(document).ready(function () {
+        var mostrar = $('#tipoBusqueda option:selected').val()
+        var ocultar = $('#tipoBusqueda option:not(:selected)').val()
+        mostrarDiv(mostrar, ocultar);
+
+        $("#tipoBusqueda").click(function () {
+            var mostrar = $('#tipoBusqueda option:selected').val()
+            var ocultar = $('#tipoBusqueda option:not(:selected)').val()
+            mostrarDiv(mostrar, ocultar);
+        });
+
+        $('#CodTerc, #CodBene').bind('input propertychange', function () {
+            $(this).val($(this).val().replace(/[^0-9],/g, ''));
+        });
+
+        $('#ListadoContratos, #ListadoBeneficiarios').dataTable({
+            oLanguage: {
+                sEmptyTable: "No se encuentran datos para esta búsqueda"
+            },
+            scrollX: false,
+            //sScrollX: "100%",
+            //sScrollXInner: "900px",
+            scrollCollapse: false,
+            bFilter: false,
+            bInfo: false,
+            bPaginate: false
+        });
+
+    });
+
+    function mostrarDiv(idMostrar, idOcultar)
+    {
+        $("#" + idMostrar + " input:first-child").prop('required', true);
+        $("#" + idMostrar + "").addClass("show").removeClass("hidden");
+        $("#" + idOcultar + " input:first-child").prop('required', false);
+        $("#" + idOcultar + " input:first-child").val("");
+        $("#" + idOcultar + "").addClass("hidden").removeClass("show");
+        $("." + idOcultar + "").addClass("hidden").removeClass("show");
+        $("." + idMostrar + "").addClass("show").removeClass("hidden");
+    }
+</script>

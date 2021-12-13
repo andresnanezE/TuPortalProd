@@ -1,0 +1,94 @@
+﻿@model Presentacion.Mvc.App.Models.SesionEnVezDeModel
+@{
+    ViewBag.Title = "Admon. sesion en vez de";
+}
+
+<div class="tab-content">
+    <div>
+        <form id="crearUsuario-form" action="@Url.Action("CrearUsuario")" method="POST" target="_blank">
+            <input type="hidden" name="ExportarFormato" />
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><strong>Crear usuario</strong></h4>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="control-label">Nro. documento</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" id="txtDocumento" class="form-control" />
+                            </div>
+                            <div class="col-md-2">
+                                <label class="control-label">Canal</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="selCanal" class="form-control" required="required">
+                                    <option value="emermedica">emermedica</option>
+                                </select>
+                            </div>
+                        </div>                   
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@*<script>
+        $(document).ready(function () {
+            $("input#informe-asesor").on("click", function () {
+                $("form#Asesor-form input[name=ExportarFormato]").val("Pdf");
+                $("form#Asesor-form input[name=TipoInforme]").val("R");
+                $("form#Asesor-form input[name=CedulaAsesor]").val($(this).attr("data-ccasesor"));
+                $("form#Asesor-form input[name=NombreAsesor]").val($(this).attr("data-nombreasesor"));
+                $("form#Asesor-form input[name=Estatus]").val($(this).attr("data-estatus"));
+                $("form#Asesor-form input[name=AreasProtegidas]").val($(this).attr("data-areasprotegidas"));
+                $("form#Asesor-form input[name=Pmp]").val($(this).attr("data-pmp"));
+                $("form#Asesor-form input[name=Familiar]").val($(this).attr("data-familiar"));
+                $("form#Asesor-form input[name=PerInicio]").val($(this).attr("data-fechainicio"));
+                $("form#Asesor-form input[name=PerFin]").val($(this).attr("data-fechafin"));
+                $("form#Asesor-form input[name=Productividad]").val($(this).attr("data-productividad"));
+                $("form#Asesor-form input[name=Cumplimiento]").val($(this).attr("data-cumplimiento"));
+                $("form#Asesor-form input[name=Metas]").val($(this).attr("data-metas"));
+                $("form#Asesor-form").submit();
+            });
+
+            $("input#resumen-pdf-estatus").on("click", function () {
+                $("form#Estatus-form input[name=ExportarFormato]").val("Pdf");
+                $("form#Estatus-form").submit();
+            });
+
+            $("input#resumen-excel-estatus").on("click", function () {
+                $("form#Estatus-form input[name=ExportarFormato]").val("Excel");
+                $("form#Estatus-form").submit();
+            });
+
+            $("input#resumen-pdf-detallado").on("click", function () {
+                $("form#Detallado-form input[name=ExportarFormato]").val("Pdf");
+                $("form#Detallado-form").submit();
+            });
+
+            $("input#resumen-excel-detallado").on("click", function () {
+                $("form#Detallado-form input[name=ExportarFormato]").val("Excel");
+                $("form#Detallado-form").submit();
+            });
+
+        });
+
+        function pestana(id_pesta) {
+            if (id_pesta == 'resumenTab') {
+                debugger;
+                document.getElementById("resumen").style.display = 'block';
+                document.getElementById("detalle").style.display = 'none';
+            }
+            else {
+                document.getElementById("resumen").style.display = 'none';
+                document.getElementById("detalle").style.display = 'block';
+            }
+        }
+    </script>*@
+
+

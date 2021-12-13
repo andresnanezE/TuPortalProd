@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Cargar comisiones asesor colpatria";
+}
+
+<div class="col-md-12">
+
+    <form id="usuario-form" action="@Url.Action("Index", "CargueComisiones")" method="POST" enctype="multipart/form-data">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal">
+                <br />
+
+                @*@if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <a class="close" data-dismiss="alert">×</a>
+                                @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                                {
+                                    @modelError.ErrorMessage<br />
+                                }
+                            </div>
+                        </div>
+                    }*@
+
+                <div class="form-group">
+                    <span class="control-label col-md-2">Archivo</span>
+                    <div class="col-md-3">
+                        <input type="file" name="Archivos" id="Archivos">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-2">
+                        <button type="button" class="btn btn-primary" id="enviar" onclick="validar()"> <span class="glyphicon glyphicon-ok-sign"></span> Enviar</button>
+                    </div>
+                </div>
+
+                <div class="row" id="_alert">
+                    <div class="col-md-7 col-md-offset-2">
+                        <div class="alert alert-info" role="alert" id="ainfo">
+                            <span class="glyphicon glyphicon-exclamation-sign send" aria-hidden="true"></span>
+                            &nbsp &nbsp &nbsp &nbspEnviando, espera un momento ...
+                        </div>
+                    </div>
+                </div>
+
+
+                <br />
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign "></span> Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de administración de ventas.
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+@Scripts.Render("~/bundles/filer")
+@Scripts.Render("~/bundles/cargacomisiones")
+@Styles.Render("~/Styles/filer")
+
+
+
+

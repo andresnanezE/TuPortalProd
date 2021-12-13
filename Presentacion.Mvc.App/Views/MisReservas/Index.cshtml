@@ -1,0 +1,237 @@
+﻿@{
+    ViewBag.Title = "Mis Cotizaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/MisCotizaciones.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+@*<link href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css" rel="stylesheet" />*@
+
+<div class="col-md-12 text-center" style="margin-top:25px;">
+    <label class="title-header">Ingresa un dato para realizar la búsqueda</label>
+</div>
+
+<div class="col-md-12">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-md-8">
+                <div class="inner-addon right-addon dv-search">
+                    <i class="glyphicon glyphicon-search"></i>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div id="rw-cnt-bsq" class="row pr-">
+        <div id="dv-cnt-bsq" class="col-sm-12 dv-cnt-bsq">
+            <table class="tbl-frm text-left">
+                <tbody>
+                    <tr>
+                        <td style="width: 25%">
+                            <label class="control-label lb-frm" id="dpk-start"> Fecha:</label>
+                            <div id="sandbox-container">
+                                <div class="input-daterange input-group" id="dt-pp">
+                                    <input id="dtIni" type="text" class="form-control" name="start" />
+                                    <span class="input-group-addon ip-addn">hasta</span>
+                                    <input id="dtFin" type="text" class="form-control" name="end" />
+                                </div>
+                            </div>
+                        </td>
+                        <td style="width: 25%">
+                            <label class="control-label lb-frm" id="lbl-producto">Producto:</label>
+                            <select id="productos" class="form-control slc-ct-rs" data-bind="options: Productos, optionsText: 'NombreProducto', optionsValue: 'COD_SERV', value: 'COD_SERV', optionsCaption: 'Seleccionar...', event: { change: obtenerCotizaciones } "></select>
+                        </td>
+                        <td style="width: 25%">
+                            <label class="control-label lb-frm" id="lbl-estado-reserva">Estado De La Reserva:</label>
+                            <select id="estadoReserva" class="form-control slc-ct-rs" data-bind="options: EstadosReserva, optionsText: 'nombreEstado', optionsValue: 'nombreEstado', value: 'nombreEstado', optionsCaption: 'Seleccionar...', event: { change: obtenerCotizaciones }"></select>
+                        </td>
+                        <td style="width: 25%">
+                            <label class="control-label text-center lb-frm" id="lbl-cotizacion">Estado De La Cotización:</label>
+                            <select id="estadoCotizacion" class="form-control slc-ct-rs" data-bind="options: EstadoCotizacion, optionsText: 'Nombre', optionsValue: 'Id', value: 'Id', optionsCaption: 'Seleccionar...', event: { change: obtenerCotizaciones }"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="height: 10px;"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button class="btn btn-clr-fl float-right" data-bind="click: limpiarFiltros.bind($data)">Limpiar filtros</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row pr-">
+        <div id="dv-loading-data" class="col-sm-12">
+            <div style="position: absolute;z-index: 999999999;color: rgb(255,255,255);width: 100%;height: 360px;top: 0;left: 0;">
+                <div style="position: relative;top: 50%;left: 50%;transform: translate(-50% , -50%);width: 59%;text-align: center;">
+                    <label class="sp-loading-data" data-text="Obteniendo reservas…">Obteniendo reservas…</label>
+                </div>
+            </div>
+        </div>
+        <div id="dv-tb-ctzn" class="col-sm-12" style="display: none; padding: 0;">
+            <table id="tb-ctzn" class="table table-hover nowrap stripe row-border order-column text-center tb-ctzn">
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            RESERVA
+                        </th>
+                        <th class="hdr-ctzn" colspan="3">
+                            COTIZACIÓN
+                        </th>
+                        <th colspan="6"></th>
+                    </tr>
+                    <tr>
+                        <th>Gestionar</th>
+                        <th>Estado Reserva</th>
+                        <th>Fecha Expiración</th>
+                        <th class="hdr-ctzn"></th>
+                        <th class="hdr-ctzn">Cotizar/Consultar</th>
+                        <th class="hdr-ctzn br-rg-">Estado</th>
+                        <th>N° Reserva</th>
+                        <th>Nit</th>
+                        <th>Razón Social</th>
+                        <th>Director</th>
+                        <th>Asesor</th>
+                        <th>Producto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ko foreach: misCotizaciones -->
+                    <tr>
+                        <td>
+                            <!-- ko if: Estado !== "Vencida" &&  Estado !== "Anulada"-->
+                                <!-- ko if: ValidarVencida -->
+                                <a class="btn btn-rnvr-alt" data-bind="attr: { href: '/GestionarReserva/Index?cotID=' + IdCotizacion }">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                </a>
+                                <!-- /ko -->
+                                <!-- ko ifnot: ValidarVencida -->
+                                <a class="btn btn-rnvr" data-bind="attr: { href: '/GestionarReserva/Index?cotID=' + IdCotizacion }">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                </a>
+                                <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- ko ifnot: Estado !== "Vencida" && Estado !== "Anulada" -->
+                            <a class="btn btn-rnvr-alt">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </a>
+                            <!-- /ko -->
+                        </td>
+                        <td data-bind="text: Estado"></td>
+                        <td data-bind="text: moment(FechaVencimiento).format('ll')"></td>
+                        <td>
+                            <!-- ko if: EstadoCotizacion === "Cotizado" || EstadoCotizacion === "Reconsiderado" -->
+                            <img class="crs-pnt" src="../../Image/pdf-file-format-symbol.svg" data-bind="click: indexVM.visualizarPDF.bind($data, IdCotizacion)">
+                            <!-- /ko -->
+                        </td>
+                        <td>
+                            <!-- ko if: Estado !== "Vencida" && Estado !== "Anulada" -->
+                                <!-- ko if: EstadoCotizacion === "Sin Cotizar" -->
+                                    <a class="btn" data-bind="css: ValidarVencida === true ? 'btn-ctzr-alt' : 'btn-ctzr', click: indexVM.cotizarAhora.bind($data, IdCotizacion) ">
+                                        Cotizar Ahora
+                                    </a>
+                                <!-- /ko -->
+                                <!-- ko if: EstadoCotizacion === "Cotizado" || EstadoCotizacion === "Pendiente Reconsideración" || EstadoCotizacion === "No Reconsiderado" || EstadoCotizacion === "Reconsiderado" -->
+                                    <!-- ko if: ValidarVencida -->
+                                    <button class="btn btn-ctzr-alt" data-bind="text: EstadoCotizacion === 'Pendiente Reconsideración' ? 'En Reconsideración' : EstadoCotizacion "></button>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: ValidarVencida -->
+                                    <button class="btn btn-rcsd" data-bind="text: EstadoCotizacion === 'Pendiente Reconsideración' ? 'En Reconsideración' : EstadoCotizacion "></button>
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- ko ifnot: Estado !== "Vencida" && Estado !== "Anulada" -->
+                                <a class="btn btn-ctzr-alt" data-bind="text: Estado === 'Vencida' ? Estado : 'Anulada' "></a>
+                            <!-- /ko -->
+                        </td>
+                        <td class="br-rg-" data-bind="text: EstadoCotizacion"></td>
+                        <td class="bld td-ctzn" data-bind="text: IdCotizacion"></td>
+                        <td class="td-nit" data-bind="text: Nit"></td>
+                        <td data-bind="text: NombreEmpresa"></td>
+                        <td data-bind="text: NombreDirector"></td>
+                        <td data-bind="text: NombreAsesor"></td>
+                        <td data-bind="text: Producto"></td>
+                    </tr>
+                    <!-- /ko -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdl-reservas" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <span class="sp-tt-mdl">
+                            ¡Reservas próximas a vencer!
+                        </span>
+                    </div>
+                    <div class="col-md-12">
+                        <img class="img-responsive center-block i-mdl" src="~/Image/Artboard 4@300x.png">
+                    </div>
+                    <div class="col-md-12 text-center dv-sb-mdl">
+                        <span class="sp-sb-mdl">
+                            Tiene&nbsp;
+                            <span data-bind="text: queryData().length"></span>&nbsp;
+                            reservas próximas a vencer:
+                        </span>
+                    </div>
+                    <div class="col-sm-12">
+                         <div class="row">
+                             <div class="col-sm-12 ctn-data-vnc">
+                                 <!-- ko foreach: queryData -->
+                                 <table class="table table-striped mr-mdl-0" border="0">
+                                     <tbody>
+                                         <tr>
+                                             <td class="td-mdl-">
+                                                 Fecha de vencimiento:
+                                             </td>
+                                             <td class="td-mdl--" data-bind="text: moment(FechaVencimiento).format('L')"></td>
+                                         </tr>
+                                         <tr>
+                                             <td colspan="2" data-bind="text: Alerta"></td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                                 <hr class="hr-mdl" />
+                                 <!-- /ko -->
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer pd-mdl-0">
+                <button type="button" class="btn btn-success btn-block btn-mdl" data-dismiss="modal">ACEPTAR</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @*<script type="text/javascript" src="~/js/kendo.all.min.js"></script>
+        <script type="text/javascript" src="~/js/angular.min.js"></script>
+        <script type="text/javascript" src="~/Content/ui-grid.min.js"></script>
+        <script type="text/javascript" src="~/js/ui-grid.core.min.js"></script>
+        <script type="text/javascript" src="~/js/ui-grid.pagination.min.js"></script>
+        <script type="text/javascript" src="~/js/ui-grid.language.all.js"></script>
+        <script type="text/javascript" src="~/js/loading-bar.min.js"></script>
+        <script type="text/javascript" src="~/js/MisCotizaciones/misReservas.js"></script>*@
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    @*<script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>*@
+    <script src="~/App/MisReservas/indexViewModel.js"></script>
+}

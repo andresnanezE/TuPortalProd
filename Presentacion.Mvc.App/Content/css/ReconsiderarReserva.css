@@ -1,0 +1,549 @@
+﻿/*#region --MODAL-- */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#m-cotizacion .modal-dialog .modal-content {
+    width: 70%;
+    border-radius: 0;
+}
+
+#m-title-2,
+#m-title {
+    font-size: 1.56rem;
+    font-weight: 700;
+    color: rgb(40,84,131);
+}
+
+#m-title-2 {
+    margin-top: 20px;
+}
+
+#m-message {
+    font-size: 2.4rem;
+    color: rgb(40,84,131);
+}
+
+.m-message {
+    font-size: 2.4rem;
+    color: rgb(40,84,131);
+}
+
+#m-img {
+    margin-bottom: 40px;
+}
+
+/*.modal-content {
+    height: 458px;
+}*/
+
+div.modal-dialog:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) {
+    top: 50px;
+}
+
+/*#endregion */
+/*#region --BTN-- */
+.btn-m-aceptar {
+    font-size: 1.56rem !important;
+    font-weight: bold !important;
+    background-color: rgb(52,195,139);
+    color: rgb(255,255,255) !important;
+    width: 40%;
+    font-family: Arial;
+}
+
+.btn-m-cancelar {
+    font-size: 1.56rem !important;
+    font-weight: bold !important;
+    background-color: rgb(40,69,101);
+    color: rgb(255,255,255) !important;
+    right: 6px;
+    width: 40%;
+    font-family: Arial;
+}
+
+.modal-body {
+    padding: 0px;
+}
+
+div.modal-dialog:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) {
+    top: 35px;
+}
+
+/*#endregion */
+
+
+/*tabla Sedes*/
+/*#body-reconsideracion {
+    padding-top: 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+}*/
+
+.rw-top {
+    margin-top: 0px;
+    padding-top: 34px;
+    margin-left: 0px;
+    margin-right: -0px;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3em;
+    font-weight: bold !important;
+}
+/*#frm-body {
+    background: url(../../Image/Alarmas/CotizarReserva/Screenshot_6.png);
+}*/
+
+.info-reserva {
+    background: url('../../Image/Alarmas/CotizarReserva/Artboard 5@300x@2x.png');
+    color: white;
+    font-size: 1.2rem;
+    margin-right: -20px;
+    margin-left: -20px;
+}
+.tabla-sedes {
+    background-color: transparent !important;
+}
+
+.tabla-sedes > thead {
+    background-color: #34c38b;
+    color: #FFFFFF;
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.tabla-sedes > tbody, tfoot {
+    color: #226db4;
+    font-size: 13px;
+    font-family: Arial;
+    padding: 8px;
+}
+
+
+/*tabla Sedes*/
+/*Area notas*/
+
+.div-notas {
+    color: #226db4;
+    font-size: 13px;
+    font-family: Arial;
+}
+    .lbl-fecha {
+        color: #1D3959;
+        font-size: 14px;
+    }
+    .lbl-nota {
+        font-size: 14px;
+    }
+
+.div-nota {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.tx-a-nota {
+    padding-left: 41px;
+    padding-right: 54px;
+    border-radius: 50px;
+    box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208);
+    overflow-y: hidden;
+}
+
+.frm-nota{
+    margin-top:10px;
+    margin-bottom :10px;
+}
+
+.btn-lbr {
+    background-color: rgb(239,173,77);
+    color: rgb(255,255,255);
+    /*font-family: Arial;
+    font-weight: bold;*/
+}
+
+.btn-rnr {
+    width: 70%;
+    font-family: Arial;
+    font-weight: bold;
+    color: #fff;
+    background-color: #34C38B;
+}
+
+.btn-cancel {
+    width: 70%;
+    background-color: rgb(40,69,101);
+    color: rgb(255,255,255);
+}
+
+.cnt-gst {
+    margin-top: 3%;
+    padding: 0% 2%;
+}
+
+/*.rw-gst {
+    font-size: 15.5px;
+    padding: 4px 0%;
+    color: rgb(255,255,255);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: rgb(24,59,99);
+}*/
+
+/*.lb-nm {
+    margin: 0px;
+}*/
+
+.tb-info-gst {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    border-collapse: collapse;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+    .tb-info-gst > thead > tr {
+        font-size: 15.5px;
+        font-weight: bold;
+        color: rgb(255,255,255);
+        background-color: rgb(24,59,99);
+    }
+
+        .tb-info-gst > thead > tr > td {
+            padding: 2px 0%;
+        }
+
+    .tb-info-gst > tbody > tr {
+        border-bottom: 1px solid rgb(174, 174, 174);
+    }
+
+    .tb-info-gst > tbody > tr:nth-child(2n+1) {
+        height: 26px;
+        font-weight: bold;
+        background-color: rgb(217,217,217);
+    }
+
+    .tb-info-gst > tbody > tr:nth-child(2n+2) {
+        height: 26px;
+        background-color: rgb(255,255,255);
+    }
+
+    .tb-info-gst > tbody > tr:last-child {
+        border: none !important;
+        color: rgb(255,255,255);
+        background-color: rgb(24,59,99);
+    }
+
+.tb-tt-sz-gst {
+    font-size: 14px;
+    padding-right: 15px;
+}
+
+/*Area notas*/
+
+/*#region COTIZAR RESERVA */
+
+.tb-info-ct-rs {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    border-collapse: collapse;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+    .tb-info-ct-rs > thead > tr {
+        font-size: 15.5px;
+        font-weight: bold;
+        color: rgb(255,255,255);
+        background-color: rgb(24,59,99);
+    }
+
+        .tb-info-ct-rs > thead > tr > td {
+            padding: 2px 0%;
+        }
+
+    .tb-info-ct-rs > tbody > tr {
+        border-bottom: 1px solid rgb(174, 174, 174);
+    }
+
+        .tb-info-ct-rs > tbody > tr:nth-child(2n+1) {
+            height: 26px;
+            font-weight: bold;
+            background-color: rgb(217,217,217);
+        }
+
+        .tb-info-ct-rs > tbody > tr:nth-child(2n+2) {
+            height: 26px;
+            background-color: rgb(255,255,255);
+        }
+
+.rw-ct-rs {
+    margin-top: 2%;
+    background-color: rgb(34,85,141);
+    color: rgb(255,255,255);
+    padding: 11px 0;
+    border-radius: 7px;
+}
+
+.btn-add {
+    font-weight: bold;
+    color: rgb(255,255,255);
+    background-color: rgb(34,85,141);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+    .btn:hover, .btn:focus {
+        color: rgb(255,255,255) !important;
+    }
+
+.btn-cancel-ct-rs {
+    border: none;
+    font-weight: bold;
+    color: rgb(255,255,255);
+    background-color: rgb(24,59,98);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn-cancel-ct-rs- {
+    border: none;
+    font-weight: bold;
+    color: rgb(255,255,255);
+    background-color: rgb(52,195,139);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.slc-ct-rs {
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -webkit-appearance: caret;
+    -moz-appearance: button-arrow-down;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    border: 0 !important;
+    background: rgb(255,255,255);
+    background-image: none;
+    box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+}
+
+.slc-ct-rs, option {
+    color: #22558D;
+}
+
+.tb-frm-ct-rs {
+    width: 95%;
+    margin: 0 auto;
+}
+
+    .tb-frm-ct-rs > thead > tr {
+        font-size: 15px;
+        font-weight: bold;
+        color: rgb(0,0,0);
+        background-color: rgb(217,217,217);
+    }
+
+    .tb-frm-ct-rs > thead > tr > td {
+        padding-left: 15px;
+    }
+
+.tb-frm-ct-rs > tbody > tr {
+    height: 43px;
+}
+
+.tb-frm-ct-rs > tbody > tr > td {
+    padding-right: 10px;
+}
+
+    .tb-frm-ct-rs > tbody > tr > td:last-child {
+        padding-right: 0px;
+    }
+
+.btn-dlt-frm-ct-rs {
+    border: none;
+    border-radius: 10px;
+    color: rgb(255,255,255);
+    background-color: rgb(24,59,98);
+    font-family: Arial, Helvetica, sans-serif;
+}
+/*#endregion COTIZAR RESERVA*/
+
+/*#region NEW*/
+
+.tb-info-cr {
+    width: 100%;
+    line-height: 26px;
+}
+
+    .tb-info-cr > tbody > tr:first-child {
+        color: rgb(255,255,255);
+        background-color: rgb(24, 59, 99);
+    }
+
+.tb-info-cr- > tbody > tr:first-child {
+    background-color: rgb(249,249,249);
+    border-top: 1px solid rgb(221,221,221);
+    border-bottom: 1px solid rgb(221,221,221);
+}
+
+.tb-info-cr > tbody > tr {
+    border-bottom: 1px solid rgb(221,221,221);
+}
+
+    .tb-info-cr > tbody > tr:last-child {
+        border-bottom: none;
+    }
+
+.mr-mdl-0 {
+    margin: 0;
+    
+}
+
+/*.mdl-cnt-ctzn {
+    background-color: none !important;
+    width: auto !important;
+    border: none !important;
+}*/
+
+.hr-mdl {
+    border: 0;
+    height: 2px;
+    margin: 1% 0;
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+}
+
+.hr-mdl- {
+    border: 0;
+    height: 2px;
+    margin: 0;
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #183B63, #f0f0f0);
+}
+
+.sp-tt-mdl {
+    color: rgb(34,85,141);
+    font-size: 2.2rem;
+    font-family: Arial;
+}
+
+.tb-info-cr- {
+    width: 100%;
+}
+
+.mb-mdl-5 {
+    margin-bottom: 5%;
+}
+
+.pd-mdl-0 {
+    padding-bottom: 0;
+}
+
+.dv-sb-mdl {
+    margin: 2% 0 3% 0%;
+}
+
+.sp-sb-mdl {
+    color: rgb(34,85,141);
+    font-size: 1.6rem;
+    font-family: Arial;
+    font-weight: bold;
+}
+
+.mdl-dlg-ctzn {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%) !important;
+}
+
+.rw-mdl-ctzn {
+    margin: 16px 0 0px 0px;
+    border-top: 1px solid rgb(24,59,99)
+}
+
+.dv-ov-ctzn {
+    max-height: 260px;
+    overflow-y: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.cl-tt-mdl-ctzn {
+    color: rgb(28,62,101);
+}
+
+.btn-ctzn- {
+    border: none;
+    color: rgb(255,255,255);
+    background-color: rgb(40,69,101);
+}
+
+    .btn-ctzn-:hover {
+        color: rgb(255,255,255);
+    }
+
+/*#endregion NEW*/
+
+
+.tableWrap {
+    min-height: 90px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.tb-sd > thead > tr > th {
+    top: 0;
+    position: sticky;
+}
+
+.tb-sd > tbody > tr {
+    text-align: center;
+}
+
+.tb-sd {
+    margin-bottom: 0px !important;
+    border-collapse: collapse;
+}
+
+    .tb-sd > thead > tr > th {
+        padding: 3px 6px;
+        text-align: center;
+        background-color: rgb(34,85,141);
+        color: rgb(255,255,255);
+        line-height: 15px;
+    }
+
+
+.tb-nt > thead > tr:first-child {
+    font-weight: bold;
+    color: rgb(255,255,255);
+    background-color: rgb(24,59,99);
+}
+
+.tb-nt > thead > tr:last-child {
+    color: rgb(255,255,255);
+    background-color: rgb(34,85,141); 
+}
+
+.tb-nt > thead > tr > th {
+    border: none !important;
+}
+
+.tb-nt > thead > tr:last-child  th,
+.tb-nt > tbody > tr > td {
+    text-align: center;
+}
+
+.bt-w{
+    width: 70% !important;
+}
+
+.bt-rchz-rcd {
+    color: rgb(255,255,255);
+    background-color: rgb(193, 0, 17);
+}

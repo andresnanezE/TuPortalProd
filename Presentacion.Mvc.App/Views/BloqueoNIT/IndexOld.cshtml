@@ -1,0 +1,371 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Registrar NIT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/OpenMod.js"></script>
+<script>
+    function openMod(postbck, messa) {
+        //var TeamDetailPostBackURL = '../Mensaje/Emergente/';
+        var TeamDetailPostBackURL = '@Url.Action("Emergente", "Mensaje")';
+
+        var id = messa;
+
+
+        var options = { "backdrop": "static", keyboard: true };
+        //alert(TeamDetailPostBackURL);
+        $.ajax({
+            type: "POST",
+            url: TeamDetailPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify( { "title": "Restricciones vigentes", "mess": id }),
+            datatype: "json",
+            success: function (data) {
+                debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            //error: function (ex) {
+            //    alert("Error.", ex.);
+
+            //}
+            error: function (xhr, error) {
+                console.debug(xhr); console.debug(error);
+                alert('Error.' + error);
+
+            }
+        });
+    }
+
+</script>
+<div class="col-md-12">
+    <div class="panel panel-default" style="width: 100%">
+        <div class="panel-heading" ALIGN="center">
+            <h3>Reservar NIT</h3>
+        </div>
+    </div>
+    @*NIT*@
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7 col-md-offset-3">
+                    <form id="form-busquedaNit" action="@Url.Action(" ConsultarNIT")" method="post">
+                        @Html.Label("NIT", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-6" input type="number">
+                            @Html.EditorFor(model => model.NIT, new
+                            {
+                            htmlAttributes = new
+                            {
+                            @type = "text",
+                            @class = "form-control ValidacionOnlyNumber",
+                            placeholder = "NIT",
+                            required = "required"
+                            }
+                            })
+                            @Html.ValidationMessageFor(model => model.NIT, "", new { @class = "text-danger" })
+                        </div>
+                        @*@DV*@
+                        <div class="form-group col-md-5 col-md-offset-5" style='width:120px; height:25px; text-align: center;' disabled>
+                            @Html.Label("DV", htmlAttributes: new { @class = "control-label col-md-3" })
+                            @Html.DisplayFor(model => model.DV, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                            @Html.ValidationMessageFor(model => model.DV, "", new { @class = "text-danger" })
+                        </div>
+
+                        <button class="btn btn-lg btn-primary col-md-5 col-md-offset-5" style='width:135px; height:50px' id="myBtn">Consultar NIT</button>
+                        <input type=hidden id='mesNot' value='@Html.DisplayTextFor(model => model.mensaje)'>
+                        <div id="myModal" class="modal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div id="myModalContent"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    @*<a href="@Url.Action(" ConsultarNIT","BloqueoNIT",new { NITi=Model.NIT})">Consultar NIT</a>*@
+                </div>
+            </div>
+        </div>
+
+        <form id="form-RegistroNit" action="@Url.Action(" Index")" method="post">
+            @Html.HiddenFor(model => model.NIT)
+            @Html.HiddenFor(model => model.DV)
+            @Html.HiddenFor(model => model.ciudad)
+            @Html.HiddenFor(model => model.canal)
+
+            @*Nombre*@
+            <div class="form-group">
+                @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.nombreEmpresa, new
+                    {
+                    htmlAttributes = new
+                    {
+                    @class = "form-control ValidacionOnlyletter",
+                    placeholder = "Nombre del cliente",
+                    required = "required"
+                    }
+                    })
+                    @Html.ValidationMessageFor(model => model.nombreEmpresa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Contacto*@
+            <div class="form-group">
+                @Html.Label("Contacto", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Contacto, new
+                    {
+                    htmlAttributes = new
+                    {
+                    @class = "form-control ValidacionOnlyletter",
+                    placeholder = "Contacto del cliente",
+                    required = "required"
+                    }
+                    })
+                    @Html.ValidationMessageFor(model => model.Contacto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Telefono*@
+            <div class="form-group">
+                @Html.Label("Teléfono", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.telefono, new
+                    {
+                    htmlAttributes = new
+                    {
+                    @type = "number",
+                    @class = "form-control",
+                    placeholder = "Número de Contacto del cliente",
+                    required = "required"
+
+                    }
+                    })
+                    @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Celular*@
+            <div class="form-group">
+                @Html.Label("Teléfono celular", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.celular, new
+                    {
+                    htmlAttributes = new
+                    {
+                    @type = "number",
+                    @class = "form-control",
+                    placeholder = "Número de Contacto del cliente",
+                    required = "required"
+                    }
+                    })
+                    @Html.ValidationMessageFor(model => model.celular, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Cargo*@
+            <div class="form-group">
+                @Html.Label("Cargo", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Cargo, new
+                    {
+                    htmlAttributes = new
+                    {
+                    @class = "form-control ValidacionOnlyletter",
+                    placeholder = "Cargo del cliente",
+                    required = "required"
+                    }
+                    })
+                    @Html.ValidationMessageFor(model => model.Cargo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Correo electronico*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.correoElectronico, htmlAttributes: new { @type = "email", @class = "control-label col-md-3 " })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.correoElectronico, new
+                    {
+                    htmlAttributes = new
+                    {
+                    @class = "form-control",
+                    placeholder = "Correo electrónico",
+                    required = "required"
+                    }
+                    })
+                    @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*Productos para Ofrecer*@
+            <div class="form-group">
+                @Html.Label("Productos", new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @if (Model != null && Model.productos != null)
+                    {
+                    @*@Html.CheckBoxListFor(x => x.productosIds,
+                    x => x.productos,
+                    x => x.COD_SERV,
+                    x => x.NombreProducto,
+                    x => x.seleccionado)*@
+                    foreach (var item in Model.productos)
+                    {
+                    @Html.RadioButtonFor(m => m.productosIds, item.COD_SERV, new { @class = "productosIds" })
+                    @Html.Label(item.NombreProducto)
+                    <br />
+                    }
+
+                    @Html.ValidationMessageFor(model => model.productos, "", new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+
+
+            @*@Ciudad*@
+            <div class="form-group ">
+                @Html.Label("Ciudad", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.ciudad, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.ciudad, "", new { @class = "text-danger" })
+            </div>
+
+            @*@Canal*@
+            <div class="form-group">
+
+                @Html.Label("Canal", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.canal, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.canal, "", new { @class = "text-danger" })
+
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(ViewBag.Mensaje))
+            {
+            <div class="alert alert-success">
+                <p align="center"><strong><font size="6">@ViewBag.Mensaje</font></strong></p>
+            </div>
+            }
+            <div class="form-group" ALIGN=RIGHT>
+                <div class="row col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group fa fa-align-left" style='width:70px; height:25px'>
+                            <button class="btn btn-lg btn-primary col-md-6 col-md-offset-10" style='width:135px; height:50px'>Reservar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="form-group" ALIGN=RIGHT>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group fa fa-align-left" style='width:70px; height:25px'>
+                        <button type="button" class="btn btn-lg btn-primary col-md-6 col-md-offset-10" id="myButton" style='width:135px; height:50px' onclick="location.href='@Url.Action(" MisCotizaciones","BloqueoNit")'">Mis Reservas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+            var mess = $('#mesNot').attr("value");
+            //alert(mess);
+            if (mess) {
+                openMod('/Mensaje/Emergente/', mess);
+            }
+
+            $("#celular").keypress(function (event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                }
+                if (!/^([0-9])*$/.test(event.key))
+                    e.preventDefault();
+
+
+                //$("#celular").val(validateNum($("#celular").val()));
+            });
+
+
+            $("#telefono").keypress(function (event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                }
+                if (!/^([0-9])*$/.test(event.key))
+                    e.preventDefault();
+                //$("#telefono").val(validateNum($("#telefono").val()));
+            });
+        });
+        function validateNum(evt) {
+            evt = evt.replace("-", "");
+            evt = evt.replace("e", "");
+            evt = evt.replace("E", "");
+            alert(evt);
+            return evt;
+        }
+        $('#numeroEventos').qtip({
+            content: 'Aquí debes ingresar el número de eventos a cubrir del cliente.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('#numeroSedes').qtip({
+            content: 'Aquí debes ingresar el número de sedes del cliente a cubrir.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('#numeroCapacitaciones').qtip({
+            content: 'Aquí debes ingresar el número de capacitaciones del cliente a cubrir.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('#NumeroExpuestos').qtip({
+            content: 'Aquí debes ingresar el numero de personas a cubrir (personas fijas y flotantes) dentro de las sedes del cliente.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('#MotivoVisita').qtip({
+            content: 'Aquí debes ingresar información relevante para el pricing y que se debe tener en cuenta al momento de realizar la cotización.',
+            style: { classes: 'qtip-tipsy qtip-shadow' },
+            position: {
+
+                target: 'mouse', // Track the mouse as the positioning target
+                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+            }
+        });
+
+        $('.productosIds').change(function () {
+
+            var value = $(this).filter(':checked').val();
+            if (value == '2010') {
+                $('#tiposAreas').show();
+
+            }
+            else {
+                $('#tiposAreas').hide();
+
+            }
+        })
+
+
+    </script>
+
+    
+</div>

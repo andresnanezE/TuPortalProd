@@ -1,0 +1,127 @@
+﻿@model Presentacion.Mvc.App.Models.RolModel
+
+@{
+    ViewBag.Title = "Administración Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="programacionTurnos-form" action="@Url.Action("Index")" method="POST">
+    <div class="panel panel-default" style="width: 65%">
+        <div class="panel-heading">
+            <h3>Búsqueda</h3>
+        </div>
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new
+                                              {
+                                                  @class = "text-danger"
+                                              })
+            <h3 class=" text-success" style="padding-left: 20px">
+                @Html.DisplayTextFor(model => model.Mensaje)
+            </h3>
+            <div class="form-group">
+                @Html.Label("Rol", new
+                                   {
+                                       @class = "control-label col-md-2"
+                                   })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.RolFiltro, new
+                                                              {
+                                                                  htmlAttributes = new
+                                                                                   {
+                                                                                       @class = "form-control"
+                                                                                   }
+                                                              })
+                    @Html.ValidationMessageFor(model => model.RolFiltro, "", new
+                                                                             {
+                                                                                 @class = "text-danger"
+                                                                             })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <input type="submit" value="Buscar" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="col-md-12">
+    <p>
+        @Html.ValidationSummary(true, "", new
+                                          {
+                                              @class = "text-danger"
+                                          })
+        @Html.ActionLink("Crear Rol", "Agregar")
+    </p>
+
+    @if (Model != null && Model.ListadoRoles != null)
+    {
+    <table id="ListadoRoles" class="table table-striped table-bordered" style="table-layout: fixed">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rol)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaCreacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Activo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListadoRoles)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ROL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FECHACREACION)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ACTIVO)
+                </td>
+                <td>
+                    @Html.ActionLink("Modificar", "Modificar", new
+                                                               {
+                                                                   item.ROLID
+                                                               })
+                </td>
+            </tr>
+                }
+        </tbody>
+    </table>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#ListadoRoles').dataTable({
+            oLanguage: {
+                sEmptyTable: "No se encuentran datos para esta búsqueda"
+            },
+            scrollX: true,
+            sScrollX: "820px",
+            sScrollXInner: "820px",
+            scrollCollapse: true,
+            bFilter: true,
+            bInfo: false,
+            bPaginate: false,
+            aoColumns: [
+                { sWidth: '20%', sClass: "alignCenter" },
+                { sWidth: '20%', sClass: "alignCenter" },
+                { sWidth: '10%', sClass: "alignCenter" },
+                { sWidth: '10%', sClass: "alignCenter" }
+            ]
+        });
+
+    });
+</script>

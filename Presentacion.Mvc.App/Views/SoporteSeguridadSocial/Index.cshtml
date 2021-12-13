@@ -1,0 +1,99 @@
+﻿@*
+    John Nelson Rodrigues [cshtml]
+    Enero 2017
+*@
+@using System.Collections
+@model Presentacion.Mvc.App.Models.SoportesSeguridadSocial
+
+@{
+    ViewBag.Title = "Soportes de Seguridad Social.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Raw(ViewBag.Script)
+<div class="col-md-12">
+    <form id="usuario-form" action="@Url.Action("Index", "SoporteSeguridadSocial")" method="POST" enctype="multipart/form-data">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal" style="padding-top: 20px">
+
+                @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2 alert alert-danger alert-head" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                        @modelError.ErrorMessage<br />
+                            }
+                    </div>
+                </div>
+                }
+
+                @if (ViewBag.Message != null && !string.IsNullOrEmpty(ViewBag.Message))
+                {
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        @ViewBag.Message
+                    </div>
+                </div>
+                }
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ID_MOTIVO, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.ID_MOTIVO, (SelectList)ViewBag.Motivos, "-Seleccionar-", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OBSERVACION, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.OBSERVACION, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.OBSERVACION, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3 col-md-offset-2">
+                        <input type="file" name="Archivos" id="Archivos" multiple="multiple">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-2">
+                        <button type="button" class="btn btn-primary" id="enviar" onclick="validar()"> <span class="glyphicon glyphicon-ok-sign"></span> Enviar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="_alert">
+                <div class="col-md-7 col-md-offset-2">
+                    <div class="alert alert-info" role="alert" id="ainfo">
+                        <span class="glyphicon glyphicon-exclamation-sign send" aria-hidden="true"></span>
+                        &nbsp &nbsp &nbsp &nbspEnviando, espera un momento ...
+                    </div>
+                </div>
+            </div>
+
+            <br />
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                <div class="alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de administración de ventas.
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@Scripts.Render("~/bundles/filer")
+@Scripts.Render("~/bundles/SoporteSeguridadSocial")
+@Styles.Render("~/Styles/filer")

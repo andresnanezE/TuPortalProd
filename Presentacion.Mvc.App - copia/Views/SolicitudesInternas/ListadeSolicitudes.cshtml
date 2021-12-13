@@ -1,0 +1,105 @@
+﻿@using PagedList.Mvc
+@model IEnumerable<Presentacion.Mvc.App.Models.SolicitudesInternas>
+
+@{
+    ViewBag.Title = "ListadeSolicitudes";
+}
+<p>Solicitudes</p>
+<div class="col-md-12">
+    <div style="margin-left:20px;">
+        <table class="table table-striped table-bordered table-hover" style="width: 95% !important">
+            <thead class="table-heading">
+                <tr>
+                    <th>
+                        Fecha Creación
+                    </th>
+                    <th>
+                        Fecha Finalización
+                    </th>
+                    <th>
+                        Área
+                    </th>
+                    <th>
+                        Tipo Solicitud
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                    <th>
+                        Detalle
+                    </th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>
+                        @item.FechaCreacion
+                    </th>
+                    <th>
+                        @item.FechaFinalizacion
+                    </th>
+                    <th>
+                        @item.Area.nombreArea
+                    </th>
+                    <th>
+                        @item.TipoRequerimiento.nombreTRequerimiento
+                    </th>
+                    <th>
+                        @item.Descripcion
+                    </th>
+                    <th>
+                        @item.Estado
+                    </th>
+                    <td>
+                        <input type="button" class="sol" name="name" value="Detalle"
+                               data-iditem='{"FC":"@item.FechaCreacion","FF":"@item.FechaFinalizacion","AREA":" @item.Area.nombreArea","REQ":" @item.TipoRequerimiento.nombreTRequerimiento","DESC":" @item.Descripcion","EST":"@item.Estado"}' />
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+
+        $('.sol').on('click',function() {
+            mostrarDetalle($(this).data('iditem'));
+        });
+
+    });
+
+    function mostrarDetalle(sol) {
+
+        var descripcion = sol.DESC;
+        var nombreAsesor = 'Maria Teresa Perez';
+        var body = '<table><tr>' +
+                   '<td><b>Fecha creación</b></td>' +
+                   '<td style="padding-left:10px">:&nbsp</td>' +
+                   '<td>'+sol.FC+'</td></tr>' +
+                   '<tr>' +
+                   '<td><b>Fecha Finalización</b></td>' +
+                   '<td style="padding-left:10px">:&nbsp</td>' +
+                   '<td>' + sol.FF + '</td></tr>' +
+                   '<tr>' +
+                   '<td><b>Área</b></td>' +
+                   '<td style="padding-left:10px">:&nbsp</td>' +
+                   '<td>' + sol.AREA + '</td></tr>' +
+                   '<tr>' +
+                   '<td><b>Tipo Solicitud</b></td>' +
+                   '<td style="padding-left:10px">:&nbsp</td>' +
+                   '<td>' + sol.REQ + '</td></tr>' +
+                   '</table><br>' +
+            descripcion + '<br><br>Atentamente<br>' +
+            nombreAsesor + '<br><br>';
+        $.popupSI('Solicitud abierta', body + '<div><b>Agregar Nota:</b></div><textarea name="Text1" cols="45" rows="5"></textarea>');
+    }
+
+</script>
+
+@Scripts.Render("~/bundles/modal")

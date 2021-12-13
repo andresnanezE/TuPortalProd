@@ -1,0 +1,30 @@
+﻿@using Presentacion.Mvc.App.Models
+
+@{
+    ViewBag.Title = "Fosyga";
+}
+
+<h2 id="log" class="col-md-12 ajax-file-upload-green">Por favor permitir abrir ventanas emergentes, Gracias</h2>
+
+@{
+    @Html.Hidden("urlFOSYGA", ConfiguracionesGlobales.urlFOSYGA)
+}
+
+
+<script>
+	var url = new URL(window.location.href);
+    var id = url.searchParams.get("id");
+	console.log(id);
+    if (id=="1") {
+        window.open("http://kheiron.emermedica.com.co:8006");
+    }
+    else if (id=="2") {
+        window.open("http://appb.saludcapital.gov.co/Comprobadordederechos/Consulta");
+    }
+    else {
+        window.open($('#urlFOSYGA').val());
+    }
+
+    var url = '@Url.Action("Index","Home")';
+    window.setTimeout($('#log').empty(), 30000);
+</script>

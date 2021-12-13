@@ -1,0 +1,150 @@
+﻿@*John Nelson Rodríguez
+    Enero 2017*@
+
+@*@using PagedList.Mvc
+    @using Microsoft.Ajax.Utilities*@
+
+@model Presentacion.Mvc.App.Models.SesionEnVezDeUsuarioViewModel
+
+@{
+    ViewBag.Title = "Crear usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery.dataTables.js"></script>
+
+<div class="col-md-12">
+    @using (Html.BeginForm())
+    {
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin-bottom: 15px;">
+            <h4><strong class="title-usuario">@ViewBag.Title</strong></h4>
+        </div>
+
+        @Html.Hidden("ObtValoresCamposFormulario", @Url.Action("ObtValoresCamposFormulario"))
+        @Html.Hidden("ActEstadoUsuario", @Url.Action("ActEstadoUsuario"))
+        @Html.Hidden("Index", @Url.Action("Index"))
+
+        <div class="form-horizontal">
+
+            @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @*<a class="close" data-dismiss="alert">×</a>*@
+                    @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                    @modelError.ErrorMessage<br />
+                            }
+                </div>
+            </div>
+                }
+
+            @if (!String.IsNullOrEmpty(@Model.Mensaje))
+                {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @Model.Mensaje
+                </div>
+            </div>
+                }
+
+            <br />
+            <div class="form-group ">
+                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Codusuario, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Codusuario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Codusuario, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Canal, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.Canal, Model.CanalUsuario, "...", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Canal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ciudad, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.Ciudad, Model.CiudadUsuario, "...", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Ciudad, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Perfil, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.Perfil, Model.PerfilUsuario, "...", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Perfil, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Segmento, htmlAttributes: new { @class = "control-label col-md-3 segmento" })
+                <div class="col-md-2 segmento">
+                    @Html.DropDownListFor(model => model.Segmento, Model.SegmentoUsuario, "...", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Segmento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.Modificar)
+
+            <div class="form-group">
+                <div class="col-md-4 col-xs-offset-3">
+                    <button type="submit" class="btn btn-primary" id="enviar" disabled="disabled"> <span class="glyphicon glyphicon-ok-sign"></span><span class="btn-crear"> Crear</span></button>
+                    <button type="button" class="btn btn-danger" id="cancelar"> <span class="glyphicon glyphicon-thumbs-down"></span><span class="btn-cancelar"> Cancelar</span></button>
+                </div>
+            </div>
+
+            <br />
+        </div>
+    </div>
+    }
+</div>
+<div class="col-md-12">
+
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin-bottom: 15px;">
+            <h4><strong>Administración de usuarios</strong></h4>
+        </div>
+        @if (@Model.ListaUsuarios.Any())
+        {
+
+        @Html.Partial("~/Views/Shared/SesionEnVezDe/AdministracionUsuariosView.cshtml", Model.ListaPageUsuarios);
+        }
+    </div>
+</div>
+
+@*Modal alert*@
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Importante</h4>
+            </div>
+            <div class="modal-body">
+                <p class="modal-alert"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/modal")
+    @Scripts.Render("~/bundles/adminenvezde")
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,169 @@
+﻿@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.CargueTarifaCampañaModel
+@{
+    ViewBag.Title = "Cargue Tarifas Campañas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="programacionTurnos-form" class="col-md-12" >
+
+    <div class="panel panel-default" style="width: 65%;">
+        <div class="panel-heading">
+            <h3>Cargue Tarifas campañas</h3>
+        </div>
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            
+               @using (Html.BeginForm("Index", "CargueTarifasCampaña", FormMethod.Post, new { enctype = "multipart/form-data" }))
+               {
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="file" name="file" />
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="submit" value="Cargar" class="btn btn-primary" />
+                        <br /><br />
+                         @ViewBag.Message
+                    </div>
+
+                </div>
+               }
+         </div>
+    </div>  
+
+</div>
+
+<div class="col-md-12">
+    <table id="listaCargueTarifasCampaña" class="table table-striped table-bordered" style="table-layout: fixed">
+        <thead>
+            <tr>
+                <th style="vertical-align: top;">
+                    @Html.Label("Tipo Tarifa")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Campaña Tarifa")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Ciudad")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Rango Inicial Persona")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Rango Final Persona")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Modalidad pago")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Forma pago")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Valor Tarifa")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Valor IVA Tarifa")
+                </th>
+                <th style="vertical-align: top;">
+                    @Html.Label("Fecha de Vencimiento")
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaCargueTarifasCampaña)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.TIPO_TARIFA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CAMPANA_TARIFA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CIUDAD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.RANGO_INICIAL_PERSONA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.RANGO_FINAL_PERSONA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.MODALIDAD_PAGO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FORMA_PAGO)
+                    </td>
+                    <td>
+                        @item.VALOR_TARIFA.ToString("C")
+                    </td>
+                    <td>
+                        @item.VALOR_IVA_TARIFA.ToString("C")
+                    </td>
+                    <td>
+                        @item.FECHA_VENCIMIENTO_TARIFA.ToShortDateString()
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @Html.PagedListPager(Model.ListaCargueTarifasCampaña, page => Url.Action("Paginador", new { page }))
+</div>
+
+<script>
+        $(document).ready(function () {
+
+            $('table#listaCargueTarifasCampaña').DataTable({
+                oLanguage: {
+                    sEmptyTable: "No hay datos para mostrar",
+                    sInfo: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    sInfoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    sInfoFiltered: "(Friltrado desde _MAX_ registros totales)",
+                    sLengthMenu: "Mostrar _MENU_ registros por pagina",
+                    sLoadingRecords: "Cargando...",
+                    sProcessing: "Procesando...",
+                    sSearch: "Buscar:",
+                    sZeroRecords: "No se encontraron registros que coincidan",
+                    oPaginate: {
+                        sFirst: "Primera",
+                        sLast: "Ultima",
+                        sNext: "Siguiente",
+                        sPrevious: "Anterior"
+                    }
+                },
+                "autoWidth": false,
+                //"sort": true,
+                //"filter": true,
+                //"dom": "<'row'<'col-md-6'l><'col-md-6'f>>" + "<'row'<'col-md-12'i>>" ,
+                "processing": false,
+                "searching": false,
+                "paging": false,
+                //"ordering": true,
+                "info": false,
+                "columns": [
+                       { "searchable": true, "orderable": true, "Width": "14%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "14%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "13%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "13%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "10%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "10%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "10%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "10%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "10%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "10%", "Class": "alignCenter" }
+                ]
+            });
+        });
+</script>
+
+
+

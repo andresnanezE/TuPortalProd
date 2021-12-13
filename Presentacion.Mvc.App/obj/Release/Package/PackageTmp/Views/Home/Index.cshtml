@@ -1,0 +1,161 @@
+﻿@using System.Configuration
+@using System.Activities.Statements;
+@model  List<Dominio.Administracion.Entidades.MapperDto.ComoVoyDto>
+@{
+    ViewBag.Title = "Herramienta Comercial";
+
+    var maincontentclass = ViewBag.rol == "Asesor"  && ViewBag.Msg == null ? "col-xs-12 col-sm-8" : "col-xs-12 col-sm-11";
+    var newscontent1class = ViewBag.rol == "Asesor" && ViewBag.Msg == null ? "col-xs-12 col-sm-5" : "col-xs-12 col-sm-4";
+    var newscontent2class = ViewBag.rol == "Asesor" && ViewBag.Msg == null ? "col-xs-12 col-sm-7" : "col-xs-12 col-sm-8";
+
+}
+
+@section css
+    {
+    @Styles.Render("~/Styles/home.css")
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+@*
+    // Daniel Peralta - Luis Acero
+    // 2017-01-13
+*@
+
+<section id="main-content" class="container">
+    @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+    <div class="">
+        <div class="@maincontentclass">
+            <!-- Banners -->
+            <div id="banners-container"></div>
+
+            <!-- Destacados -->
+            <div class="destacados-container">
+                <div class="row destacados">
+                    <div id="destacado0" class="col-xs-12 col-sm-4"></div>
+                    <div id="destacado1" class="col-xs-12 col-sm-4"> </div>
+                    <div id="destacado2" class="col-xs-12 col-sm-4"></div>
+                </div>
+            </div>
+
+            <!-- Noticias -->
+            <div id="noticias-container"></div>
+            <div class="see-all">
+                <a id="viewAllNews" href="@Url.Action("Lista", "Noticias")" class="btn btn-type-01">Ver todas las noticias</a>
+            </div>
+        </div>
+
+        <!-- Como Voy -->
+        @if (ViewBag.rol == "Asesor" && ViewBag.Msg == null)
+        {
+        <div class="col-xs-12 col-sm-3 side-comovoy">
+            <div class="row">
+                @foreach (var n in @Model)
+                    {
+                        n.HTML = n.HTML.Replace("@", n.TEXTO);
+                <div class="col-xs-12">
+                    @Html.Raw(n.HTML)
+                </div>
+                    }
+            </div>
+        </div>
+        }
+    </div>
+</section>
+<!-- Modal -->
+<div id="destacado-modal" class="modal-emermedica modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="embed-container aspect16_4">
+                    <iframe width="560" height="315" class="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Alert -->
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-msg-alert"></span>
+                <div id="ajax-container"></div>
+            </div>
+            <div class="modal-footer footer-alert">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        var urlTraerDestacados = '@(Url.Action("TraerDestacados", "Destacados"))';
+        var urlTraerBanners = '@(Url.Action("TraerBanners", "Destacados"))';
+        var urlTraerNoticias = '@(Url.Action("TraerNoticias", "Noticias", new { }))/?soloActivas=true&pageSize=4&page=1&take=4&skip=0&order=fecha';
+        var urlDetalleNoticia = '@(Url.RouteUrl("Noticia"))/'
+        var urlVirtualPath = '@(ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"])';
+        var urlBannersPath = urlVirtualPath + '@(ConfigurationManager.AppSettings["Imagen.Path.Banners"])';
+        var urlDestacadosPath = urlVirtualPath + '@(ConfigurationManager.AppSettings["Imagen.Path.Destacados"])';
+        var urlNoticiasPath = urlVirtualPath + '@(ConfigurationManager.AppSettings["Imagen.Path.Noticias.Imagen"])';
+    </script>
+    <script id="banners-template" type="text/x-kendo-template">
+        <div id="slider-banners" class="slider caroussel">
+            # for (var i = 0; i < data.length; i++) { #
+            <div class="caroussel-cell">
+                <a href="#= data[i].URL #">
+                    <img src="#= urlBannersPath + data[i].IMAGEN #" alt="" class="img-responsive">
+                </a>
+            </div>
+            # } #
+        </div>
+    </script>
+    <script id="destacado-template" type="text/x-kendo-template">
+        <a href="#= URL #" target="_blank">
+            <img src="#= urlDestacadosPath + IMAGEN #" alt="" class="img-responsive">
+        </a>
+    </script>
+    <script id="destacado-ensitio-template" type="text/x-kendo-template">
+        <a class="clickmodal" data-url="#= URL #">
+            <img src="#= urlDestacadosPath + IMAGEN #" alt="" class="img-responsive">
+        </a>
+    </script>
+    <script id="noticias-template" type="text/x-kendo-template">
+        # for (var i = 0; i < data.length; i++) { #
+        #
+        var fecha = new Date(data[i].FECHA);
+        #
+        <div class="square-cb">
+            <div class="@newscontent1class">
+                <img src="#= urlNoticiasPath + data[i].IMAGEN #" alt="" class="img-responsive">
+            </div>
+            <div class="@newscontent2class">
+                <div class="row">
+                    <h3>#= data[i].TITULO #</h3>
+                    <time>#= kendo.toString(fecha, 'D') #</time>
+                    <hr>
+                    <p>#= data[i].DESCRIPCION #</p>
+                    <a href="#= urlDetalleNoticia + data[i].TITULOQS #" class="btn btn-type-01" target="_blank">Ver más</a>
+                </div>
+            </div>
+        </div>
+        # } #
+    </script>
+
+    @Scripts.Render("~/bundles/flickity")
+    @Scripts.Render("~/bundles/unobtrusive")
+    @Scripts.Render("~/bundles/emermedica.home")
+}

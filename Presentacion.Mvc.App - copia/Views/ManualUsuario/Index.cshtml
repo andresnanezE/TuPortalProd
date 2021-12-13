@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<style>
+    #epdf {
+        width: 80%;
+    }
+
+    div.titulo {
+        height: 3em;
+        position: relative;
+        margin-left: 10px;
+
+        width: 95%;
+        border-radius: 2px;
+        background-color: #F5F5F5;
+    }
+
+        div.titulo h2 {
+            margin: 10px;
+            position: absolute; /* 2 */
+            top: 10%; /* 3 */
+            transform: translate(0, -10%);
+
+            font-size: 18px;
+            font-weight: bold;
+        }
+</style>
+<br />
+<br />  
+<div class="titulo">
+    <h2> Manual usuario</h2> <br />
+</div><br />
+<form action="/" method="post">
+
+    @if (string.IsNullOrEmpty(ViewBag.archivo))
+    {
+        <div class="row">
+            <div class="col-md-6 col-md-offset-2 alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @*<a class="close" data-dismiss="alert">×</a>*@
+                @ViewBag.Mensaje
+            </div>
+        </div>
+    }
+
+    <div class="col-md-12 col-md-offset-1">
+        <embed id="epdf" src="~/pdfs/@(ViewBag.archivo).pdf#toolbar=0&navpanes=0&scrollbar=0" height="550" />
+    </div>
+</form>
+

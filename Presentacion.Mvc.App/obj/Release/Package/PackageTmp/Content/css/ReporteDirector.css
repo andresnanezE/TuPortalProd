@@ -1,0 +1,153 @@
+﻿/*Filtros reporte*/
+
+#reportrange {
+    background: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    width: 65%;
+    border-radius: 50px;
+    height: 34px;
+}
+
+.multiselect {
+    border-radius: 50px;
+    width: 65%;
+}
+.slc-frm {
+
+    outline: 0;
+    background-image: none;
+    border: 1px solid !important;
+    background: rgb(255,255,255);
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: button-arrow-down;
+    -webkit-appearance: caret;
+}
+
+.lb-frm {
+    margin-bottom: 0px;
+    color: rgb(255,255,255);
+}
+
+
+
+.title-header {
+    color: rgb(34, 85, 141);
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial;
+    margin-top: 10px;
+}
+
+.ipt-fm {
+    border-radius: 50px;
+    height: 45px;
+    border: none;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    box-shadow: -7px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208);
+}
+
+.btnCl {
+    width: 60%;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+    .inner-addon .glyphicon {
+        position: absolute;
+        padding: 16px;
+        pointer-events: none;
+    }
+
+
+.right-addon .glyphicon {
+    right: 0px;
+}
+
+.lb-name {
+    color: rgb(34, 85, 141);
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Arial;
+}
+/*****************/
+/*#region reporte*/
+.tb-ctzn > thead > tr > th {
+    text-align: center;
+    color: rgb(255,255,255);
+    background-color: rgb(34,85,141);
+}
+
+    .tb-ctzn > thead > tr > th.hdr-ctzn {
+        text-align: center;
+        color: rgb(255,255,255);
+        background-color: rgb(24,59,99);
+    }
+
+
+.btn-rnvr {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(24, 59, 99);
+    color: rgb(24, 59, 99);
+    padding: 1% 0%;
+    width: 50%;
+}
+
+.btn-ctzr {
+    color: rgb(255,255,255);
+    background-color: rgb(52,195,139);
+    padding: 2% 0%;
+    width: 80%;
+}
+
+
+.frm-slt {
+    margin-top: 40px;
+}
+
+.rw-mf {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn + .dropdown-menu {
+    margin-top: -10px;
+    background: white !important;
+    padding: 0;
+    border: 0;
+    right: 0;
+    left: auto;
+    min-width: 100%;
+}
+
+    .btn + .dropdown-menu > li > a {
+        padding: 5px 10px !important;
+        color: black !important;
+        border-radius: 50px;
+        box-shadow: -7px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208);
+    }
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: white !important;
+    text-decoration: none;
+    background-color: rgb(34,85,141) !important;
+}
+
+.dropdown-menu > .active {
+    color: white !important;
+    text-decoration: none;
+    background-color: lightgray !important;
+}
+
+
+/*#endregion reporte*/
+
+

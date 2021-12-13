@@ -1,0 +1,89 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Reporte cotizaciones y reservas de asesores por director";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <form id="DescargaReporteCotizacion-form" action="@Url.Action("ReporteCotizacionesAsesor")" method="POST" autocomplete="off">
+        <div class="panel panel-default" style="width: 100%">
+            <div class="panel-heading" ALIGN="center">
+                <h3>Cotizaciones y reservas por asesor</h3>
+            </div>
+            <div class="form-horizontal">
+                <hr />
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaInicial, htmlAttributes: new { @class = "control-label col-md-2 col-lg-offset-2" })
+                    <div class="col-md-5">
+                        <div class="input-group input-append date">
+                            @Html.TextBoxFor(m => m.FechaInicial, new { @class = "date-picker form-control", @placeholder = "DD/MM/AAAA", Value = Model.FechaInicial.ToString("dd/MM/yyyy") })
+
+                            @Html.ValidationMessageFor(model => model.FechaInicial, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaFinal, htmlAttributes: new { @class = "control-label col-md-2 col-lg-offset-2" })
+                    <div class="col-md-5">
+                        <div class="input-group input-append date">
+                            @Html.TextBoxFor(m => m.FechaFinal, new { @class = "date-picker form-control", @placeholder = "DD/MM/AAAA", Value = Model.FechaFinal.ToString("dd/MM/yyyy") })
+                            @*@Html.HiddenFor(model => model.FechaNacimiento)*@
+                            @Html.ValidationMessageFor(model => model.FechaFinal, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ALIGN=RIGHT>
+                    <div class="col-md-12"></div>
+                    <div class="col-md-6">
+                        <input formtarget="_blank" type="submit" value="Generar reporte" class="btn btn-primary" />
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+        // This will make every element with the class "date-picker" into a DatePicker element
+        $('.date-picker').datepicker();
+
+        var dateNow = new Date().getDate;
+        $('#FechaInicial').datepicker("option", {
+            dateFormat: 'dd/mm/yyyy',
+            minDate: dateNow,
+            defaultDate: dateNow,
+            autoclose: true,
+            ignoreReadonly: true
+        });
+
+        $('#FechaFinal').datepicker("option", {
+            dateFormat: 'dd/mm/yyyy',
+            minDate: dateNow,
+            defaultDate: dateNow,
+            autoclose: true,
+            ignoreReadonly: true
+        });
+
+        $('label[for="Fecha Inicial]').show();
+        $("#FechaInicial").show();
+        $("#FechaInicial").prop('required', true);
+
+        $('label[for="Fecha Final]').show();
+        $("#FechaFinal").show();
+        $("#FechaFinal").prop('required', true);
+
+        $('#FechaInicial').val(dateNow);
+        $('#FechaFinal').val(dateNow);
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

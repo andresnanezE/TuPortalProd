@@ -1,0 +1,219 @@
+﻿@using System.Configuration
+@using Utilidades.Enums
+@{
+    ViewBag.Title = "Administración Destacados y Banners";
+}
+
+@*
+    // Daniel Peralta - Luis Acero
+    // 2017-01-13
+*@
+
+<section id="main-content" class="container">
+
+    <div id="destacados-banners-container" class="container-fluid">
+        <div id="destacados-container" class="col-xs-11">
+            <div class="row">
+                <h2 class="page-header">DESTACADOS</h2>
+            </div>
+            <div class="clearfix"></div>
+            <form role="form" method="post" action="@(Url.Action("ActualizarDestacados", "Destacados"))" id="destacados-form">
+                <p>Las imágenes se deben subir en tamaño de 360px X 130px</p>
+
+                <div class="row destacados">
+                    <!-- Destacado 1 -->
+                    <div class="col-xs-12 col-sm-4">
+                        <input type="hidden" name="id" value="1" />
+                        <div class="form-group">
+                            <label class="control-label">Destacado 1</label>
+                            <i class="fa fa-info-circle" title="Imagen del destacado 1" aria-hidden="true"></i>
+                            <div class="destacado-container-pic">
+                                <img class="default-image-destacado-1" data-bind="attr: { src: getImage(1) }" />
+                                <img class="upload-image-destacado-tg" src="~/Image/icon-edit.png" data-id="1" alt="Cargar Foto" title="Cargar Foto" style="width: 50px; height:50px;" />
+                            </div>
+                            <div style="display: none;">
+                                <input type="file" class="image-destacado" name="image-destacado-1" data-id="1" data-type="@(ImageType.Destacado)" data-preview-item="img.default-image-destacado-1" />
+                                <input type="hidden" name="imageRaw1" data-bind="value: imageRaw1" />
+                            </div>
+                            <span>URL</span>
+                            <input type="url" class="form-control" name="url1" placeholder="Url" data-bind="value: destacado1.URL" />
+                            <label class="control-label">¿Abrir en el sitio?</label><br />
+                            <div class="btn-group yes-no">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="abrirensitio1" data-bind="checkedbool: destacado1.ABRIRENSITIO" value="true" required="required" style="display: none;" />
+                                    Si
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="abrirensitio1" data-bind="checkedbool: destacado1.ABRIRENSITIO" value="false" required="required" style="display: none;" />
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destacado 2 -->
+                    <div class="col-xs-12 col-sm-4">
+                        <input type="hidden" name="id" value="2" />
+                        <div class="form-group">
+                            <label class="control-label">Destacado 2</label>
+                            <i class="fa fa-info-circle" title="Imagen del destacado 2" aria-hidden="true"></i>
+                            <div class="destacado-container-pic">
+                                <img class="default-image-destacado-2" data-bind="attr: { src: getImage(2) }" />
+                                <img class="upload-image-destacado-tg" src="~/Image/icon-edit.png" data-id="2" alt="Cargar Foto" title="Cargar Foto" style="width: 50px; height:50px;" />
+                            </div>
+                            <div style="display: none;">
+                                <input type="file" class="image-destacado" name="image-destacado-2" data-id="2" data-type="@(ImageType.Destacado)" data-preview-item="img.default-image-destacado-2" />
+                                <input type="hidden" name="imageRaw2" data-bind="value: imageRaw2" />
+                            </div>
+                            <span>URL</span>
+                            <input type="url" class="form-control" name="url2" placeholder="Url" data-bind="value: destacado2.URL" />
+                            <label class="control-label">¿Abrir en el sitio?</label><br />
+                            <div class="btn-group yes-no">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="abrirensitio2" data-bind="checkedbool: destacado2.ABRIRENSITIO" value="true" required="required" style="display: none;" />
+                                    Si
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="abrirensitio2" data-bind="checkedbool: destacado2.ABRIRENSITIO" value="false" required="required" style="display: none;" />
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destacado 3 -->
+                    <div class="col-xs-12 col-sm-4">
+                        <input type="hidden" name="id" value="3" />
+                        <div class="form-group">
+                            <label class="control-label">Destacado 3</label>
+                            <i class="fa fa-info-circle" title="Imagen del destacado 3" aria-hidden="true"></i>
+                            <div class="destacado-container-pic">
+                                <img class="default-image-destacado-3" data-bind="attr: { src: getImage(3) }" />
+                                <img class="upload-image-destacado-tg" src="~/Image/icon-edit.png" data-id="3" alt="Cargar Foto" title="Cargar Foto" style="width: 50px; height:50px;" />
+                            </div>
+                            <div style="display: none;">
+                                <input type="file" class="image-destacado" name="image-destacado-3" data-id="3" data-type="@(ImageType.Destacado)" data-preview-item="img.default-image-destacado-3" />
+                                <input type="hidden" name="imageRaw3" data-bind="value: imageRaw3" />
+                            </div>
+                            <span>URL</span>
+                            <input type="url" class="form-control" name="url3" placeholder="Url" data-bind="value: destacado3.URL" />
+                            <label class="control-label">¿Abrir en el sitio?</label><br />
+                            <div class="btn-group yes-no">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="abrirensitio3" data-bind="checkedbool: destacado3.ABRIRENSITIO" value="true" required="required" style="display: none;" />
+                                    Si
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="abrirensitio3" data-bind="checkedbool: destacado3.ABRIRENSITIO" value="false" required="required" style="display: none;" />
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="save-tg" type="submit" class="btn btn-success">Salvar</button>
+                &nbsp;
+                <button id="cancel-tg" type="button" class="btn btn-danger" data-bind="events: { click: cancel }">Cancelar</button>
+            </form>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div id="banners-container" class="col-xs-11">
+            <div class="row">
+                <h2 class="page-header">BANNERS</h2>
+            </div>
+            <div class="row">
+                <div class="dyk-grid">
+                    <div id="banners-grid"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            <div class="col-xs-12">
+                <div class="row">
+                    <button id="add-banner" class="btn btn-success pull-right">Adicionar Banner</button>
+                </div>
+            </div>
+
+            <div id="banner-window" data-role="window" data-modal="true" data-visible="false" data-resizable="false" data-draggable="false" data-title="Adicionar Banner" data-width="500" style="display:none;">
+                <div class="panel panel-default">
+                    <div class="panel-body container-fluid modal-banners">
+                        <form role="form" method="post" action="@(Url.Action("GuardarBanner", "Destacados"))" id="banner-form">
+                            <input type="hidden" name="bannerId" data-bind="value: bannerId" />
+                            <div class="form-group">
+                                <label class="control-label">Banner</label>
+                                <span>(1015px X 360px)</span>
+                                <i class="fa fa-info-circle" title="Imagen de logo slider Home"></i>
+                                <div class="banner-container-pic">
+                                    <img class="default-banner img-responsive" data-bind="attr: { src: getBannerImage }" />
+                                    <img id="upload-image-banner-tg" src="~/Image/icon-edit.png" alt="Cargar Foto" title="Cargar Foto" style="width: 50px; height:50px;" />
+                                </div>
+                                <div style="display: none;">
+                                    <input type="file" class="image-banner" name="image-banner" data-type="@(ImageType.Banner)" data-preview-item="img.default-banner" data-raw-item="bannerImageRaw" />
+                                    <input type="hidden" name="bannerImageRaw" data-bind="value: bannerImageRaw" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Url</label>
+                                <input type="url" class="form-control" name="bannerUrl" required="required" placeholder="Url" data-bind="value: bannerUrl" />
+                                <span class="k-invalid-msg" data-for="urlBanner"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Posición</label>
+                                <input type="number" name="bannerPosicion" required="required" placeholder="Posición" data-role="numerictextbox" data-format="#" data-min="1" data-decimals="0" data-bind="value: bannerPosicion" />
+                                <span class="k-invalid-msg" data-for="urlBanner"></span>
+                            </div>
+                            <button id="save-tg" type="submit" class="btn btn-success">Salvar</button>
+                            &nbsp;
+                            <button id="cancel-tg" type="button" class="btn btn-danger" data-bind="events: { click: cancel }">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        // General
+        var urlVirtualPath = '@(ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"])';
+        var urlUploadImage = '@(Url.Action("SubirImagen", "Destacados"))';
+        var deleteSuccessMessage = 'El banner ha sido eliminado exitosamente';
+        // Detacados
+        var urlTraerDestacados = '@(Url.Action("TraerDestacados", "Destacados"))';
+        var urlDestacadosPath = urlVirtualPath + '@(ConfigurationManager.AppSettings["Imagen.Path.Destacados"])';
+        var urlDefaultDestacadoImage = '@(Url.Content("~/Image/defaultDestacado.jpg"))';
+        var imageTypeDestacado = '@(ImageType.Destacado)'
+        // Banners
+        var urlTraerBanners = '@(Url.Action("TraerBanners", "Destacados"))';
+        var urlTraerBanner = '@(Url.Action("TraerBanner", "Destacados"))';
+        var urlEliminarBanner = '@(Url.Action("EliminarBanner", "Destacados"))';
+        var urlBannersPath = urlVirtualPath + '@(ConfigurationManager.AppSettings["Imagen.Path.Banners"])';
+        var urlDefaultBannerImage = '@(Url.Content("~/Image/defaultBanner.jpg"))';
+        var deleteMessage = '¿Esta seguro de eliminar el banner seleccionado?';
+        var deleteSuccessMessage = 'El banner ha sido eliminado exitosamente';
+    </script>
+    <script id="banners-grid-edit-template" type="text/x-kendo-template">
+        <a class="edit-banner icon-grid-fix" href="javascript:void(0);" title="Editar" data-id="#= BANNERID #">
+            <i class="fa fa-pencil"></i>
+        </a>
+    </script>
+    <script id="banners-grid-delete-template" type="text/x-kendo-template">
+        <a class="delete-banner icon-grid-fix" href="javascript:void(0);" title="Eliminar" data-id="#= BANNERID #">
+            <i class="fa fa-close"></i>
+        </a>
+    </script>
+    <script id="banners-grid-image-template" type="text/x-kendo-template">
+        <a href="javascript:void(0);" title="Imagen" class="glyphicon glyphicon-picture banner-image-tg">
+            <div class="banner-image" style="display: none;">
+                <img src="#= IMAGEN ? urlBannersPath + IMAGEN : urlImagenPorDefecto #" />
+            </div>
+        </a>
+    </script>
+
+    @Scripts.Render("~/bundles/emermedica.destacados")
+}

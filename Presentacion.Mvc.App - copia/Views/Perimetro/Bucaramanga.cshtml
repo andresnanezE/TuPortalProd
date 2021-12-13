@@ -1,0 +1,16 @@
+﻿@using Presentacion.Mvc.App.Models
+@{
+    ViewBag.Title = "Perimetro Bucaramanga";
+}
+@{ @Html.Hidden("PerimetroUrlBucaramanga", ConfiguracionesGlobales.PerimetroUrlBucaramanga) }
+<h2 id="log" class="col-md-12 ajax-file-upload-green">Abriendo perimetro Bucaramanga... Por favor permitir abrir ventanas emergentes, Gracias</h2>
+
+<script>
+
+    window.open($("#PerimetroUrlBucaramanga").val());
+
+    //window.open('https://www.google.com/maps/d/viewer?mid=zRXBpRh6KJY8.kOzDmnrn0vRU&usp=sharing');
+    var url = '@Url.Action("Index","Home")';
+    window.setTimeout($('#log').empty(), 30000);
+</script>
+

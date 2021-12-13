@@ -1,0 +1,1370 @@
+﻿@using System.Configuration;
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/fuente.css" rel="stylesheet" />
+    <link href="~/Content/css/Reclutamiento.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="~/Image/icono.png" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.3.min.js"></script>
+    <script src="~/Scripts/knockout-3.5.0.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/locales/bootstrap-datepicker.es.js"></script>
+    <script src="~/Scripts/bootstrap-timepicker.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <title>Herramientas Comerciales</title>
+</head>
+<body>
+
+    <div id="ov-loading" style="display: none;">
+        <div class="wrap">
+            <div class="loading">
+                <div class="bounceball"></div>
+                <div class="text">Procesando Información</div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-static-top example6 nv-bg">
+        <div class="container ct-nv">
+            <div class="navbar-header bg-white">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar6">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-hide"></a>
+            </div>
+            <div id="navbar6" class="navbar-collapse collapse">
+                <label style="color: rgb(255,255,255);font-size: 16px;margin: 14px 0px 0px 15px;">¡Únete a nuestro equipo comercial como asesor independiente!.</label>
+                <ul class="nav navbar-nav navbar-right" style="color: white">
+                    <li>
+                        <a data-bind="text: nombresApellidos"></a>
+                    </li>
+                    <li>
+                        <a class="pd-img">
+                            <img class="i-user" src="~/Content/images/logo-usuario.svg" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="dv-files" class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <span class="sp-title-form">
+                            Ciclo de solicitud de vinculo de Asesores
+                        </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12" style="margin-top: 20px;">
+                                <table class="text-center" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td width="16%">
+                                                <img class="img-fluid" src="~/Content/images/Paso-1.svg" />
+                                            </td>
+                                            <td width="12%">
+                                                <img class="img-fluid" src="~/Content/images/arrow.svg" />
+                                            </td>
+                                            <td width="16%">
+                                                <img class="img-fluid" src="~/Content/images/Paso-2.svg" />
+                                            </td>
+                                            <td width="12%">
+                                                <img class="img-fluid" src="~/Content/images/arrow.svg" />
+                                            </td>
+                                            <td width="16%">
+                                                <img class="img-fluid" src="~/Content/images/Paso-3.svg" />
+                                            </td>
+                                            <td width="12%">
+                                                <img class="img-fluid" src="~/Content/images/arrow.svg" />
+                                            </td>
+                                            <td width="16%">
+                                                <img class="img-fluid" src="~/Content/images/Paso-4.svg" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span id="sp-st-1">Enviar documentos y gestionar contrato</span>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <span id="sp-st-2">Reclutamiento</span>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <span id="sp-st-3">Capacitación</span>
+                                            </td>
+                                            <td></td>
+                                            <td id="sp-st-4">
+                                                <span>Contratación</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- ko if: step1 -->
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div id="dv-file1" class="col-sm-12 mt-2 dv-disabled">
+                                        <span class="control-fileupload cf-name1">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file1" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-file2" class="col-sm-12 mt-2 dv-disabled">
+                                        <span class="control-fileupload cf-name2">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file2" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-file3" class="col-sm-12 mt-2 dv-disabled">
+                                        <span class="control-fileupload cf-name3">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file3" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-file4" class="col-sm-12 mt-2 dv-disabled">
+                                        <span class="control-fileupload cf-name4">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file4" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-file5" class="col-sm-12 mt-2 dv-disabled">
+                                        <span class="control-fileupload cf-name5">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file5" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-file6" class="col-sm-12 mt-2 dv-disabled">
+                                        <span class="control-fileupload cf-name6">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file6" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-file7" class="col-sm-12 mt-2 dv-disabled">
+                                        <span class="control-fileupload cf-name7">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file7" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-file8" class="col-sm-12 mt-2" style="display: none;">
+                                        <span class="control-fileupload cf-name8">
+                                            <label for="file">Selecciona un archivo...</label>
+                                            <input type="file" id="file8" accept=".pdf, image/png, image/jpeg, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled="disabled" data-bind="event: { change: archivo.bind($data) }">
+                                        </span>
+                                    </div>
+                                    <div id="dv-btn-load-files" class="col-sm-12 mt-2 text-right dv-disabled-btn">
+                                        <button id="btn-load-files" class="btn btn-primary btn-upload" data-bind="click: loadFile.bind($data)" disabled="disabled">
+                                            <span id="sp-verify">Enviar Archivos</span>&nbsp;
+                                            <i id="i-arrow" class="fa fa-arrow-right f-right-" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div id="dv-btn-load-contrato" class="col-sm-12 mt-2 text-right dv-disabled-btn" style="display: none">
+                                        <button id="btn-load-contrato" class="btn btn-primary btn-upload" data-bind="click: loadContrato.bind($data)" disabled="disabled">
+                                            <span id="sp-verify">Enviar Contrato</span>&nbsp;
+                                            <i id="i-arrow" class="fa fa-arrow-right f-right-" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="row">
+                                    <table style="width: 100%;height: 350px; font-weight: 600;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Obligatorio
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Obligatorio
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Obligatorio
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Obligatorio
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Opcional
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Opcional
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Obligatorio
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko if: step2 -->
+                        <div class="row" style="margin-top: 40px;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8">
+                                <table class="table table-borderless w-100">
+                                    <tbody>
+                                        <!-- ko foreach: estadoArchivos -->
+                                        <tr>
+                                            <td style="width: 5%;">
+                                                <span style="color: #337AB7">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-bind="text: Nombre"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko if: step3 -->
+                        <div class="row" style="margin-top: 40px">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <table class="table table-borderless w-100">
+                                    <tbody>
+                                        <!-- ko foreach: notasCapacitacion -->
+                                        <tr>
+                                            <td style="width: 5%;">
+                                                <span style="color: #337AB7">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-bind="text: Estado1"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">
+                                                <span style="color: #337AB7">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-bind="text: Estado2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">
+                                                <span style="color: #337AB7">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-bind="text: Estado3"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                        <tr>
+                                            <td colspan="2" style="padding-top: 60px;">
+                                                <span style="color: #337AB7">
+                                                    El proceso de capacitación ha finalizado con éxito, Emermédica procederá a realizar el proceso de contratación junto contigo, para finalizar con tu vinculación a el equipo de Asesores de nuestra compañía.
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko if: step4 -->
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-sm-12">
+                                <div class="row" id="bagde-rw-1">
+                                    <div class="col-sm-4">
+                                        <div id="st-1" class="rc-step step-ac">
+                                            <label id="bd-1" class="badge-step-ac">1</label>&ensp;
+                                            <label style="margin-bottom: 0px;">Información personal</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div id="st-2" class="rc-step">
+                                            <label id="bd-2" class="badge-step">2</label>&ensp;
+                                            <label style="margin-bottom: 0px;">SARLAFT</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div id="st-3" class="rc-step">
+                                            <label id="bd-3" class="badge-step">3</label>&ensp;
+                                            <label style="margin-bottom: 0px;">Experiencia comercial</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row hidden" id="bagde-rw-2">
+                                    <div class="col-sm-4">
+                                        <div id="st-4" class="rc-step step-ac">
+                                            <label id="bd-4" class="badge-step-ac">4</label>&ensp;
+                                            <label style="margin-bottom: 0px;">Contenido del contrato</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div id="st-5" class="rc-step">
+                                            <label id="bd-5" class="badge-step">5</label>&ensp;
+                                            <label style="margin-bottom: 0px;">Certificación de determinación tributaria</label>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-sm-4">
+                                            <div id="st-3" class="rc-step">
+                                                <label id="bd-3" class="badge-step">3</label>&ensp;
+                                                <label style="margin-bottom: 0px;">Experiencia comercial</label>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div id="dv-form-1" class="col-sm-12" style="margin-top: 15px;">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label class="mb-0">Fecha de nacimiento:</label>
+                                        <div class="input-group ip-gr date">
+                                            <input id="fechaNacimiento" type="text" class="form-control fr-brd-" data-bind="value: fechaNacimiento">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-th"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label class="mb-0">Pais de nacimiento:</label>
+                                        <select id="pais" class="form-control fr-brd" data-bind="options: paises, optionsText: 'Nombre', optionsValue: 'Id', optionsCaption: 'Seleccione...', value: paisId, event:{ change: paisesChanged }"></select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Estrato:</label>
+                                        <select id="estrato" class="form-control fr-brd" data-bind="event:{ change: estratoChanged }">
+                                            <option selected value="">Seleccione...</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="mb-0">Dirección:</label>
+                                        <input class="form-control fr-brd" id="direccion" type="text" data-bind="value: direccion, event: { 'keyup': kuDireccion }" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="mb-0">Barrio:</label>
+                                        <input id="barrio" type="text" class="form-control fr-brd" data-bind="value: barrio, event: { 'keyup': kuBarrio }" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="mb-0">EPS:</label>
+                                        <select id="eps" class="form-control fr-brd" data-bind="options: eps, optionsText: 'Nombre', optionsValue: 'Id', optionsCaption: 'Seleccione...', value: epsId, event:{ change: epsChanged }"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="mb-0">Fondo de pensiones:</label>
+                                        <select id="pensiones" class="form-control fr-brd" data-bind="options: pensiones, optionsText: 'Nombre', optionsValue: 'Id', optionsCaption: 'Seleccione...', value: pensionId, event:{ change: pensionesChanged }"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="mb-0">Estado civil:</label>
+                                        <select id="estadoCivil" class="form-control fr-brd" data-bind="event:{ change: estadoCivilChanged }">
+                                            <option selected value="">Seleccione...</option>
+                                            <option value="soltero">Soltero</option>
+                                            <option value="casado">Casado</option>
+                                            <option value="separado">Separado</option>
+                                            <option value="viduo">Viudo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="mb-0">Nivel educativo:</label>
+                                        <select id="nivelEducativo" class="form-control fr-brd" data-bind="options: nivelEducativo, optionsText: 'Nombre', optionsValue: 'Id', optionsCaption: 'Seleccione...', value: nivelEducativoId, event:{ change: nivelEducativoChanged }"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="checkbox">
+                                            <label style="color: #003C72; font-weight: bold; padding-left: 0px !important">
+                                                ¿Posee otra fuente de ingresos distinta a Emermédica?
+                                                <input id="fuenteIngresos" type="checkbox">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 text-right">
+                                        <button class="btn btn-primary" style="width: 30%;" data-bind="click: siguiente.bind($data)">
+                                            <span>Continuar</span>
+                                            <i class="fa fa-arrow-right" aria-hidden="true" style="float: right;margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="dv-form-2" class="col-sm-12" style="margin-top: 15px; display: none;">
+                                <div class="row" style="margin-top: 25px;">
+                                    <div class="col-sm-12">
+                                        <table class="w-100">
+                                            <tbody>
+                                                <tr style="vertical-align: bottom;">
+                                                    <td style="width: 35%;">
+                                                        <span class="lb-fr-sl">Ocupación o profesión:</span>
+                                                        <select id="profesion" class="form-control fr-brd" data-bind="options: profesion, optionsText: 'Nombre', optionsValue: 'Id', optionsCaption: 'Seleccione...', value: profesionId, event:{ change: profesionChanged }"></select>
+                                                    </td>
+                                                    <td style="width: 5%"></td>
+                                                    <td style="width: 60%;">
+                                                        <span class="lb-fr-sl">Todos los recursos y/o bienes que poseo han sido obtenidos lícitamente, a través de los siguientes medios y/o actividades:</span>
+                                                        <input id="recursos" class="form-control fr-brd" type="text" data-bind="value: recursos, event: { 'keyup': kuRecursos }" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-12" style="margin-top: 15px;">
+                                        <table class="tb-slf w-100">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 47.5%">
+                                                        <div class="checkbox">
+                                                            <label class="lb-ch">
+                                                                ¿Maneja recursos publicos?
+                                                                <input class="slf-tgl" type="checkbox" id="prSlft1">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width: 5%"></td>
+                                                    <td style="width: 47.5%">
+                                                        <div class="checkbox">
+                                                            <label class="lb-ch">
+                                                                ¿Es servidor público?
+                                                                <input class="slf-tgl" type="checkbox" id="prSlft2">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label class="lb-ch">
+                                                                ¿Ostenta algún grado de poder público?
+                                                                <input class="slf-tgl" type="checkbox" id="prSlft3">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label class="lb-ch">
+                                                                ¿Tiene la condición de Persona Expuesta Políticamente?
+                                                                <input class="slf-tgl" type="checkbox" id="prSlft4">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label class="lb-ch">
+                                                                ¿Realiza operaciones internacionales?
+                                                                <input class="slf-tgl" type="checkbox" id="prSlft5">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label class="lb-ch">
+                                                                ¿Goza de reconocimiento público?
+                                                                <input class="slf-tgl" type="checkbox" id="prSlft6">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <select id="opInternacionales" style="display: none;" class="form-control fr-brd" data-bind="event:{ change: operacionesInternacionalesChanged }">
+                                                            <option selected value="">Seleccione...</option>
+                                                            <option value="importaciones">Importaciones</option>
+                                                            <option value="exportaciones">Exportaciones</option>
+                                                            <option value="inversiones">Inversiones</option>
+                                                            <option value="prestamos">Prestamos</option>
+                                                            <option value="recepciongiros">Envio y/o recepción de giros</option>
+                                                            <option value="pagoservicios">Pago de servicios</option>
+                                                            <option value="transferencias">Transferencias</option>
+                                                            <option value="otras">Otras</option>
+                                                        </select>
+                                                    </td>
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 30px;">
+                                    <div class="col-sm-6 text-left">
+                                        <button class="btn btn-primary" style="width: 60%;" data-bind="click: anterior.bind($data)">
+                                            <span>Regresar</span>
+                                            <i class="fa fa-arrow-left" aria-hidden="true" style="float: left; margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <button class="btn btn-primary" style="width: 60%;" data-bind="click: siguiente.bind($data)">
+                                            <span>Continuar</span>
+                                            <i class="fa fa-arrow-right" aria-hidden="true" style="float: right;margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="dv-form-3" class="col-sm-12" style="margin-top: 15px; display: none;">
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-sm-12">
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <label for="anios">¿Cuánto tiempo en total tiene de experiencia en el área comercial?</label>&nbsp;
+                                                <input id="anios" type="text" class="form-control fr-anios" data-bind="value: anios" maxlength="2">&nbsp;
+                                                <label for="email">Años:</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <table class="w-100">
+                                            <tr>
+                                                <td colspan="3" style="padding-bottom: 15px;">
+                                                    <label style="color:#003C72;">
+                                                        1. PRINCIPAL Sector de Experiencia en Ventas
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 42.5%">
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="financiero"
+                                                               name="rg1" value="financiero" checked data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="financiero">Financiero</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="seguros"
+                                                               name="rg1" value="seguros" data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="seguros">Seguros</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="salud"
+                                                               name="rg1" value="salud" data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="salud">Salud</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="construccion"
+                                                               name="rg1" value="construccion" data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="construccion">Construcción</label>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 15%;"></td>
+                                                <td style="width: 42.5%">
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="comunicaciones"
+                                                               name="rg1" value="comunicaciones" data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="comunicaciones">Comunicaciones</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="transporte"
+                                                               name="rg1" value="transporte" data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="transporte">Transporte</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="industrial"
+                                                               name="rg1" value="industrial" data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="industrial">Industrial</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="otro1"
+                                                               name="rg1" value="otro1" data-bind="event: { 'change': radioGroup1 }" />
+                                                        <label for="otro1">Otro. ¿Cuál?</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr-otro-1" style="display: none">
+                                                <td colspan="3" style="padding-top: 15px;">
+                                                    <input id="fr-otro1" type="text" class="form-control" placeholder="Escriba otro sector de ventas" data-bind="value: primerSector" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-5">
+                                        <table class="w-100">
+                                            <tr>
+                                                <td colspan="3" style="padding-bottom: 15px;">
+                                                    <label style="color:#003C72;">
+                                                        2.SEGUNDO Sector de Experiencia en Ventas
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 42.5%">
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="financiero1"
+                                                               name="rg2" value="financiero1" checked data-bind="event: { 'change': radioGroup2 }" />
+                                                        <label for="financiero1">Financiero</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="seguros1"
+                                                               name="rg2" value="seguros1" data-bind="event: { 'change': radioGroup2 }" />
+                                                        <label for="seguros1">Seguros</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="salud1"
+                                                               name="rg2" value="salud1" data-bind="event: { 'change': radioGroup2 }" />
+                                                        <label for="salud1">Salud</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="construccion1"
+                                                               name="rg2" value="construccion1" data-bind="event: { 'change': radioGroup2 }" />
+                                                        <label for="construccion1">Construcción</label>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 15%;"></td>
+                                                <td style="width: 42.5%">
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="comunicaciones1"
+                                                               name="rg2" value="comunicaciones1" data-bind="event: { 'change': radioGroup2 }" />
+                                                        <label for="comunicaciones1">Comunicaciones</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="transporte1"
+                                                               name="rg2" value="transporte1" />
+                                                        <label for="transporte1">Transporte</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="industrial1"
+                                                               name="rg2" value="industrial1" data-bind="event: { 'change': radioGroup2 }" />
+                                                        <label for="industrial1">Industrial</label>
+                                                    </div>
+                                                    <div class="radiobtn">
+                                                        <input type="radio" id="otro2"
+                                                               name="rg2" value="otro2" data-bind="event: { 'change': radioGroup2 }" />
+                                                        <label for="otro2">Otro. ¿Cuál?</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr-otro-2" style="display: none">
+                                                <td colspan="3" style="padding-top: 15px;">
+                                                    <input id="fr-otro2" type="text" class="form-control" placeholder="Escriba otro sector de ventas" data-bind="value: segundoSector" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                @*<div class="row" style="margin-top: 15px;">
+                                        <div class="col-sm-12">
+                                            <span>
+                                                Descarga, diligencia y adjunta aquí,<a href="https://sgtuportalafiliaciones.blob.core.windows.net/documentos/TuPortal/Certificacion-Contratacion.zip" target="_blank"> CERTIFICACIÓN - DETERMINACIÓN DEL IMPTO PARA PERSONAS NATURALES.pdf y CONTRATO CORRETAJE VERSIÓN ACTUALIZADA 20102016.pdf</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-sm-12 text-center">
+                                            <div class="file btn btn-primary" style="position: relative; overflow: hidden;">
+                                                Adjuntar Certificado
+                                                <input id="file-certificado" type="file" accept=".zip" name="file" style="position: absolute; font-size: 50px; opacity: 0; right: 0; top: 0;" />
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                @*<div class="row">
+                                        <div class="col-sm-12" style="margin-top: 10px;">
+                                            <span style="color: #979797">
+                                                “En caso de no activar su código dentro de los tres meses siguientes a la firma del contrato, los documentos recibidos de su parte serán dados de baja del archivo principal de la compañía”
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-12" style="margin-top: 3px;">
+                                            <span style="color: #979797">
+                                                De acuerdo con la Ley 1266 de 31 de Diciembre de 2008 o Ley Habeas Data, autorizo a Emermédica S.A. para que actualice la información aquí registrada y consulte y verifique la información de mi hoja de vida.
+                                            </span>
+                                        </div>
+                                    </div>*@
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-6 text-left">
+                                        <button class="btn btn-primary" style="width: 60%;" data-bind="click: anterior.bind($data)">
+                                            <span>Regresar</span>
+                                            <i class="fa fa-arrow-left" aria-hidden="true" style="float: left; margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <button id="siguiente" class="btn btn-primary" style="width: 60%;" data-bind="click: siguiente.bind($data)">
+                                            <span>Continuar</span>
+                                            <i class="fa fa-arrow-right" aria-hidden="true" style="float: right;margin-top: 4px;"></i>
+                                        </button>
+                                        <button id="enviar" class="btn btn-primary" style="width: 60%; display: none;" data-bind="click: completarRegistro.bind($data)">
+                                            <span>Continuar</span>
+                                            <i class="fa fa-arrow-right" aria-hidden="true" style="float: right;margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="dv-form-4" class="col-sm-12" style="margin-top: 15px; display: none;">
+                                <div class="row">
+                                    <div id="dv-contr" class="col-sm-12 ov-contr">
+                                        <p style="font-family: Cambria;color: #B19292;font-size: 24px;line-height: 25px;">
+                                            CONTRATO DE CORRETAJE SIMPLE PARA<br>
+                                            LA PROMOCIÓN Y COMERCIALIZACIÓN DE<br>
+                                            PLANES Y PRODUCTOS DE SALUD
+                                        </p>
+                                        <hr style="margin: 0px;background-color: #B19292;height: 2px;margin-bottom: 1px;">
+                                        <hr style="margin-top: 0px;background-color: #B19292;height: 5px;">
+                                        <p style="text-align: justify;">Nosotros,&nbsp;<strong data-bind="text: representanteLegal().Nombres + ' ' + representanteLegal().Apellidos"></strong>,&nbsp; mayor,&nbsp; vecino&nbsp; de Bogot&aacute;, con&nbsp; la&nbsp; c&eacute;dula&nbsp; de&nbsp; ciudadan&iacute;a No.&nbsp;<span data-bind="text: representanteLegal().NumeroDocumento"></span>&nbsp;de&nbsp;<span data-bind="text: representanteLegal().CiudadExpedicion"></span>, obrando como Representante Legal de <strong>EMERM&Eacute;DICA</strong> <strong>S.A. SERVICIOS DE AMBULANCIA PREPAGADOS</strong>, sociedad comercial de naturaleza an&oacute;nima y car&aacute;cter privado creada por la voluntad privada mediante escritura p&uacute;blica No. 720 de la Notar&iacute;a 30 de Bogot&aacute; del 18 de marzo de 1991, aclarada por la escritura p&uacute;blica No. 1053 del 19 de abril de 1991, inscrita en la C&aacute;mara de Comercio de Bogot&aacute; el 25 de abril de 1991 bajo el n&uacute;mero 324543 del Libro IX, matricula mercantil No. 00450432 y NIT 800126785-7, y a la que para efectos del presente contrato se le denominara simplemente <strong>EMERM&Eacute;DICA</strong>, por una parte; y, por la otra parte&nbsp; <u data-bind="text: nombresApellidos"></u> tambi&eacute;n mayor, vecino (a) de <u>Colombia</u>, identificado (a) como aparece al pie de su firma, quien tiene la calidad de Corredor Comercial,&nbsp; en&nbsp; adelante&nbsp; y&nbsp; para efectos de este contrato se denominara <strong>EL</strong> <strong>CORREDOR</strong>, hemos&nbsp; celebrado&nbsp; el presente <strong>CONTRATO </strong><strong>DE CORRETAJE SIMPLE PARA LA PROMOCI&Oacute;N Y COMERCIALIZACI&Oacute;N</strong> <strong>DE PLANES DE SALUD, </strong>del que dan cuenta las disposiciones incorporadas a &eacute;ste contrato y las dem&aacute;s que de forma especial apliquen para las Entidades Administradoras de Planes Adicionales de Salud &ndash; EAPB del Sistema General de Seguridad Social en Salud, previas las siguientes</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: center;"><strong>CONSIDERACIONES</strong></p>
+                                        <p>&nbsp;</p>
+                                        <ol>
+                                            <li style="text-align: justify;"><strong>EMERM&Eacute;DICA</strong> <strong>A. SERVICIOS DE AMBULANCIA PREPAGADOS, </strong>es una Empresa Administradora de Planes Adicionales de Salud de AMBULANCIA PREPAGADA, cuyo objeto social es la prestaci&oacute;n de servicios m&eacute;dicos, especialmente de emergencia y a domicilio, la prestaci&oacute;n de servicios de ambulancia bajo el sistema de prepago, el traslado de enfermos mediante la utilizaci&oacute;n de unidades dotadas, y en general la prestaci&oacute;n de toda clase de servicios en el &aacute;rea m&eacute;dica siempre que puedan considerarse relacionados o complementarios con los anteriores.</li>
+                                        </ol>
+                                        <p style="text-align: justify;">&nbsp;</p>
+                                        <ol style="text-align: justify;" start="2">
+                                            <li>Para el desarrollo de su objeto social, <strong>EMERM&Eacute;DICA S.A.</strong> fue autorizada por la Superintendencia Nacional de Salud mediante Resoluci&oacute;n No. 0763 del 13 de octubre de 1995, otorg&aacute;ndole el certificado de funcionamiento como ENTIDAD DE SERVICIOS DE AMBULANCIA PREPAGADOS. Igualmente se encuentra inscrita en el Registro Especial de Prestadores de Servicios de Salud que la habilita como INSTITUCI&Oacute;N PRESTADORA DE SERVICIOS DE SALUD, para ofertar y prestar servicios pre-hospitalarios en la modalidad extramural y domiciliaria, en eventos de urgencia y emergencia, y traslados primarios asistidos.</li>
+                                        </ol>
+                                        <p style="text-align: justify;">&nbsp;</p>
+                                        <ol start="3">
+                                            <li style="text-align: justify;">La oferta y prestaci&oacute;n de los servicios los efect&uacute;a <strong>EMERM&Eacute;DICA SA </strong>a trav&eacute;s de contratos privados, por lo cual, con el fin de impulsar comercialmente la promoci&oacute;n de sus planes y productos de salud, como administradora y prestadora de servicios de salud, ha considerado procedente celebrar este acuerdo con <strong>EL CORREDOR, </strong>para contactar a personas naturales y jur&iacute;dicas que se encuentren interesadas en adquirir alguno de ellos.</li>
+                                        </ol>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: center;"><strong>CL&Aacute;USULAS</strong></p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>PRIMERA.</strong>-&nbsp; <strong><u>OBJETO:</u></strong> <strong>EMERM&Eacute;DICA</strong> encarga a <strong>EL CORREDOR</strong>, quien asume en forma independiente y aut&oacute;noma, de la manera reglamentada en el C&oacute;digo de Comercio para el Corretaje Simple, y en los Decretos 1486 de 1994, 720 de 1994, 1485 de 1994, 1570 de 1993, Ley 100 de 1993, Circular &Uacute;nica de la Superintendencia Nacional de Salud, y dem&aacute;s normas concordantes, as&iacute; como aquellas que las modifiquen, complementen o deroguen las cuales se entender&aacute;n incorporadas de forma autom&aacute;tica al presente contrato; las siguientes gestiones y servicios comerciales: <strong>A)</strong> Como intermediario, <strong>EL CORREDOR</strong> se obliga a poner en relaci&oacute;n con terceras personas naturales y jur&iacute;dicas, a<strong> EMERM&Eacute;DICA</strong>, con el fin de que celebren con &eacute;sta Planes y Contratos para la cobertura de servicios de salud de los que &eacute;sta tenga establecidos; a partir de dicho momento <strong>EMERM&Eacute;DICA </strong>se encargar&aacute; de realizar los actos tendientes al perfeccionamiento de la venta y formalizaci&oacute;n del contrato, sin perjuicio del acompa&ntilde;amiento que se requiera de <strong>EL CORREDOR</strong>.<strong> B)</strong> Promocionar y comercializar la afiliaci&oacute;n a los diferentes Planes y Contratos de Salud de acuerdo con el mercado objetivo de <strong>EMERM&Eacute;DICA,</strong> las pol&iacute;ticas comerciales que &eacute;sta tenga establecidas, dentro de la cobertura geogr&aacute;fica que tenga autorizada a nivel nacional y local, y con base en los per&iacute;metros de cobertura de cada ciudad o municipio. <strong>C)</strong> Realizar las acciones necesarias para que los contratantes, beneficiarios y usuarios de los planes y productos de salud de <strong>EMERM&Eacute;DICA,</strong> cumplan sus obligaciones legales y contractuales, especialmente pero sin limitarse a esta: efectuar el pago oportuno de las primas y cuotas de cada contrato conforme la modalidad y forma de pago escogida; est&eacute;n y permanezcan&nbsp; afiliados al R&eacute;gimen Contributivo o a un R&eacute;gimen de Excepci&oacute;n del SGSSS seg&uacute;n aplique; y de acuerdo con los lineamientos que para el efecto determine <strong>EMERM&Eacute;DICA.</strong> <strong>D)</strong> Efectuar una permanente labor de mantenimiento y conservaci&oacute;n de los contratantes, beneficiarios y usuarios de los Planes y Productos de <strong>EMERM&Eacute;DICA, </strong>que logre captar a trav&eacute;s de su intermediaci&oacute;n, ofreciendo en forma permanente la atenci&oacute;n de servicio al cliente. <strong>PAR&Aacute;GRAFO PRIMERO</strong>.- <strong>&nbsp;EL CORREDOR</strong> de forma voluntaria se compromete a realizar la intermediaci&oacute;n de que trata la presente clausula, quedando obligado a efectuarla en la forma y t&eacute;rminos estipulados en este contrato. <strong>PAR&Aacute;GRAFO&nbsp; SEGUNDO.</strong>- El objeto del presente contrato lo desarrollar&aacute; <strong>EL CORREDOR</strong>&nbsp; por su especial&nbsp; conocimiento&nbsp; del mercado, con autonom&iacute;a&nbsp; t&eacute;cnica, administrativa y financiera. Por su propia naturaleza, no constituye contrato de trabajo en ninguna de las relaciones de <strong>EL CORREDOR </strong>para con <strong>EMERM&Eacute;DICA</strong> ni de &eacute;sta para con los trabajadores que aquel utilice en el desarrollo de sus actividades; no le son aplicables las reglas y condiciones del corretaje de seguros al tratarse de un corretaje simple; y no se encuentra vinculado con <strong>EMERM&Eacute;DICA</strong> por relaciones de colaboraci&oacute;n, dependencia, subordinaci&oacute;n, representaci&oacute;n o mandato. <strong>PAR&Aacute;GRAFO TERCERO.- </strong>El presente acuerdo no otorga ning&uacute;n tipo de exclusividad a favor de <strong>EL CORREDOR</strong>; por lo cual <strong>EMERM&Eacute;DICA </strong>est&aacute; facultada para celebrar contratos con otras personas naturales o jur&iacute;dicas para la comercializaci&oacute;n y promover todos sus planes y productos de salud; todo bajo el entendido de que esas personas han recibido informaci&oacute;n de los planes y productos por mecanismos diferentes a la promoci&oacute;n y publicidad de <strong>EL CORREDOR.</strong>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>&nbsp;</strong></p>
+                                        <p style="text-align: justify;"><strong>SEGUNDA.</strong>- <strong><u>COMISI&Oacute;N Y FORMA DE&nbsp; PAGO</u>:&nbsp; </strong>Por las actividades de intermediaci&oacute;n&nbsp; que realice <strong>EL</strong> <strong>CORREDOR </strong>y siempre y cuando estas actividades concluyan con la celebraci&oacute;n por parte de&nbsp; <strong>EMERM&Eacute;DICA</strong>&nbsp; de los contratos de salud, se causar&aacute; en favor de <strong>EL</strong> <strong>CORREDOR</strong> una comisi&oacute;n que pagara exclusivamente <strong>EMERM&Eacute;DICA</strong>, en los t&eacute;rminos y condiciones del (os) anexo (s) sobre &ldquo;Pol&iacute;ticas Nacionales de Producci&oacute;n y de Pago de Comisiones para Asesores Comerciales por Corretaje&rdquo; que hace parte integral de este contrato. El pago se har&aacute; efectivo previa presentaci&oacute;n de la cuenta de cobro o factura y prueba del cumplimiento de sus obligaciones con el Sistema general de Seguridad Social Integral y salud y pensiones. <strong>PAR&Aacute;GRAFO PRIMERO.- </strong>Si por cualquier causa atribuible a las partes o a terceros, no se logra hacer efectiva la venta con los clientes presentados por <strong>EL CORREDOR</strong> a <strong>EMERM&Eacute;DICA</strong>, no se generar&aacute; comisi&oacute;n alguna en favor de <strong>EL CORREDOR</strong> ni <strong>EMERM&Eacute;DICA</strong> estar&aacute; en la obligaci&oacute;n de hacer ninguna erogaci&oacute;n derivada de la actividad del mismo. <strong>PAR&Aacute;GRAFO SEGUNDO.- </strong>A las sumas canceladas a <strong>EL CORREDOR</strong> se le efectuar&aacute;n los descuentos de ley. <strong>PAR&Aacute;GRAFO TERCERO.- EMERM&Eacute;DICA </strong>se reserva el derecho a modificar unilateralmente el anexo de que trata la presente cl&aacute;usula, sin previo aviso.</p>
+                                        <p style="text-align: justify;"><strong>&nbsp;</strong></p>
+                                        <p style="text-align: justify;"><strong>TERCERA.</strong>- <strong><u>EXPENSAS</u>: EL CORREDOR </strong>no tendr&aacute; derecho al reconocimiento de gastos o&nbsp; expensas en que incurra por raz&oacute;n de las gestiones de intermediaci&oacute;n que realice. Las partes convienen y as&iacute; lo expresan, que de conformidad al articulo 1342 del C&oacute;digo de Comercio, las expensas que se causen&nbsp; por&nbsp; negocios&nbsp; que&nbsp; efectivamente se celebren se entiende que est&aacute;n&nbsp; comprendidas dentro de la comisi&oacute;n convenida.</p>
+                                        <p style="text-align: justify;">&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>CUARTA.</strong>- <strong><u>OBLIGACIONES DE LOS CONTRATANTES</u>:</strong> <strong>A)</strong> <strong><u>DEL CORREDOR</u>:</strong> <strong>1.-</strong>&nbsp; Cumplir con las obligaciones que se consagran para el corretaje simple en el C&oacute;digo de Comercio y, especialmente a comunicar a las partes que ponga en relaci&oacute;n con <strong>EMERM&Eacute;DICA</strong>, todas las circunstancias conocidas y que en alguna forma puedan influir en la celebraci&oacute;n de un negocio. <strong>2.-</strong> Realizar su actividad con la diligencia y cuidado que caracterizan a un corredor comercial, y a utilizar los medios de que disponga para poner en relaci&oacute;n con <strong>EMERM&Eacute;DICA</strong> a personas que re&uacute;nan las calidades y condiciones para afilarse a sus Planes o contratar sus Productos de salud. <strong>3.-</strong> Efectuar la promoci&oacute;n y comercializaci&oacute;n de los Planes de Prepago que tenga autorizados <strong>EMERM&Eacute;DICA</strong> por la Superintendencia Nacional de Salud, y los productos de salud que oferta como Instituci&oacute;n Prestadora de Servicios de Salud. <strong>4.-</strong> Guardar una recta l&iacute;nea de conducta y actuaci&oacute;n, observando las pol&iacute;ticas se&ntilde;aladas por <strong>EMERM&Eacute;DICA</strong>. <strong>5.-</strong> Informar en forma veraz a los posibles usuarios de los servicios, sobre las condiciones legales y contractuales del contrato de acuerdo con el tipo de negocio, modalidades y lugar de prestaci&oacute;n de los servicios y en general a suministrarles informaci&oacute;n que permita perfeccionar el contrato. <strong>6.-</strong> No ofrecer condiciones distintas a las contempladas en los planes y productos de salud. <strong>7.- </strong>Hacer uso responsable de la informaci&oacute;n, documentos y papeler&iacute;a de propiedad de <strong>EMERM&Eacute;DICA </strong>que se le entregue en raz&oacute;n de su actividad como corredor.<strong> 8.-</strong> En el evento de que <strong>EL CORREDOR</strong> realice el recaudo del valor de los dineros correspondientes a contratos celebrados, previa autorizaci&oacute;n de <strong>EMERM&Eacute;DICA</strong>, consignar&aacute; a esta, a mas tardar dentro de las 24 horas siguientes a su recaudo, el valor recibido. Queda entendido que hacer recaudo s&oacute;lo estar&aacute; autorizado para recibir del cliente la primera cuota cuando el contrato sea con una persona natural. <strong>9</strong>.- Procurar que los negocios que celebre <strong>EMERM&Eacute;DICA </strong>por su labor de intermediaci&oacute;n se mantengan vigentes, y promover la renovaci&oacute;n de los mismos. <strong>10.-</strong> Devolver a <strong>EMERM&Eacute;DICA</strong> una vez termine este contrato por cualquier causa, todos los documentos y la papeler&iacute;a que se le hubiere confiado o suministrado para desempe&ntilde;ar su labor<strong>. 11.-</strong> Asistir a los cursos de capacitaci&oacute;n programados por <strong>EMERM&Eacute;DICA. 12.- </strong>Hacer constar su calidad de intermediario, identificando la Entidad para la cual realiza su labor de promoci&oacute;n y comercializaci&oacute;n en su papeler&iacute;a y dem&aacute;s documentaci&oacute;n que utilice para desarrollar su actividad y cuando se presente con los potenciales afiliados. <strong>13.- </strong>Suministrar la documentaci&oacute;n que le sea exigida por <strong>EMERM&Eacute;DICA</strong>. &nbsp;<strong>B)<u> DE EMERM&Eacute;DICA</u></strong>: <strong>1.- </strong>Cancelar las comisiones generadas dentro de los t&eacute;rminos y condiciones establecidos en el anexo que forma parte integral de este contrato. <strong>2.- </strong>Capacitar a <strong>EL</strong> <strong>CORREDOR </strong>sobre los Planes y Productos de Salud. <strong>3.-</strong> Suministrar la papeler&iacute;a y formatos que <strong>EL CORREDOR</strong> debe usar.<strong> 4.- </strong>Dar a conocer las pol&iacute;ticas comerciales de la compa&ntilde;&iacute;a.</p>
+                                        <p><strong>&nbsp;</strong></p>
+                                        <p style="text-align: justify;"><strong>QUINTA</strong>.- <strong><u>PREVISIONES ESPECIALES:</u> 1.-&nbsp; </strong>Los contratos y&nbsp; todas&nbsp; las&nbsp; diligencias requeridas&nbsp; para&nbsp; su suscripci&oacute;n o renovaci&oacute;n se entiende celebrados y hechos de manera directa entre <strong>EMERM&Eacute;DICA</strong> y las&nbsp; personas naturales o jur&iacute;dicas interesadas en los servicios que presta <strong>EMERM&Eacute;DICA</strong>, siendo <strong>EL CORREDOR</strong> solo un intermediario entre los&nbsp; contratantes. <strong>2.-</strong> Los clientes son de <strong>EMERM&Eacute;DICA</strong> por lo cual en caso de terminaci&oacute;n del contrato por cualquier causa,<strong> EL CORREDOR</strong> no podr&aacute; utilizar en su favor o en el de terceros sean o no competidores de <strong>EMERM&Eacute;DICA</strong> la informaci&oacute;n que tenga sobre los mismos, la cual se encuentra amparada por el deber de confidencialidad de que trata el presente contrato y por las disposiciones legales sobre el H&aacute;beas Data.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>SEXTA</strong>.- <strong><u>DEBER DE AVISO</u>:</strong> En caso de p&eacute;rdida o extravi&oacute; de documentos o papeler&iacute;a perteneciente a <strong>EMERM&Eacute;DICA</strong>, <strong>EL CORREDOR</strong>&nbsp; se&nbsp; obliga&nbsp; a dar aviso inmediato, haci&eacute;ndose responsable de los da&ntilde;os y perjuicios que se ocasionaren a <strong>EMERM&Eacute;DICA</strong>&nbsp; por&nbsp; dicho extravi&oacute;.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>S&Eacute;PTIMA.-</strong>&nbsp; <strong><u>DURACION Y PR&Oacute;ROGA</u>:</strong>&nbsp; El t&eacute;rmino de duraci&oacute;n del presente contrato es de un (1) a&ntilde;o y se prorrogar&aacute; autom&aacute;ticamente por periodos iguales, salvo que cualquiera de las partes comunique su intenci&oacute;n de terminarlo al vencimiento del t&eacute;rmino inicial o al de cualquiera de sus pr&oacute;rrogas, para lo cual deber&eacute; otorgar un preaviso de quince (15) d&iacute;as calendario.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>OCTAVA.-</strong> <strong><u>TERMINACI&Oacute;N DEL CONTRATO</u>:</strong> El presente contrato se podr&aacute; dar por terminado por cualquiera de las siguientes causas: <strong>A)</strong> Vencimiento del t&eacute;rmino inicialmente pactado o el de cualquiera de sus prorrogas. <strong>B)</strong> Por mutuo acuerdo de las partes. <strong>C) </strong>Por el incumplimiento comprobado de cualquiera de las obligaciones previstas en el presente contrato, para lo cual bastara una comunicaci&oacute;n de la parte cumplida a la parte incumplida en tal sentido, sin necesidad de requerimientos previos a los cuales renuncian expresamente las partes. <strong>D)</strong> Por violaci&oacute;n por parte de <strong>EL CORREDOR</strong> a cualquier de las prohibiciones previstas en &eacute;ste contrato o en la ley. <strong>E) </strong>Unilateralmente por cualquiera de las partes mediante comunicaci&oacute;n escrita con una antelaci&oacute;n no inferior a cinco (5) d&iacute;as calendario a la fecha en que se desee darlo por terminado, sin indicar los motivos. Las partes renuncian expresamente al cobro de cualquier indemnizaci&oacute;n, multa o pena por esta causa. <strong>F)</strong> Por las dem&aacute;s causales previstas en la ley y en los reglamentos.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>NOVENA.- <u>CAUSALES DE INCUMPLIMIENTO</u>:</strong>&nbsp; <strong>EMERM&Eacute;DICA</strong>&nbsp; podr&aacute; unilateralmente dar por terminado en cualquier momento el presente contrato, cuando <strong>EL CORREDOR</strong> incurre en alguna de las siguientes causales, pero sin limitarse a estas: <strong>A)</strong> Por ceder parcial o totalmente sin previa autorizaci&oacute;n de <strong>EMERM&Eacute;DICA</strong> el presente&nbsp; contrato a un tercero, persona natural o jur&iacute;dica. <strong>B)</strong>&nbsp; Por incumplimiento a una o varias de las obligaciones adquiridas en el presente contrato. <strong>C)</strong> Por ofrecer servicios en nombre de <strong>EMERM&Eacute;DICA</strong> distintos a aquellos de los contemplados en su planes y productos. <strong>D)</strong> Por utilizar el nombre de <strong>EMERM&Eacute;DICA</strong> sin el previo consentimiento escrito de la misma y para fines distintos a los previstos en el presente contrato.&nbsp; <strong>E)</strong> Por utilizar indebidamente la papeler&iacute;a que le haya sido entregada. <strong>F) </strong>Por recaudar o retener sumas de dinero correspondientes a los clientes, excepto en los casos autorizados por <strong>EMERM&Eacute;DICA</strong>.<strong> G)</strong> Por incurrir en alguna de las siguientes prohibiciones, sin perjuicio de las acciones a que haya lugar contempladas en el ART. 1346 del c&oacute;digo de comercio: <strong>1.</strong> - En los t&eacute;rminos del Decreto 1486 del 13 de Julio de 1994: 1.1. La colocaci&oacute;n de planes de salud bajo un plan distinto al ofrecido, con enga&ntilde;o para el usuario; 1.2. la cesi&oacute;n de comisiones a favor del usuario; 1.3. el ofrecimiento de beneficios que el plan no cubre o la exageraci&oacute;n de estos; 1.4. en general todo acto de competencia desleal.<strong> 2. </strong>Realizar publicaciones, avisos, propaganda o literatura referente a <strong>EMERM&Eacute;DICA</strong> sin la aprobaci&oacute;n previa y la autorizaci&oacute;n escrita de esta. <strong>3.- </strong>Comprometer a <strong>EMERM&Eacute;DICA </strong>en temas no autorizados o por actuar en su representaci&oacute;n. <strong>4.- </strong>Modificar la forma de pago de los contratos con o sin el consentimiento del usuario y de <strong>EMERM&Eacute;DICA</strong>. <strong>5.-</strong> Alterar las solicitudes de ingreso e inclusi&oacute;n de usuarios<strong>. 6.-</strong> Suplantar de cualquier forma la voluntad de las partes. <strong>7.-</strong> Ofrecer tarifas o descuentos no autorizados.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA</strong>.-<strong> <u>CL&Aacute;USULA PENAL</u>: </strong>En caso de incumplimiento parcial o total de las obligaciones del presente contrato por parte de<strong> EL CORREDOR</strong>, &eacute;ste pagar&aacute; a <strong>EMERM&Eacute;DICA</strong> un valor equivalente al diez por ciento (10%) del valor del contrato a t&iacute;tulo de pena o sanci&oacute;n sin perjuicio de que se pueda hacer exigible la obligaci&oacute;n principal o el subrogado pecuniario, y en ambos casos la indemnizaci&oacute;n de perjuicios. <strong>&nbsp;EL CORREDOR</strong> autoriza con la firma del presente contrato a <strong>EMERM&Eacute;DICA</strong> a descontar de cualquier suma que se le adeude el valor de la sanci&oacute;n aqu&iacute; establecida.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA PRIMERA.-</strong><u> <strong>CL&Aacute;USULA COMPROMISORIA</strong></u><strong>:</strong>&nbsp; Las eventuales&nbsp; diferencias&nbsp; que&nbsp; llegaren a surgir entre los contratantes con ocasi&oacute;n de la celebraci&oacute;n, interpretaci&oacute;n, ejecuci&oacute;n y terminaci&oacute;n de este contrato,&nbsp; que no pudiesen ser solucionadas directamente por ellos, ser&aacute;n dirimidas&nbsp; por un Tribunal de Arbitramiento integrado por un (1) &aacute;rbitro el cual funcionara en Bogot&aacute; y decidir&aacute; en&nbsp; derecho ci&ntilde;&eacute;ndose a lo dispuesto en el decreto 2279 de 1989 y dem&aacute;s normas concordantes, o que lo modifiquen, adicionen o deroguen. El &aacute;rbitro ser&aacute; designado de com&uacute;n acuerdo por las partes dentro de los diez (10) d&iacute;as h&aacute;biles siguientes a la fecha en que una parte comunique a la otra su determinaci&oacute;n de convocar al tribunal. Si no mediare acuerdo total o parcial al respecto, el &aacute;rbitro ser&aacute; designado por la C&aacute;mara de Comercio de Bogot&aacute;.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA SEGUNDA</strong>.- <strong><u>DEBER DE CONFIDENCIALIDAD</u></strong><strong>: </strong>Las partes se comprometen a mantener de manera confidencial toda aquella informaci&oacute;n a la que tengan acceso con motivo o por ocasi&oacute;n de la celebraci&oacute;n o ejecuci&oacute;n del presente contrato. Ninguna de las partes podr&aacute; utilizar parcial o totalmente, en provecho suyo o de un tercero diferente al debido cumplimiento de este contrato, la informaci&oacute;n relativa a &eacute;ste contrato o que se derive del mismo<strong>.</strong> La anterior obligaci&oacute;n surtir&aacute; efecto a partir de la fecha en que se firme el presente contrato y tendr&aacute; una vigencia de dos (2) a&ntilde;os m&aacute;s despu&eacute;s de terminado el mismo. <strong>PAR&Aacute;GRAFO.-</strong> En el evento de incumplimiento del deber de confidencialidad, la parte afectada tendr&aacute; derecho a exigir inmediatamente a la parte incumplida y a t&iacute;tulo de pena el pago de una suma equivalente al veinte por ciento (20%) del valor del contrato con la simple afirmaci&oacute;n de la parte afectada acerca del incumplimiento y sin necesidad de requerimiento o constituci&oacute;n en mora, derechos a los que renuncian las partes. El cobro de la pena aqu&iacute; prevista no excluye ni impide el cobro de la totalidad de la indemnizaci&oacute;n por los perjuicios ocasionados por el incumplimiento, y en consecuencia, la parte afectada tendr&aacute; derecho a cobrar la totalidad de los perjuicios ocasionados, m&aacute;s la pena que aqu&iacute; se establece.</p>
+                                        <p style="text-align: justify;">&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA TERCERA.-</strong> <strong><u>H&Aacute;BEAS DATA</u></strong><strong>:</strong> Las partes se autorizan mutuamente para que la informaci&oacute;n por ellas mutuamente suministrada pueda ser almacenada en sus bases de datos y usada con fines contractuales, estad&iacute;sticos y comerciales.&nbsp; AUTORIZAN el env&iacute;o de mensajes a trav&eacute;s de correo electr&oacute;nico, o cualquier otro medio de comunicaci&oacute;n, relativa a: informaci&oacute;n comercial, legal, de productos, de seguridad, de servicio o de cualquier otra &iacute;ndole, relacionada directa o indirectamente con el contrato entre ellas suscrito. AUTORIZAN para ofrecerse mutuamente sus servicios; y para que les allegue informaci&oacute;n a trav&eacute;s de los sistemas de mensajer&iacute;a a correos electr&oacute;nicos y/o terminales m&oacute;viles, los cuales estar&aacute;n sometidos a las caracter&iacute;sticas y condiciones del servicio en particular. AUTORIZAN a verificar la informaci&oacute;n y datos consignados, ante cualquier persona natural o jur&iacute;dica, privada o p&uacute;blica, sin limitaci&oacute;n alguna, desde ahora y mientras no sea revocada la presente autorizaci&oacute;n. AUTORIZAN para consultar y reportar informaci&oacute;n financiera negativa veraz a Centrales de Riesgo</p>
+                                        <p style="text-align: justify;">&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA CUARTA.- </strong><strong><u>MANEJO DE BASES DE DATOS:</u></strong>&nbsp; Se entiende por base de datos, el conjunto organizado de datos personales que pueda ser objeto de cualquier operaci&oacute;n o conjunto de operaciones: recolecci&oacute;n, almacenamiento, uso, circulaci&oacute;n o supresi&oacute;n en los t&eacute;rminos de las leyes1266 de 2008, 1581 de 2012 y su decreto reglamentario 1377 de 2013. <strong>EL CORREDOR</strong> podr&aacute; contactar los clientes de <strong>EMERM&Eacute;DICA</strong> trav&eacute;s de cualquier fuente, responsable o encargado que est&eacute; autorizado para suministrar informaci&oacute;n de posibles clientes, caso en el cual, tanto la fuente como el responsable o encargado de la informaci&oacute;n y <strong>EL CORREDOR</strong> deber&aacute;n garantizar el adecuado manejo, uso y disposici&oacute;n de la informaci&oacute;n contenida en dichas bases de datos y a dar cumplimiento a lo previsto en las leyes1266 de 2008, 1581 de 2012 y su decreto reglamentario 1377 de 2013. En el mismo sentido, estar&aacute; proscrito el uso y disposici&oacute;n de la informaci&oacute;n de toda persona que no haya autorizado en forma expresa y concreta su uso y disposici&oacute;n para efectos comerciales y de mercadeo que tengan relaci&oacute;n con el objeto contractual aqu&iacute; dispuesto. Por tanto, dentro de sus obligaciones especiales para con <strong>EMERM&Eacute;DICA</strong>, deber&aacute;n acreditar la autorizaci&oacute;n de la persona contactada en los t&eacute;rminos de las disposiciones legales arriba indicadas cuando la informaci&oacute;n de estas provenga de las bases de datos de que tratan dichas normas. En caso de incumplimiento a este deber, y de no ser subsanado de inmediato, dar&aacute; lugar a la terminaci&oacute;n inmediata y con justa causa del&nbsp; presente contrato por parte de <strong>EMERM&Eacute;DICA</strong>. Si adem&aacute;s <strong>EMERM&Eacute;DICA</strong> se viera en curso de una reclamaci&oacute;n en v&iacute;a administrativa ante la Superintendencia de Industria y Comercio, o cualquiera otra, por el uso indebido de la informaci&oacute;n de las personas contactadas por <strong>EL CORREDOR</strong>, deber&aacute; responder por la totalidad de los perjuicios, indemnizaciones, sanciones o multas, honorarios de abogados, costos del proceso y dem&aacute;s en que <strong>EMERM&Eacute;DICA</strong> incurra y se vea abocado a responder, debiendo adicionalmente coadyuvar en la defensa de los intereses de <strong>EMERM&Eacute;DICA</strong>. <strong>PAR&Aacute;GRAFO PRIMERO.- </strong>Los clientes de <strong>EMERM&Eacute;DICA</strong> que se consoliden por la gesti&oacute;n de intermediaci&oacute;n en virtud del presente contrato, integrar&aacute;n la base de datos de clientes de <strong>EMERMEDICA</strong>. Por tratarse de una base de datos, se encuentra protegida respecto a su almacenamiento, uso y circulaci&oacute;n a lo dispuesto por las leyes 1266 de 2008, 1581 de 2012 y su decreto reglamentario 1377 de 2013. La entrega de la base de datos por cualquier medio a <strong>EL CORREDOR</strong> lo obliga a lo siguiente: <strong>(1) </strong>Utilizarla s&oacute;lo para los fines del contrato que el cliente haya celebrado con <strong>EMERM&Eacute;DICA</strong>; <strong>(2)</strong> Gestionarla &uacute;nicamente para fines de retenci&oacute;n de clientes, servicio y atenci&oacute;n al cliente; <strong>(3)</strong>&nbsp; Garantizar el adecuado manejo, uso y disposici&oacute;n de la informaci&oacute;n contenida en ella, y por lo mismo deber&aacute; dar cumplimiento a lo previsto en las leyes 1266 de 2008, 1581 de 2012 y su decreto reglamentario 1377 de 2013<strong>. (4)</strong> Le estar&aacute; total y absolutamente prohibido a <strong>EL CORREDOR:</strong> <strong>(i)</strong> utilizar la informaci&oacute;n de los clientes de <strong>EMERM&Eacute;DICA</strong> contenida en sus bases de datos, para fines o beneficio propio o en beneficio de terceros; <strong>(ii)</strong> utilizar la informaci&oacute;n de los clientes de <strong>EMERM&Eacute;DICA</strong> contenida en sus bases de datos, para entregarla a terceros; <strong>(iii)</strong> utilizar la informaci&oacute;n de los clientes de <strong>EMERM&Eacute;DICA</strong> contenida en sus bases de datos, para gesti&oacute;n comercial distinta diferente y ajena a EMERM&Eacute;DICA. <strong>PAR&Aacute;GRAFO SEGUNDO.- </strong>&nbsp;En caso de incumplimiento a estos l&iacute;mites, fines y prohibiciones, dar&aacute; lugar a la terminaci&oacute;n inmediata y con justa causa del contrato por parte de <strong>EMERM&Eacute;DICA</strong>. Si adem&aacute;s <strong>EMERM&Eacute;DICA</strong> se viera en curso de una reclamaci&oacute;n en v&iacute;a administrativa ante la Superintendencia de Industria y Comercio, o cualquiera otra, por el uso indebido de la informaci&oacute;n all&iacute; contenida, <strong>EL CORREDOR</strong> deber&aacute; responder por la totalidad de los perjuicios, indemnizaciones, sanciones o multas, honorarios de abogados, costos del proceso y dem&aacute;s en que <strong>EMERM&Eacute;DICA</strong> tenga que incurrir, y por la que se vea abocada a responder, debiendo adicionalmente coadyuvar en la defensa de los intereses de <strong>EMERM&Eacute;DICA.</strong></p>
+                                        <p><strong>&nbsp;</strong></p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA QUINTA.-</strong><strong> <u>AUTORIZACIONES ESPECIALES</u></strong>: Sin perjuicio de la facultad que tiene <strong>EMERM&Eacute;DICA</strong> para dar por terminado este contrato as&iacute; como de ejercer las acciones legales correspondientes por el incumplimiento de las obligaciones y deberes que este contrato le impone a <strong>EL CORREDOR</strong>, &eacute;ste autoriza de manera expresa e irrevocable a <strong>EMERM&Eacute;DICA </strong>&nbsp;a lo siguiente: <strong>a)</strong> Suspender hasta por tres (3) meses el pago de comisiones que le puedan corresponder a <strong>EL CORREDOR</strong> en los casos en que <strong>EMERM&Eacute;DICA</strong> reciba reclamaciones de solicitantes, afiliados o usuarios sobre dineros entregados a <strong>EL CORREDOR</strong> y no reportados ni abonados oportunamente a <strong>EMERM&Eacute;DICA</strong>; <strong>b)</strong> Compensar del valor de las comisiones pendientes de pago, las sumas de dinero que le hayan sido entregas por los clientes y no haya reportado o abonado oportunamente a <strong>EMERM&Eacute;DICA</strong>. En caso de no ser suficiente el monto de dichas comisiones,<strong> EMERM&Eacute;DICA</strong> ejercer&aacute; las acciones judiciales que sean necesarias; <strong>c)</strong> Reportar e incluir la raz&oacute;n social o nombre y NIT o c&eacute;dula de <strong>EL CORREDOR </strong>&nbsp;en las centrales de riesgo y sus bases de datos.</p>
+                                        <p><strong>&nbsp;</strong></p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA SEXTA.-</strong>&nbsp;<strong>PREVENCION LAVADO DE ACTIVOS:</strong>&nbsp;<strong>EL CORREDOR</strong>&nbsp;&nbsp;se obliga expresamente a entregar a <strong>EMERMEDICA</strong>&nbsp;la informaci&oacute;n veraz y verificable que le sea solicitada para el cumplimiento de la normatividad relacionada con la prevenci&oacute;n del lavado de activos y la financiaci&oacute;n del terrorismo. En el evento en que no se cumpla con la obligaci&oacute;n consagrada en esta cl&aacute;usula, <strong>EMERMEDICA</strong>&nbsp;tendr&aacute; la facultad de dar por terminado el presente acuerdo. <strong>EL CORREDOR</strong>&nbsp;manifiesta que con base en sus sistemas de informaci&oacute;n y con las herramientas que est&aacute;n a su alcance, los clientes con los que mantiene relaciones comerciales no se encuentran incursos en actividades relacionadas con lavado de activos y/o financiaci&oacute;n del terrorismo.&nbsp;</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA S&Eacute;PTIMA.</strong>-<strong><u>IMPUESTO DE TIMBRE</u></strong><strong>:</strong> Las partes de com&uacute;n acuerdo estiman que el valor m&aacute;ximo anual de este contrato no excede la suma determinada por la ley para causar el impuesto de timbre, circunstancia por la que no habr&iacute;a lugar a su pago por raz&oacute;n de la celebraci&oacute;n del contrato; no obstante, si la cuant&iacute;a del contrato diera lugar al pago del impuesto de timbre, &eacute;ste ser&aacute; a cargo exclusivo de <strong>EL</strong> <strong>CORREDOR.</strong></p>
+                                        <p><strong>&nbsp;</strong></p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA OCTAVA.</strong>- El presente contrato sustituye con efectos hacia adelante, todos los contratos celebrados entre <strong>EMERM&Eacute;DICA</strong> y <strong>EL</strong> <strong>CORREDOR</strong> para los mismos fines, cualquiera que fuese su determinaci&oacute;n o modalidad.</p>
+                                        <p style="text-align: justify;"><strong>&nbsp;</strong></p>
+                                        <p style="text-align: justify;"><strong>D&Eacute;CIMA NOVENA.- <u>DIRECCIONES Y DOMICILIO&nbsp; CONTRACTUAL</u>:</strong> Las comunicaciones que los contratantes deban enviarse sobre asuntos relativos a este contrato, se enviaran a las siguientes&nbsp; direcciones:</p>
+                                        <p><strong>EMERM&Eacute;DICA:</strong></p>
+                                        <p>
+                                            <span>Nombre:&nbsp;</span><span data-bind="text: representanteLegal().Nombres + ' ' + representanteLegal().Apellidos"></span>
+                                        </p>
+                                        <p>Direcci&oacute;n: Carrera 19B No. 168 &ndash; 35</p>
+                                        <p>Correo Electr&oacute;nico:</p>
+                                        <p>Tel&eacute;fono: 3077098</p>
+                                        <p>Fax: 6781405</p>
+                                        <p>Celular:</p>
+                                        <p>Ciudad: Bogot&aacute;</p>
+                                        <p><strong>EL CORREDOR:</strong></p>
+                                        <p>Nombre: <span data-bind="text: nombresApellidos"></span></p>
+                                        <p>Direcci&oacute;n: <span data-bind="text: direccion"></span></p>
+                                        <p>Correo Electr&oacute;nico: <span data-bind="text: correoElectronico"></span></p>
+                                        <p>Tel&eacute;fono ó Celular: <span data-bind="text: telefono"></span></p>
+                                        <p>Ciudad: <span data-bind="text: ciudad"></span></p>
+                                        <p style="text-align: justify;">Los contratantes igualmente&nbsp; designan como domicilio contractual la ciudad de <u><span data-bind="text: ciudad"></span></u>.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;"><strong>VIGESIMA.- <u>ANEXOS</u>:</strong> Forman parte integral del presente contrato los siguientes: <strong>1)</strong> Anexo de Tarifas. <strong>2)</strong> Fotocopia del Registro &Uacute;nico Tributario de<strong> EL CORREDOR</strong><strong>. 3) </strong>Certificaci&oacute;n de la entidad financiera correspondiente en original, en la conste una cuenta bancaria abierta y activa a nombre de <strong>EL CORREDOR </strong>para consignar las comisiones<strong>. 4)</strong> C&aacute;mara de Comercio.</p>
+                                        <p>&nbsp;</p>
+                                        <p style="text-align: justify;">Para&nbsp; Constancia&nbsp; se suscribe el presente&nbsp; contrato,&nbsp; en&nbsp; dos&nbsp; ejemplares id&eacute;nticos, en la Ciudad&nbsp; de <u><span data-bind="text: ciudad"></span></u> a los&nbsp; <strong><u data-bind="text: dia"></u></strong>&nbsp;d&iacute;as del mes <strong><u data-bind="text: mes"></u></strong> del <strong><u data-bind="text: anio"></u></strong>.</p>
+                                        <p>&nbsp;</p>
+                                        <p>&nbsp;</p>
+                                        <p><strong>EMERM&Eacute;DICA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EL CORREDOR</strong></p>
+                                        <p>&nbsp;</p>
+                                        <p>&nbsp;</p>
+                                        <p>&nbsp;</p>
+                                        <p><u data-bind="text: representanteLegal().Nombres + ' ' + representanteLegal().Apellidos"></u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><u data-bind="text: nombresApellidos"></u></strong></p>
+                                        <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></p>
+                                        <p><strong>C.C. No.&nbsp;<span data-bind="text: representanteLegal().NumeroDocumento"></span>&nbsp;de&nbsp;<span data-bind="text: representanteLegal().CiudadExpedicion"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C.C. No. <span data-bind="text: numeroDocumento"></span></strong></p>
+                                        <p><strong>Representante Legal</strong></p>
+                                    </div>
+                                </div>
+                                <div id="dv-rw-declaro" class="row dv-rw-declaro" style="margin-top: 20px;">
+                                    <div class="col-sm-1" style="width: 5%">
+                                        <label class="ctnr-" style="color: #0161B6">
+                                            <input id="declaro" type="checkbox" data-bind="checked: declaro">
+                                            <span class="checkmark-"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-11 dv-declaro">
+                                        <span class="tx-declaro">
+                                            &quot;Declaro que he tenido acceso al contrato de corretaje y al anexo de <a href="https://sgtuportalafiliaciones.blob.core.windows.net/documentos/TuPortal/GC-OD-001.V2.pdf" target="_blank">políticas comerciales I</a> y <a href="https://sgtuportalafiliaciones.blob.core.windows.net/documentos/TuPortal/GC-OD-003.V4.pdf" target="_blank">políticas comerciales II</a> que forma parte integral del contrato, los cuales he descargado y leído sin inconveniente alguno. manifiesto de forma clara y expresa que acepto las disposiciones contractuales allí incluidas y que las he entendido. reconozco y acepto que el contrato con el que me vinculo a emermédica sa es un contrato de corretaje regulado por el código de comercio y en los decretos 1486 de 1994 y 1570 de 1993 recogidos en el decreto único reglamentario del sector salud con tenido en el decreto 780 de 2016, y en los decretos 720 de 1994, 1485 de 1994, ley 100 de 1993, circular única de la superintendencia nacional de salud. por lo mismo declaro que entre emermédica y el suscrito no existe ni se constituye relación laboral alguna, y que me vinculación no determina relaciones de colaboración, dependencia, subordinación, representación o mandato. manifiesto que si me encuentro en imposibilidad de firmar físicamente el contrato la ausencia de firma la subsano con la presente aceptación integral a sus disposiciones y naturaleza jurídica, por lo cual renuncio a reclamaciones posteriores de toda índole en tal sentido.&quot;
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 30px;">
+                                    <div class="col-sm-6 text-left">
+                                        <button class="btn btn-primary" style="width: 60%;" data-bind="click: anterior.bind($data)">
+                                            <span>Regresar</span>
+                                            <i class="fa fa-arrow-left" aria-hidden="true" style="float: left; margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <button class="btn btn-primary btn-sig" style="width: 60%;" data-bind="click: siguiente.bind($data)">
+                                            <span>Continuar</span>
+                                            <i class="fa fa-arrow-right" aria-hidden="true" style="float: right;margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="dv-form-5" class="col-sm-12" style="margin-top: 15px; display: none;">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p>
+                                            Manifiesto bajo gravedad de juramento que con la información que poseo a la fecha de la firma de este documento certifico que no soy responsable del impuesto a las ventas IVA, cuyos ingresos brutos provienen por lo menos en un 80% de pagos originados en una relación laboral o legal y reglamentaria y que adicionalmente cumplo con todos los siguientes requisitos:
+                                        </p>
+                                        <table border="1" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 85%;"></th>
+                                                    <th style="width: 7.5%;">SI</th>
+                                                    <th style="width: 7.5%;">NO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr1"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp1">
+                                                            <input type="radio" id="prt1Si" name="rgp1" value="1" data-bind="checked: pr1, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt1Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp1">
+                                                            <input type="radio" id="prt1No" name="rgp1" value="0" data-bind="checked: pr1, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt1No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr2"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp2">
+                                                            <input type="radio" id="prt2Si" name="rgp2" value="1" data-bind="checked: pr2, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt2Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp2">
+                                                            <input type="radio" id="prt2No" name="rgp2" value="0" data-bind="checked: pr2, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt2No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr3"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp3">
+                                                            <input type="radio" id="prt3Si" name="rgp3" value="1" data-bind="checked: pr3, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt3Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp3">
+                                                            <input type="radio" id="prt3No" name="rgp3" value="0" data-bind="checked: pr3, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt3No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr4"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp4">
+                                                            <input type="radio" id="prt4Si" name="rgp4" value="1" data-bind="checked: pr4, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt4Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp4">
+                                                            <input type="radio" id="prt4No" name="rgp4" value="0" data-bind="checked: pr4, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt4No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr5"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp5">
+                                                            <input type="radio" id="prt5Si" name="rgp5" value="1" data-bind="checked: pr5, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt5Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp5">
+                                                            <input type="radio" id="prt5No" name="rgp5" value="0" data-bind="checked: pr5, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt5No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr6"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp6">
+                                                            <input type="radio" id="prt6Si" name="rgp6" value="1" data-bind="checked: pr6, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt6Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp6">
+                                                            <input type="radio" id="prt6No" name="rgp6" value="0" data-bind="checked: pr6, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt6No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <p style="font-weight: bold;text-align: center;">
+                                            IMPUESTO UNIFICADO BAJO EL RÉGIMEN SIMPLE DE TRIBUTACION-SIMPLE PARA LA FORMALIZACION Y LA GENERACION DE EMPLEO
+                                        </p>
+                                        <p>
+                                            Por favor informar si se acogió al nuevo régimen simple de tributación-SIMPLE, para efectos de determinar si es sujeto o no de la retención en la fuente a título de renta e ICA. De ser así, adjuntar una copia del RUT donde se pueda evidenciar el cambio al nuevo régimen.
+                                        </p>
+                                        <table border="1" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 85%;"></th>
+                                                    <th style="width: 7.5%;">SI</th>
+                                                    <th style="width: 7.5%;">NO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr7"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp7">
+                                                            <input type="radio" id="prt7Si" name="rgp7" value="1" data-bind="checked: pr7, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt7Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp7">
+                                                            <input type="radio" id="prt7No" name="rgp7" value="0" data-bind="checked: pr7, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt7No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <p style="font-weight: bold;">
+                                            Información para efectos de depuración de la base de retención en la fuente:
+                                        </p>
+                                        <p>
+                                            Solicito se tenga en cuenta la siguiente información para la depuración de la base gravable de la retención en la fuente para el pago de honorarios por la existencia de alguno (s) de los siguientes conceptos:
+                                        </p>
+                                        <table border="1" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 85%;"></th>
+                                                    <th style="width: 7.5%;">SI</th>
+                                                    <th style="width: 7.5%;">NO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr8"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp8">
+                                                            <input type="radio" id="prt8Si" name="rgp8" value="1" data-bind="checked: pr8, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt8Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp8">
+                                                            <input type="radio" id="prt8No" name="rgp8" value="0" data-bind="checked: pr8, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt8No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr9"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp9">
+                                                            <input type="radio" id="prt9Si" name="rgp9" value="1" data-bind="checked: pr9, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt9Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp9">
+                                                            <input type="radio" id="prt9No" name="rgp9" value="0" data-bind="checked: pr9, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt9No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@ConfigurationManager.AppSettings["Pr10"]</td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp10">
+                                                            <input type="radio" id="prt10Si" name="rgp10" value="1" data-bind="checked: pr10, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt10Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp10">
+                                                            <input type="radio" id="prt10No" name="rgp10" value="0" data-bind="checked: pr10, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt10No"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <p style="font-weight: bold; text-decoration: underline;">
+                                            **Dependientes
+                                        </p>
+                                        <span>
+                                            De conformidad con el parágrafo 2º del artículo 387 del Estatuto Tributario, modificado por el artículo 15 de la Ley 1607 de 2012, y el parágrafo 3º del artículo 2º del Decreto 0009 de 2013,  manifiesto que tengo los siguientes dependientes a mi cargo:
+                                        </span>
+                                        <table border="1" style="width: 100%">
+                                            <tbody>
+                                                <tr style="font-weight: bold;">
+                                                    <td style="width: 5%;text-align: center;">SI</td>
+                                                    <td style="width: 5%;text-align: center;">NO</td>
+                                                    <td>Concepto</td>
+                                                    <td>Documento para acreditar deducción</td>
+                                                    <td style="width: 25%;">Tope máximo mensual</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp11">
+                                                            <input type="radio" id="prt11Si" name="rgp11" value="1" data-bind="checked: pr11, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt11Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp11">
+                                                            <input type="radio" id="prt11No" name="rgp11" value="0" data-bind="checked: pr11, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt11No"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Pr11-1"]
+                                                        <input id="frmhijo1" type="text" class="frm-hijos" maxlength="2" data-bind="value: hijo1" />
+                                                        @ConfigurationManager.AppSettings["Pr11-2"]
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Ds11"]
+                                                    </td>
+                                                    <td rowspan="4" style="text-align: center;">
+                                                        @ConfigurationManager.AppSettings["VlrMx"]
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp12">
+                                                            <input type="radio" id="prt12Si" name="rgp12" value="1" data-bind="checked: pr12, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt12Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp12">
+                                                            <input type="radio" id="prt12No" name="rgp12" value="0" data-bind="checked: pr12, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt12No"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Pr12-1"]
+                                                        <input id="frmhijo2" type="text" class="frm-hijos" maxlength="2" data-bind="value: hijo2" />
+                                                        @ConfigurationManager.AppSettings["Pr12-2"]
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Ds12"]
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp13">
+                                                            <input type="radio" id="prt13Si" name="rgp13" value="1" data-bind="checked: pr13, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt13Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp13">
+                                                            <input type="radio" id="prt13No" name="rgp13" value="0" data-bind="checked: pr13, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt13No"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Pr13-1"]
+                                                        <input id="frmhijo3" type="text" class="frm-hijos" maxlength="2" data-bind="value: hijo3" />
+                                                        @ConfigurationManager.AppSettings["Pr13-2"]
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Ds13"]
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp14">
+                                                            <input type="radio" id="prt14Si" name="rgp14" value="1" data-bind="checked: pr14, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt14Si"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radiobtnp radiobtnp14">
+                                                            <input type="radio" id="prt14No" name="rgp14" value="0" data-bind="checked: pr14, event: { 'change': radioGroup3 }" />
+                                                            <label for="prt14No"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Pr14"]
+                                                    </td>
+                                                    <td>
+                                                        @ConfigurationManager.AppSettings["Ds14"]
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 30px;">
+                                    <div class="col-sm-6 text-left">
+                                        <button class="btn btn-primary" style="width: 60%;" data-bind="click: anterior.bind($data)">
+                                            <span>Regresar</span>
+                                            <i class="fa fa-arrow-left" aria-hidden="true" style="float: left; margin-top: 4px;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <!-- ko if: estadoProspecto() === "Devuelto" -->
+                                        <button id="actualizar" class="btn btn-primary" style="width: 60%;" data-bind="click: completarRegistro.bind($data)">
+                                            <span>Actualizar Información</span>
+                                            <i class="fa fa-arrow-right" aria-hidden="true" style="float: right;margin-top: 4px;"></i>
+                                        </button>
+                                        <!-- /ko -->
+                                        <!-- ko if: estadoProspecto() !== "Devuelto" -->
+                                        <button id="enviar" class="btn btn-primary" style="width: 60%;" data-bind="click: completarRegistro.bind($data)">
+                                            <span>Enviar Información</span>
+                                            <i class="fa fa-arrow-right" aria-hidden="true" style="float: right;margin-top: 4px;"></i>
+                                        </button>
+                                        <!-- /ko -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko if: step5 -->
+                        <div class="row" style="margin-top: 30px;">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11">
+                                <div class="pyro">
+                                    <div class="before"></div>
+                                    <div class="after"></div>
+                                </div>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 62%;">
+                                                <img style="width: 65%;" class="img-responsive center-block" src="/Content/images/logo-asesor.svg">
+                                            </td>
+                                            <td>
+                                                <p class="lb-final bold" style="margin-top: 15px; text-align: center; font-size: 35px;">
+                                                    ¡BIENVENIDO!
+                                                </p><br /><br />
+                                                <p class="lb-final" style="text-align: justify">
+                                                    Ahora haces parte de nuestra fuerza comercial. Gracias por contribuir a nuestro compromiso de salvar y cuidar vidas.
+                                                </p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+            <div id="dv-track" class="col-sm-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="tb-track">
+                            <tbody>
+                                <tr id="tr-track" style="vertical-align: top;height: 70%;">
+                                    <td>
+                                        <div id="dv-track-note" class="dv-track-note">
+                                            <div class="w-100 dv-tt-track">
+                                                <label class="sp-title-form pd-track-tt">
+                                                    Tracking de solicitud
+                                                </label>
+                                            </div>
+                                            <div class="w-100" style="padding-top: 45px;"></div>
+                                            <!-- ko foreach: notas -->
+                                            <div class="w-100 mb-2">
+                                                <span data-bind="text: Nota"></span>
+                                                <p class="tx-date" data-bind="text: moment(FechaRegistro).format('MM/DD/YYYY, h:mm a')"></p>
+                                            </div>
+                                            <!-- /ko -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height: 24%;">
+                                    <td style="padding-top: 5%;">
+                                        <span>Estado de tu solicitud:</span>&nbsp;
+                                        <!-- ko if: estadoProspecto() === "" -->
+                                        <strong>PENDIENTE</strong>
+                                        <!-- /ko -->
+                                        <!-- ko if: estadoProspecto() !== "" -->
+                                        <strong style="text-transform: uppercase" data-bind="text: estadoProspecto"></strong>
+                                        <!-- /ko -->
+                                        <p style="color: rgb(51, 122, 183); margin-top: 20px;line-height: 1.2;">
+                                            Puedes incluir los archivos posteriormente en esta página, accediendo con tu número de cédula y correo electrónico.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr style="height: 6%;">
+                                    <td>
+                                        <button id="btn-verificar" class="btn btn-primary btn-upload btn-block" data-bind="click: validarIngresoProspecto.bind($data, false)">Cerrar Sesión</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mdl-fnsh" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body mdl-bd-up">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3 class="h-md-up" data-bind="text: titleModal"></h3>
+                            <hr class="hr-up">
+                        </div>
+                        <div id="msg-error" class="col-sm-12 mt-2-up- text-center">
+                            <span data-bind="text: textModal"></span>
+                        </div>
+                        <div id="dv-crtf" class="col-sm-12 text-center mt-2" style="display: none; margin-bottom: 15px;">
+                            <a href="https://sgtuportalafiliaciones.blob.core.windows.net/documentos/TuPortal/Certificacion-Contratacion.zip" target="_blank"> CERTIFICACIÓN - DETERMINACIÓN DEL IMPTO PARA PERSONAS NATURALES.pdf y CONTRATO CORRETAJE VERSIÓN ACTUALIZADA 20102016.pdf</a>
+                        </div>
+                        <div class="col-sm-12 mdl-ft-up text-right">
+                            <button id="btn-cont-mdl" class="btn btn-block btn-primary" data-dismiss="modal">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mdl-confirm" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body mdl-bd-up">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <!-- ko if: estadoProspecto() === "Devuelto" -->
+                            <h3 class="h-md-up">¡Tu información será actualizada!</h3>
+                            <!-- /ko -->
+                            <!-- ko if: estadoProspecto() !== "Devuelto" -->
+                            <h3 class="h-md-up">¡Tus documentos serán enviados!</h3>
+                            <!-- /ko -->
+                            <hr class="hr-up">
+                        </div>
+                        <div id="msg-error" class="col-sm-12 mt-2-up- text-center">
+                            <p>Ten presente que a partir que des <strong>Enviar</strong> toda la información puesta aquí formará parte de tu proceso de contratación.</p>
+                            <p>Nuestra área de reclutamiento corroborará la información suministrada.</p>
+                            <p>Declaro que la información suministrada es verdadera.</p>
+                        </div>
+                        <div class="col-sm-6 mdl-ft-up text-left">
+                            <button class="btn btn-block btn-primary" data-dismiss="modal">Regresar</button>
+                        </div>
+                        <div class="col-sm-6 mdl-ft-up text-right">
+                            <button class="btn btn-block btn-primary" data-dismiss="modal" data-bind="click: confirmarEnvio.bind($data)">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mdl-complete" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body mdl-bd-up">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3 class="h-md-up" data-bind="text: titleModal"></h3>
+                            <hr class="hr-up">
+                        </div>
+                        <div id="msg-success" class="col-sm-12 mt-2-up- text-center hidden">
+                            <span>Gracias:</span>
+                            <p class="sp-title-form">
+                                <span data-bind="text: nombresApellidos"></span>
+                            </p>
+                            <p style="margin-top: 20px;">
+                                Tu información será revisada por nuestro departamento de Contratación.
+                            </p>
+                            <p style="margin-top: 30px;">
+                                Una vez sean verificados tus datos, te notificaremos de la confirmación de tu contratación a través de tu correo:
+                            </p>
+                            <p class="bold" data-bind="text: correoElectronico" style="margin-top: 20px;"></p>
+                        </div>
+                        <div class="col-sm-12 mdl-ft-up text-right" style="margin-top: 40px;">
+                            <button id="btn-cont-mdl" class="btn btn-block btn-primary" data-bind="click: clearData.bind($data)">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/App/Transversal/general.js"></script>
+    <script src="~/App/Reclutamiento/ProcesoRegistroViewModel.js"></script>
+</body>
+</html>

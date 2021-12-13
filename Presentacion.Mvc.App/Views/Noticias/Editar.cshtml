@@ -1,0 +1,125 @@
+﻿@using System.Configuration
+@model Guid?
+@{
+    ViewBag.Title = "Administración Noticias";
+    var textoBoton = Model == null ? "Agregar Noticia" : "Editar Noticia";
+}
+
+<section id="main-content" class="container">
+    <div class="col-xs-11">
+        <hr />
+        <div class="container-fluid">
+            <div class="row">
+                <a class="btn btn-primary" href="@Url.Action("ListaAdmin", "Noticias", new { })">Volver al listado de noticias</a>
+            </div>
+        </div>
+        <hr />
+    </div>
+    <div id="noticia-container" class="container-fluid">
+        <div class="panel panel-default col-xs-11">
+            <div class="panel-body row">
+                <form role="form" method="post" action="@(Url.Action("GuardarNoticia", "Noticias"))" id="noticia-form">
+                    <input type="hidden" name="id" data-bind="value: noticiaId" />
+                    <div class="form-group">
+                        <label class="control-label">Titulo</label>
+                        <input type="text" class="form-control" name="titulo" placeholder="Título" required="required" data-bind="value: titulo" tabindex="1" />
+                        <span class="k-invalid-msg" data-for="titulo"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Descripción</label>
+                        <textarea class="form-control border-box" name="descripcion" maxlength="250" data-bind="value: descripcion" tabindex="2"></textarea>
+                        <span class="k-invalid-msg" data-for="descripcion"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Imagen</label>
+                        <span>(263px X 200px)</span>
+                        <i class="fa fa-info-circle" title="Imagen de logo slider Home Online"></i>
+                        <div class="noticia-container-pic">
+                            <img class="default-noticia" data-bind="attr: { src: traerImagen }" />
+                            <img id="subir-imagen-tg" src="~/Image/icon-edit.png" alt="Cargar Imagen" title="Cargar Imagen" />
+                        </div>
+                        <div style="display: none;">
+                            <input type="file" name="imagen" data-preview-item="img.default-noticia" data-raw-item="imagenRaw" data-image-type="NoticiaImagen" />
+                            <input type="hidden" name="imagenRaw" data-bind="value: imagenRaw" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Banner</label>
+                        <span>(1140px X 312px)</span>
+                        <i class="fa fa-info-circle" title="Imagen de logo slider Home Online"></i>
+                        <div class="noticia-container-ban">
+                            <img class="default-banner img-responsive" data-bind="attr: { src: traerBanner }" />
+                            <img id="subir-banner-tg" src="~/Image/icon-edit.png" alt="Cargar Banner" title="Cargar Banner" />
+                        </div>
+                        <div style="display: none;">
+                            <input type="file" name="banner" data-preview-item="img.default-banner" data-raw-item="bannerRaw" data-image-type="NoticiaBanner" />
+                            <input type="hidden" name="bannerRaw" data-bind="value: bannerRaw" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Fecha</label>
+                        <input type="text" name="fecha" placeholder="dd/mm/yyyy" required="required" data-bind="value: fecha" tabindex="3" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">¿Activa?</label><br />
+                        <div class="btn-group yes-no">
+                            <label class="btn btn-default">
+                                <input type="radio" name="activa" data-bind="checkedbool: activo" value="true" required="required" style="display: none;" tabindex="4" />
+                                Si
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="activa" data-bind="checkedbool: activo" value="false" required="required" style="display: none;" tabindex="5" />
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Contenido</label>
+                        <textarea id="contenido" name="contenido" required="required" rows="10" cols="30" style="height:440px" data-bind="value: contenido" tabindex="6"></textarea>
+                        <span class="k-invalid-msg" data-for="contenido"></span>
+                    </div>
+                    <button id="save-tg" type="submit" class="btn btn-success">@(textoBoton)</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    @if(Model.HasValue)
+    {
+    <script type="text/javascript">
+            var noticiaId = '@(Model.Value.ToString())';
+    </script>
+    }
+    else
+    {
+    <script type="text/javascript">
+            var noticiaId = null;
+    </script>
+    }
+    <script type="text/javascript">
+        var urlTraerNoticia = '@(Url.Action("TraerNoticia", "Noticias"))';
+        var urlSubirImagen = '@(Url.Action("SubirImagen", "Noticias"))';
+        var urlListaNoticias = '@(@Url.Action("ListaAdmin", "Noticias", new { }))';
+        var urlImagenPorDefecto = '@(Url.Content("~/Image/defaultImagenNoticia.jpg"))';
+        var urlBannerPorDefecto = '@(Url.Content("~/Image/defaultBannerNoticia.png"))';
+        var urlImagenNoticia = '@(ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"] + ConfigurationManager.AppSettings["Imagen.Path.Noticias.Imagen"])';
+        var urlBanner = '@(ConfigurationManager.AppSettings["Assets.Uploads.Virtual.Path"] + ConfigurationManager.AppSettings["Imagen.Path.Noticias.Banner"])';
+        //Editor de imagenes
+        var urlLecturaImagenes = '@(Url.Action("Read", "ImageBrowser"))'
+        var urlEliminarImagen = '@(Url.Action("Destroy", "ImageBrowser"))'
+        var urlCrearImagen = '@(Url.Action("Create", "ImageBrowser"))'
+        var urlThumbnail = '@(Url.Action("Thumbnail", "ImageBrowser"))'
+        var urlSubirImageKendo = '@(Url.Action("Upload", "ImageBrowser"))'
+        var urlConsultaArchivo = '@(Url.Action("Image", "ImageBrowser"))' + '/?path={0}'
+        //Editor de archivos
+        var urlLecturaArchivos = '@(Url.Action("Read", "ImageBrowser"))'
+        var urlEliminarArchivo = '@(Url.Action("Destroy", "ImageBrowser"))'
+        var urlCrearArchivo = '@(Url.Action("Create", "ImageBrowser"))'
+        var urlSubirArchivoKendo = '@(Url.Action("Upload", "ImageBrowser"))'
+    </script>
+
+    @Scripts.Render("~/bundles/emermedica.editarnoticia")
+}

@@ -1,0 +1,182 @@
+﻿@model Presentacion.Mvc.App.Models.GanometroModel
+
+@{
+}
+<div class="contenedor col-md-12 col-sm-12">
+
+    <div class="panel panel-default panel-cust">
+        <div class="panel-heading">
+            <h4>Ganometro</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+            <div class="form-inline col-md-12" role="form">
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(model => model.FechaVenta, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                    <div class="col-md-4">
+                        <div class="container">
+                            <div class="row">
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            @Html.EditorFor(model => model.FechaVenta, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.FechaVenta, "", new { @class = "text-danger" })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(model => model.CantidadVentas, htmlAttributes: new { @class = "control-label col-md-2", type = "numeric", value = "", required = "required" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CantidadVentas, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CantidadVentas, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <input type="submit" class="form-control btn btn-primary" value="Guardar" />
+            </div>
+            }
+        </div>
+    </div>
+    <div class="panel panel-default panel-cust">
+        <div class="panel-heading">
+            <h4>Ventas</h4>
+        </div>
+        <div class="panel-body">
+            <div id="table" class="cont-tabla-gnometro">
+                <table class="table table-bordered dataTables_scroll dataTable no-footer" id="grdResul">
+                    <thead style=" ">
+                        <tr>
+                            <th>Semana</th>
+                            <th>Dia 1</th>
+                            <th>Dia 2</th>
+                            <th>Dia 3</th>
+                            <th>Dia 4</th>
+                            <th>Dia 5</th>
+                            <th>Dia 6</th>
+                            <th>Dia 7</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+
+                            for (int i = 0; i < 4; i++)
+                            {
+                            <tr>
+                                <td class="cont-data">Semana @i</td>
+                                @for (int j = 0; j < 7; j++)
+                                    {
+                                        Random rnd = new Random(DateTime.Now.Millisecond);
+                                <td>
+                                    <div class="col-md-12 cf">
+                                        <div class="col-md-12">@rnd.Next((j+i), 500)</div>
+                                        <div class="col-md-12"> @j.ToString("00")/07/2018</div>
+                                    </div>
+                                </td>
+                                    }
+                            </tr>
+                            }
+                        }
+                        @*@{
+                                if (Model.Ventas != null && Model.Ventas.Any())
+                                {
+                                    foreach (var i in Model.Ventas)
+                                    {
+                                        <tr>
+                                            <td class="cont-data">Semana @i.SEMANA</td>
+                                            <td>
+                                                <div class="col-md-12 cf">
+                                                    <div class="col-md-12">@i.FDIA1</div>
+                                                    <div class="col-md-12"> @i.DIA1</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12 cf">
+                                                    <div class="col-md-12">@i.FDIA2</div>
+                                                    <div class="col-md-12"> @i.DIA2</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12 cf">
+                                                    <div class="col-md-12">@i.FDIA3</div>
+                                                    <div class="col-md-12"> @i.DIA3</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12 cf">
+                                                    <div class="col-md-12">@i.FDIA4</div>
+                                                    <div class="col-md-12"> @i.DIA4</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12 cf">
+                                                    <div class="col-md-12">@i.FDIA5</div>
+                                                    <div class="col-md-12"> @i.DIA5</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12 cf">
+                                                    <div class="col-md-12">@i.FDIA6</div>
+                                                    <div class="col-md-12"> @i.DIA6</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12 cf">
+                                                    <div class="col-md-12">@i.FDIA7</div>
+                                                    <div class="col-md-12"> @i.DIA7</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }*@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    th {
+        text-align: center;
+    }
+
+    .cont-tabla-gnometro {
+        overflow-x: auto;
+        text-align: center;
+    }
+
+    .panel-cust {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .cont-data {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80px;
+        width: 160px;
+    }
+
+    .cf div {
+        padding: 0.3em 0.5em;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+
+        $("#FechaVenta").val("");
+        $('#datetimepicker1').datepicker({
+            format: 'dd/mm/yyyy',
+            endDate: '@DateTime.Now.Day/@DateTime.Now.Month/@DateTime.Now.Year'
+        });
+    });
+</script>

@@ -1,0 +1,116 @@
+﻿@model Presentacion.Mvc.App.Models.AfiliacionesModel
+@{
+    ViewBag.Title = "Extracto de comisiones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*
+    j0HNn3LS0N r0DRIGU3Z
+    2016-10-25
+*@
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+<br />
+<div class="col-md-12">
+    @using (Html.BeginForm())
+    {
+
+    @Html.HiddenFor(model => model.NOMBRE_REPORTE, new { Value = "RTE COMISIONES.xls" })
+    @Html.HiddenFor(model => model.NOMBRE_REPORTE_PDF, new { Value = "RTE COMISIONES.pdf" })
+    @Html.HiddenFor(model => model.ExportarFormato, new { Value = "E" })
+    @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+    <input type="hidden" name="TipoInforme" value="Detallado" />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><strong>@ViewBag.Title</strong></h4>
+        </div>
+        <div class="form-horizontal">
+            <br />
+            @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @*<a class="close" data-dismiss="alert">×</a>*@
+                    @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                    @modelError.ErrorMessage<br />
+                            }
+                </div>
+            </div>
+                }
+
+            <div align="center">
+                <div class="form-group">
+                    <div class="col-md-2"> </div>
+
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <button type="button" id="buscar-afiliaciones" class="btn reporte" data-action="GenerarReporte" data-contenttype="pdf" style="background-color: rgba(0, 0, 0, 0.00);" onclick="reportePdf();">
+                                <img src="~/Image/pdf.jpg" style="width: 80px; height: 75px;" />
+                                <br />
+                                <h4><strong>Descarga tu reporte para imprimir</strong></h4>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <button type="button" id="buscar-afiliaciones" class="btn reporte" data-action="GenerarReporte" style="background-color: rgba(0, 0, 0, 0.00);" onclick="reporteExcel();">
+                                <img src="~/Image/descarga.jpg" style="width: 80px; height: 75px;" />
+                                <br />
+                                <h4><strong>Descarga tu reporte para revisar</strong></h4>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 alert alert-info" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign "></span> Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de administración de ventas.
+            </div>
+        </div>
+    </div>
+
+    }
+</div>
+
+<!-- Modal Alert -->
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-msg-alert"></span>
+                <div id="ajax-container"></div>
+            </div>
+            <div class="modal-footer footer-alert">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function reportePdf() {
+
+        $("#ExportarFormato").val("P");
+
+    }
+
+    function reporteExcel() {
+
+        $("#ExportarFormato").val("E");
+
+    }
+</script>

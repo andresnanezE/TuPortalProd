@@ -1,0 +1,207 @@
+﻿@*@using PagedList.Mvc*@
+@model Presentacion.Mvc.App.Models.AfiliacionesModel
+
+@{
+    ViewBag.Title = "Consultar Detalle de Reactivaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+<br />
+<div class="col-md-12">
+
+    @using (Html.BeginForm())
+    {
+
+    <input type="hidden" name="ExportarFormato" value="excel" />
+    <input type="hidden" name="TipoInforme" value="D" />
+
+    @Html.HiddenFor(model => model.NOMBRE_REPORTE_RESUMEN, new { Value = "RTE REACTIVACIONES CONSOLIDASO.xls" })
+    @Html.HiddenFor(model => model.NOMBRE_REPORTE_DETALLE, new { Value = "RTE REACTIVACIONES DETALLADO.xls" })
+    @Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><strong>@ViewBag.Title</strong></h4>
+        </div>
+        <div class="form-horizontal">
+
+            <br />
+
+            @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @*<a class="close" data-dismiss="alert">×</a>*@
+                    @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                    @modelError.ErrorMessage<br />
+                            }
+                </div>
+            </div>
+                }
+
+            <div class="form-group">
+                <div>
+                    @Html.Label("Fechas Inicio:", new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        <select id="Periodo" name="Periodo" class="form-control" required="required" onchange="validaPeriodoInicialFinal()">
+                            @if (Model.ListaPeriodos != null)
+                                {
+                                    foreach (var periodo in Model.ListaPeriodos)
+                                    {
+                            <option value="@periodo.FECHA_CORTE"> @periodo.FEC_INI.ToShortDateString()  </option>
+                                    }
+                                }
+                        </select>
+                    </div>
+                </div>
+                @Html.Hidden("urlObtenerPeriodoId", Url.Action("ObtenerPeriodoPorId"))
+                <div>
+                    @Html.Label("Fechas Fin:", new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        <select id="Periodo2" name="Periodo2" class="form-control" required="required">
+                            @if (Model.ListaPeriodos != null)
+                                {
+                                    foreach (var periodo in Model.ListaPeriodos)
+                                    {
+                            <option value="@periodo.FECHA_CORTE"> @periodo.FECHA_CORTE.ToShortDateString()</option>
+                                    }
+                                }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label(" Tipo contrato:", new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    <select id="TipContrato" name="TipContrato" class="form-control" required="required" multiple>
+                        <option value="FAMILIAR" selected> FAMILIAR</option>
+                        <option value="PMP" selected> PPE</option>
+                        <option value="AREAS PROTEGIDAS" selected> AREAS PROTEGIDAS </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <input name="rct-informe-consolidado" type="button" class="btn btn-primary reporte" data-action="@Url.Action("ExportarInformeConsolidado")" id="informe-consolidado" value="Descargar informe consolidado" />
+                    <input name="rct-informe-detallado" type="button" class="btn btn-primary reporte" data-action="@Url.Action("ExportarInformeDetalle")" id="informe-detallado" value="Descargar informe detallado" />
+                    <br /><br />
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 alert alert-info" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign "></span> Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de administración de ventas.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+<!-- Modal Alert -->
+<div class="modal fade" id="modalAlert" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <span class="modal-msg-alert"></span>
+                <div id="ajax-container"></div>
+            </div>
+            <div class="modal-footer footer-alert">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function validaPeriodoInicialFinal() {
+
+        var periodoIni = $("#Periodo").val();
+        var periodoFin = $("#Periodo2").val();
+        var urlObtenerPeriodoId = $("#urlObtenerPeriodoId").val();
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: urlObtenerPeriodoId,
+            data: window.JSON.stringify({ periodoId: periodoIni }),
+            dataType: 'json',
+            headers: { '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val() },
+            beforeSend: function () {
+
+            },
+            success: function (Data) {
+                var content = Data.Data;
+                if (content.length > 0) {
+
+                    $("#Periodo2").empty();
+
+                    for (var i = 0; i < content.length; i++) {
+                        var date = new Date(parseInt(content[i].FECHA_CORTE.substr(6)));
+                        var valor = new Date(parseInt(content[i].FECHA_CORTE.substr(6)));
+
+                        $("#Periodo2").append("<option value='" + valor.toLocaleString() + "'>" + convertDate(date) + "</option>");
+                    }
+                }
+            },
+            error: function (result) {
+                alert('ha surgido un error recupenrando los périodos.');
+            }
+
+        });
+
+    }
+
+    function convertDate(inputFormat) {
+        function pad(s) { return (s < 10) ? '0' + s : s; }
+        var d = new Date(inputFormat);
+        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
+    }
+    $(document).ready(function () {
+
+        var n = '@ViewData.ModelState.Any()';
+
+        if (n === 'True') {
+            $('#informe-consolidado, #informe-detallado').prop('disabled', true);
+        }
+
+        $('select#TipContrato').select2({ placeholder: 'Seleccione uno o varios tipos de contrato (click para opciones)' });
+        $('select#BajasComerciales').select2({ placeholder: 'Seleccione uno o varios aplica comercial  (click para opciones)' });
+        $("input#informe-detallado").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+            $("form#consulta-form input[name=TipoInforme]").val("D");
+            $("form#consulta-form").submit();
+        });
+
+        $("input#informe-consolidado").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+            $("form#consulta-form input[name=TipoInforme]").val("R");
+            $("form#consulta-form").submit();
+        });
+        $("select#BajasComerciales,select#TipContrato").on("change", function () {
+            var parent = $(this).closest("div.form-group");
+            if ($(this).val() != null) {
+                $(parent).removeClass("has-error");
+                $(parent).find("p.help-block").addClass("hide");
+            } else {
+                $(parent).addClass("has-error");
+                $(parent).find("p.help-block").removeClass("hide");
+            }
+        });
+
+    });
+</script>

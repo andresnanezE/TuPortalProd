@@ -1,0 +1,316 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Cotización";
+}
+
+<link href="~/Content/css/PlantillaCotizacion.css" rel="stylesheet" />
+<link href="~/js/loading-bar.min.css" rel="stylesheet" />
+
+<style>
+    #loading-bar .bar {
+        background-color: #4CAF50 !important;
+        height: 8px !important;
+    }
+    /*Logo Emermedica*/
+
+div.col-xs-12:nth-child(1) > img:nth-child(1) {
+    width: 25%;
+}
+</style>
+
+<div class="col-sm-12 col-md-12" ng-app="portalComercialApp" ng-controller="visualizarCotizacionController">
+    <div class="form-inline" id="reporteCotizacion">
+        <div class="col-xs-12 col-md-12">           
+            <img src="~/Image/Emermedica logo-02.svg" class="img-responsive"/>
+        </div>
+        <br />
+        <div class="col-sm-12 col-md-12">
+            <section class="text-left">
+                <p><strong>{{ InfReporteCotizacion[0].Ciudad }} - {{ InfReporteCotizacion[0].FechaCreacion }}</strong></p>
+                <p><strong>Señores.</strong></p>
+                <p><strong>{{ InfReporteCotizacion[0].NombreEmpresa }}</strong></p>
+                <p><strong>Nit. </strong>{{ InfReporteCotizacion[0].Nit }}</p>
+                <p><strong>Attn. Sr.(Sra) </strong>{{ InfReporteCotizacion[0].Contacto }}</p>
+                    <p><strong>{{ InfReporteCotizacion[0].Cargo }}</strong></p>
+            </section>
+            <br />
+            <section class="text-justify tx-body">
+                <p>
+                    <strong>EMERMEDICA S.A.</strong> es la compañía colombiana líder en la prestación de servicios
+                    de Atención Médica Pre hospitalaria, con trayectoria y experiencia desde 1991, actualmente
+                    tenemos prestación del servicio en las ciudades de <strong>
+                        Bogotá, Bucaramanga, Cali, Chía, Medellín, Neiva,
+                        Soacha y Villavicencio,
+                    </strong>respaldados por el <strong>GRUPO AXA COLPATRIA.</strong>
+                    Nuestro compromiso es llevar salud, tranquilidad y seguridad a todos nuestros
+                    afiliados a través de un servicio con los mejores estándares de calidad.
+                </p>
+                <p>
+                    Presentamos nuestro Servicio de AREA PROTEGIDA con el fin de que lo puedan analizar como
+                    una solución a la necesidad de acceder a un sistema de emergencias oportuno y con
+                    altos estándares de calidad.
+                </p>
+                <h5>
+                    <strong>PRESTACIÓN DE SERVICIOS DE SALUD EN LA MODALIDAD DE ÁREA PROTEGIDA:</strong>
+                </h5>
+                <p>
+                    Producto diseñado especialmente para proveer servicios de salud para eventos
+                    que clasifiquen como de emergencia o urgencia médica; siempre que ocurran dentro
+                    de las instalaciones de la Empresa Cliente, en favor de cualquier persona, sean:
+                    empleados, socios, visitantes ocasionales, sus clientes, proveedores, contratistas,
+                    entre otros. Con respuesta los 365 días del año, las 24 horas del día.
+                </p>
+                <h4>
+                    <strong>Qué Ofrecemos:</strong>
+                </h4>
+                <h5>
+                    <strong>Comunicación rápida y efectiva.</strong>
+                </h5>
+                <p>
+                    Tendrán a disposición varias líneas telefónicas conectadas a nuestra línea de Emergencia
+                    que lo comunicará con la Central de Comunicaciones, para la aplicación del método de
+                    priorización de la atención basada en los síntomas del paciente y sus antecedentes
+                    médicos (TRIAGE).
+                </p>
+
+                <p>
+                    En Emermédica contamos con sistemas de información que soportan la operación desde la llamada del
+                    cliente/usuario a nuestra central de comunicaciones hasta la atención prestada en sitio por el
+                    médico, donde interactúan sistemas de última tecnología para la
+                    recepción de la llamada, sistema de verificación de registro del cliente y recepción de datos
+                    del usuario, KHEIRON (nombre, edad, dirección, antecedentes, etc.); sistema de posicionamiento
+                    y rastreo geo satelital GPS.
+                </p>                
+                <h5>
+                    <strong>Ubicación Estratégica</strong>
+                </h5>                
+                <p>
+                    Nuestras unidades se encuentran ubicadas estratégicamente en distintos sitios de cada ciudad,
+                    apoyadas por un sistema de georreferenciación satelital GPS que permite ubicar el móvil más
+                    cercano y con la tipología necesaria para atender el evento.
+                </p>
+                <br />
+                <h5>
+                    <strong>Valoración Médica</strong>
+                </h5>
+                <p>
+                    Con la información suministrada durante el TRIAGE, y la valoración médica en sitio realizada
+                    en el lugar por nuestro equipo médico, se inician las acciones indicadas para estabilizar al
+                    paciente y definir la conducta médica a seguir: manejo ambulatorio domiciliario o traslado a
+                    Institución Intrahospitalaria; (la gran mayoría de los casos son resueltos en el lugar del
+                    evento sin necesidad de trasladar al paciente). En caso de que, a criterio del médico en sitio,
+                    el paciente deba ser trasladado a una clínica o institución hospitalaria se realizará bajo
+                    condiciones técnicas y científicas que aseguren la estabilidad del paciente hasta que se logre
+                    la recepción del mismo con la Institución intrahospitalaria. La definición del centro asistencial
+                    al que será trasladado el paciente es definida por la compañía de acuerdo con la severidad del
+                    caso y aseguramiento del paciente.
+                </p>
+
+                <h5>
+                    <u>SERVICIOS MÉDICOS OFERTADOS</u>
+                </h5>
+                <br />
+                <p>
+                    <strong>Atención de Emergencias Médicas. </strong>Entendidos como aquellos eventos en los que
+                    exista un riesgo real e inmediato de perder la vida. Algunos casos asociados a un evento de
+                    emergencia son: síndrome coronario agudo, trauma mayor, heridas con compromiso sistémico,
+                    shock de cualquier tipo, alteración neurológica aguda de mayor complejidad, trastornos mentales
+                    que pongan en riesgo la vida del paciente o de quienes están con él.
+                </p>
+                <br />
+                <p>
+                    <strong>Atención de Urgencias Médicas. </strong>Entendidos como aquellos eventos o situaciones
+                    en los que, aunque no hay riesgo inminente de muerte ni secuelas invalidantes, hay presencia de
+                    síntomas alarmantes que requieren una pronta intervención médica para calmar síntoma o prevenir
+                    complicaciones mayores. Algunos casos asociados a una urgencia son: alteración neurológica aguda
+                    de severidad moderada, sintomatología cardiovascular con riesgo de descompensación, trastornos
+                    de conducta que pongan en peligro al paciente, familia o compañeros, traumas con riesgo de
+                    descompensación clínica o pérdida de un miembro u órgano; entre otros.
+                </p>
+                <br />
+                <p>
+                    <strong>Traslados Primarios Asistidos. </strong>Conjunto de actividades destinadas al traslado de
+                    personas en estado crítico o limitado con atención pre-hospitalaria, hacia una institución
+                    hospitalaria desde el lugar donde se encuentre el paciente siempre y cuando se encuentre dentro de
+                    los perímetros de cobertura establecidos; en ambulancias básicas
+                    o medicalizadas, dotadas con equipos de alta tecnología, con conductor experto,
+                    acompañada por un recurso humano calificado médico y/o enfermera o auxiliar, con
+                    entrenamiento en Emergencias, soporte avanzado de trauma y cardiovascular, como
+                    también en técnicas de reanimación cardiopulmonar. El traslado primario no aplica para
+                    entidades de salud, ya que en caso de que el traslado derive de una atención o de la permanencia
+                    de un paciente en las instalaciones de la institución, debe realizarse un traslado secundario y
+                    cumplir con todo el proceso de referencia y contra- referencia contemplado en la ley.
+                </p>
+
+                <p>
+                    <strong>Orientación Médica Telefónica o Virtual. (OMT-OMV): </strong>Orientación a través de personal
+                    médico, a la persona que ésta en línea telefónica o virtual, sobre la situación médica que éste le
+                    refiera, pudiendo dar recomendaciones de manejo, alerta y cuidado. Disponible conforme el horario de
+                    atención previsto por EMERMÉDICA.
+                </p>
+                <br />
+                <p>
+                    <strong>TRIAGE: </strong>Método para definir la prioridad de la atención al USUARIO en caso de
+                    una contingencia médica, según la gravedad de su estado clínico, para lo cual se aplicarán los
+                    estándares de clasificación y tiempos de respuesta estimados, definidos por la normatividad
+                    legal vigente. A los servicios de Área Protegida, le corresponden los siguientes niveles de
+                    atención:
+
+                    TRIAGE I. Emergencias Médicas Nivel 1 / Clave Roja: La condición clínica del paciente representa
+                    un riesgo vital y necesita reanimación. La asignación del recurso será inmediata, con  un
+                    tiempo  estimado de  desplazamiento hasta el  sitio del  evento de  20 minutos.
+
+                    TRIAGE II. Emergencias Médicas Nivel 2 / Clave Naranja: La condición clínica del paciente
+                    puede evolucionar hacia un rápido deterioro o a su muerte, e incrementar el riesgo de la pérdida
+                    de   un   miembro   u   órgano.   Tiempo   de   llegada   hasta   30   minutos.
+
+                    TRIAGE III. Urgencias Médicas / Clave Amarilla: La condición clínica del paciente requiere de
+                    medidas diagnósticas y terapéuticas en urgencias, son pacientes que se encuentran estables pero
+                    que se pueden empeorar si no se actúa. Tiempo estimado de arribo para la atención, 60 minutos.
+                </p>
+                <br />
+                <h5>
+                    <u>BENEFICIOS</u>
+                </h5>
+                <br />
+                <ul>
+                    <li type="square">Sin exclusiones por edad o enfermedad.</li>
+                    <li type="square">Sin límite de Uso.</li>
+                    <li type="square">
+                        Práctica de exámenes en sitio, conforme los realizables a nivel extramural,
+                        y conforme con los servicios pre-hospitalarios habilitados en el registro Especial de Prestadores
+                        de Servicios de salud; tales como: electrocardiograma, glucometría, oximetría, a criterio del
+                        médico.
+                    </li>
+                    <li type="square">Recepción del paciente en el centro asistencial con impresión diagnóstica.</li>
+                    <li type="square">Médicos enlazados a nuestra central de urgencias a través de tecnología GPS.</li>
+                    <li type="square">Atención directa y personalizada.</li>
+                </ul>
+                <br />
+                <h5>
+                    <u>VALORES AGREGADOS:</u>
+                </h5>
+                <br />
+                <p>
+                    <strong>Portal Empresarial: </strong>Plataforma virtual que permite a la empresa realizar el
+                    manejo de novedades de su contrato, agendar citas con su ejecutivo de cuenta o incluso programar
+                    capacitaciones sobre el manejo adecuado de Urgencias y Emergencias.
+                </p>
+                <br />
+                <u>
+                    <strong>Minuta de Contrato:</strong>
+                </u>&nbsp;
+                <p>
+                    <strong>EMERMÉDICA SA </strong>cuenta con una Minuta de Contrato que define el producto ofertado,
+                    la cual deberá ser suscrita por el Cliente, una vez acepte nuestra oferta económica.
+                    Si el cliente requiere que se incluyan cláusulas de tipo institucional, podrán adicionarse
+                    el contrato, a través de un anexo.
+                </p>
+                <h5>
+                    <u>PROPUESTA ECONÓMICA:</u>
+                </h5>
+                <br />
+                <div class="col-xs-12 col-md-12">
+
+                    <table class="table table-bordered table-responsive">
+
+                        <thead>
+                            <tr>
+                                <th colspan="3" class="text-center">{{ InfReporteCotizacion[0].NombreProducto }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="text-center"></th>
+                                <th scope="col" class="text-center">Personal Administrativo &nbsp;<p style="font-size: 1em">Administrativo + Operario</p></th>
+                                <th scope="col" class="text-center">Promedio De Visitantes Diario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="datos in InfSedesCotizacion">
+                                <th scope="row" class="text-center">{{ datos.NombreSede }}</th>
+                                <td class="text-center">{{ datos.Valor }}</td>
+                                <td class="text-center">{{ datos.NoPersonalVisitantes }}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <STRONG>
+                                        <u>COBERTURA</u><br />
+                                        Atención prehospitalaria de Emergencias y Urgencias.
+                                    </STRONG>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+
+                    <form class="form-control-sm">
+                        <div class="fr-title text-center" style="margin-top: 10px;margin-bottom: 20px;">
+                            <label class="label-important control-label">PROPUESTA ECONÓMICA</label>
+                        </div>
+                        <div class="fr-tx-body">
+                            <label id="lbl-" class="control-label label-important">{{ valorPropuestaEconomicaIva() | currency }} MAS EL 5% DE IVA MES.</label>
+                        </div>
+                        <div class="fr-tx-body">
+                            <label id="lb--" class="control-label label-important">TOTAL {{ valorPropuestaEconomica() | currency }} Mensual IVA Incluido.</label>
+                        </div>
+                        <div class="footer">
+                            <label id="lb-footer" class="text-muted control-label" style="font-size: 0.9em;">
+                                <br /> <br />
+                                *Este valor sólo comprende los servicios indicados de forma expresa en la presente oferta.
+                            </label>
+                            <br /> <br />
+                        </div>
+                    </form>
+                </div>
+                <ul>
+                    <li type="square">
+                        Cualquier servicio o beneficio adicional no contemplado en esta oferta,
+                        que pudiere llegarse a incluir, será valorado de manera adicional al valor de la presente
+                        propuesta.
+                        <br /> <br />
+                    </li>
+                </ul>
+
+                <p>
+                    Queremos agradecer la confianza depositada en nosotros, esto nos brinda la oportunidad de ofrecer nuestros servicios, en forma oportuna, eficaz y con alto grado de calidad.
+                </p>
+                <p>
+                    Cualquier información adicional con gusto será	aclarad por su asesor(a) comercial
+                </p>
+                <p>
+                    {{ InfReporteCotizacion[0].NombreAsesor }} <strong>Celular</strong> {{ InfReporteCotizacion[0].CelularAsesor }}.
+                </p>
+                <p>
+                    Para	mayor	información,	Los	invitamos	a	visitar	nuestra	página	de	internet
+                    www.emermedica.com.co
+                </p>
+                <strong>
+                    Cordialmente,
+                </strong>
+                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <p>
+                    <u>
+                        {{ InfReporteCotizacion[0].NombreDirector }}<br />
+                    </u>
+                    <strong> Director(a) Comercial Emermédica</strong>
+                </p>
+                <p>
+                    <strong>Celular:</strong> {{ InfReporteCotizacion[0].CelularDirector }}
+                </p>
+                <p>
+                    {{ InfReporteCotizacion[0].CorreoDirector }} <br />
+                </p>
+                <br /><br /><br /><br />
+            </section>
+        </div>
+    </div>
+</div>
+<br /><br />
+
+@*Librerias Externas*@
+<script type="text/javascript" src="~/js/angular.min.js"></script>
+<script type="text/javascript" src="~/js/loading-bar.min.js"></script>
+<script type="text/javascript" src="~/js/MisCotizaciones/visualizarCotizacion.js"></script>

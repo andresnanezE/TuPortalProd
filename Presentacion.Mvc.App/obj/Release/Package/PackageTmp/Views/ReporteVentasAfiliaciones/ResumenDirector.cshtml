@@ -1,0 +1,218 @@
+﻿@model Presentacion.Mvc.App.Models.AfiliacionesModel
+@{
+    ViewBag.Title = "Resumen Afiliaciones";
+}
+
+@if (Model.ListaResultadoResumen.FirstOrDefault() != null)
+{
+
+@Html.Hidden("actiondownload", Url.Action("Download", "ArchivoTemporal"))
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><strong>Resultados de tu consulta</strong></h4>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Label("Periodos", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().PERIODO_INICIO a @Model.ListaResultadoResumen.FirstOrDefault().PERIODO_FINAL </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Label("Fecha de digitación", new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().ACT_HORA_MAENO </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <table class="table table-striped table-condensed table-hover" id="tabla-datos" style="font-size: 1em;">
+                        @{ var listaTotal = Model.ListaResultadoResumen.Where(x => x.ESTATUS.Equals("TOTAL")).ToList();}
+                        <thead>
+                            <tr>
+                                <th colspan="5" class="text-center">
+                                    <h4 style="display: inline-block;"><strong>Resumen</strong></h4>
+                                    <span style="position: relative; float: right;">
+                                        <span>Exporta tu resumen en &nbsp;</span><br />
+                                        <input type="button" class="btn btn-danger btn-sm" data-action="ExportarInforme" id="resumen-director-pdf" data-contenttype="pdf" value="PDF" />&nbsp;
+                                        <input type="button" class="btn btn-success btn-sm" data-action="ExportarInforme" id="resumen-director-excel" value="EXCEL" />
+                                    </span>
+                                </th>
+                            </tr>
+                            <tr class="filtros">
+                                <th class="col-md-6"></th>
+                                <th class="col-md-2">Familiar</th>
+                                <th class="col-md-2">PPE</th>
+
+                                <th class="col-md-2">Areas Protegidas</th>
+
+                                <th class="col-md-2"> Totales</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr style="font-weight: 800;">
+
+                                <th class="col-md-6">Totales</th>
+
+                                @{
+
+                                int? pmp1 = Model.ListaResultadoResumen.Sum(x => x.PMP);
+                                int? fam1 = Model.ListaResultadoResumen.Sum(x => x.FAMILIAR);
+                                int? area1 = Model.ListaResultadoResumen.Sum(x => x.AREAS_PROTEGIDAS);
+                                }
+
+                                <th class="col-md-2">@fam1</th>
+                                <th class="col-md-2">@pmp1</th>
+                                <th class="col-md-2">@area1</th>
+
+                                @{
+                                var tot = pmp1 + fam1 + area1;
+                                }
+
+                                <th class="col-md-2">@tot</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody id="panel-tabla" style="font-size: 1em;">
+                            @foreach (var estatus in Model.ListaEstatusAsesor)
+                            {
+
+                                var totalAP1 = 0;
+                                var totalPMP1 = 0;
+                                var totalFAM1 = 0;
+                                var totales1 = 0;
+                                if (!estatus.Equals("TOTAL"))
+                                {
+                            <tr>
+                                <td colspan="5" style="font-weight: 800;">@estatus</td>
+                            </tr>
+                        foreach (var datosAsesor in Model.ListaResultadoResumen.Where(x => x.ESTATUS.Equals(estatus)).GroupBy(x => new { x.CC_ASESOR, x.NOMB_ASESOR,x.FAMILIAR, x.PMP,x.AREAS_PROTEGIDAS }).ToList())
+                        {
+                            <tr>
+                                <td style="padding-left: 1.5em;">@datosAsesor.Key.CC_ASESOR - @datosAsesor.Key.NOMB_ASESOR</td>
+                                @if (@datosAsesor.Key.FAMILIAR < 0)
+                                {
+                                @*<td><span>NO APLICA</span></td>*@
+                                }
+                                else
+                                {
+                                <td>@datosAsesor.Key.FAMILIAR</td>
+                                }
+                                @if (@datosAsesor.Key.PMP < 0)
+                                {
+                                @*<td><span>NO APLICA</span></td>*@
+                                }
+                                else
+                                {
+                                <td>@datosAsesor.Key.PMP</td>
+                                }
+                                @if (@datosAsesor.Key.AREAS_PROTEGIDAS < 0)
+                                {
+                                @*<td><span>NO APLICA</span></td>*@
+                                }
+                                else
+                                {
+                                <td>@datosAsesor.Key.AREAS_PROTEGIDAS</td>
+                                }
+
+                                @{
+                            var totaless = datosAsesor.Key.PMP + datosAsesor.Key.FAMILIAR + datosAsesor.Key.AREAS_PROTEGIDAS;
+                            totalPMP1 = totalPMP1 + datosAsesor.Key.PMP ?? 0;
+                            totalAP1 = totalAP1 + datosAsesor.Key.AREAS_PROTEGIDAS ?? 0;
+                            totalFAM1 = totalFAM1 + datosAsesor.Key.FAMILIAR ?? 0;
+                            totales1 = totales1 + totaless ?? 0;
+                                }
+                                <td>@totaless</td>
+                            </tr>
+                            }
+                            <tr>
+
+                                <th class="col-md-6" style="font-weight: 800;">Subtotales</th>
+                                <th class="col-md-2">@totalFAM1</th>
+                                <th class="col-md-2">@totalPMP1</th>
+                                <th class="col-md-2">@totalAP1</th>
+                                <th class="col-md-2">@totales1</th>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group text-center">
+                <input type="button" class="btn btn-primary" id="informe-detallado" data-action="ExportarInforme" value="Descargar informe detallado" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("input#informe-detallado").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+            $("form#consulta-form input[name=TipoInforme]").val("D");
+
+            $.descargarreporte(
+                {
+
+                    action_report: $(this).data('action'),
+                    action_download: $('#actiondownload').val(),
+                    confirm: $(this).data('confirm'),
+                    confirm_html: '<b>JOhn</b>',
+                    contenttype: $(this).data('contenttype')
+
+                });
+
+        });
+
+        $("input#resumen-director-excel").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Excel");
+            $("form#consulta-form input[name=TipoInforme]").val("R");
+
+            $.descargarreporte(
+               {
+
+                   action_report: $(this).data('action'),
+                   action_download: $('#actiondownload').val(),
+                   confirm: $(this).data('confirm'),
+                   confirm_html: '<b>JOhn</b>',
+                   contenttype: $(this).data('contenttype')
+
+               });
+
+        });
+
+        $("input#resumen-director-pdf").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("Pdf");
+            $("form#consulta-form input[name=TipoInforme]").val("R");
+
+            $.descargarreporte(
+                {
+
+                    action_report: $(this).data('action'),
+                    action_download: $('#actiondownload').val(),
+                    confirm: $(this).data('confirm'),
+                    confirm_html: '<b>JOhn</b>',
+                    contenttype: $(this).data('contenttype')
+
+                });
+        });
+    });
+</script>
+}
+else
+{
+<div class="col-md-12">
+    <div class="alert alert-succes text-center" role="alert" style="color: #3c763d !important; background-color: #dff0d8 !important; border-color: #d6e9c6 !important; ">
+        <strong>No se encontraron afiliaciones para esa combinación de filtros</strong>
+    </div>
+</div>
+}

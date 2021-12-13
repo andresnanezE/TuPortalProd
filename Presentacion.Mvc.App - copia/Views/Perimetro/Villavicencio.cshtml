@@ -1,0 +1,15 @@
+﻿
+@using Presentacion.Mvc.App.Models
+@{
+    ViewBag.Title = "Perimetro Villavicencio";
+}
+@{ @Html.Hidden("PerimetroUrlVillavicencio", ConfiguracionesGlobales.PerimetroUrlVillavicencio) }
+<h2 id="log" class="col-md-12 ajax-file-upload-green">Abriendo perimetro Villavicencio... Por favor permitir abrir ventanas emergentes, Gracias</h2>
+
+<script>
+    window.open($("#PerimetroUrlVillavicencio").val());
+   // window.open('https://www.google.com/maps/d/viewer?mid=zRXBpRh6KJY8.k9vAkS5VvZoY&usp=sharing');
+    var url = '@Url.Action("Index","Home")';
+    window.setTimeout($('#log').empty(), 30000);
+</script>
+

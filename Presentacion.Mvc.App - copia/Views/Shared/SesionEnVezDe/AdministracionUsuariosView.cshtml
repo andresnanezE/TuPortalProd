@@ -1,0 +1,120 @@
+﻿@*@using Microsoft.Ajax.Utilities*@
+@model PagedList.IPagedList<Presentacion.Mvc.App.Models.Usuario>
+@using PagedList.Mvc
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<div style="margin-left:20px;">
+    <table class="table   table-bordered dataTables_scroll" style="width: 95% !important">
+        <thead style="font-size: .8em;">
+            <tr>
+                <th>
+                    Acciones
+                </th>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Documento
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Ciudad
+                </th>
+                <th>
+                    Segmento
+                </th>
+                <th>
+                    Perfil
+                </th>
+                <th>
+                    Canal
+                </th>
+                <th>
+                    Estado
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td colspan="1">
+
+
+                        @if (item.Estado.Equals("ACTIVO"))
+                        {
+                            <img src="~/Image/SesionEnVezDe/check.jpg" width="20" class="desactivar" data-id="@item.Id" />
+                            <img src="~/Image/SesionEnVezDe/Observaciones.png" width="20" class="editar" data-id="@item.Id" data-doc="@item.Documento" />
+                        }
+                        else
+                        {
+                            <img src="~/Image/SesionEnVezDe/select2.png" width="20" class="activar" data-id="@item.Id" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Documento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ciudad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Segmento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Perfil)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Canal)
+                    </td>
+                    <td class="estado">
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    @*@Html.PagedListPager(Model.ListaPageUsuarios, page => Url.Action("Index", new { page }))*@
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page = 2/*, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter*/ }))
+</div>
+<style>
+    .attach {
+        margin-left: 10px;
+        margin-bottom: 25px;
+    }
+
+    #btn_close {
+        margin-left: 10px;
+    }
+
+    .sci-dialog {
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+
+    a {
+        text-decoration: underline;
+        -moz-text-decoration-color: blue; /* Code for Firefox */
+        text-decoration-color: blue;
+    }
+
+    #ainfo {
+        padding: 0px;
+        padding-left: 10px;
+    }
+</style>
+
+
+

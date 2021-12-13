@@ -1,0 +1,643 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Cotizar Reserva";
+}
+<script src="~/Scripts/OpenMod.js"></script>
+<link href="~/Content/css/ReservaCotizacion.css" rel="stylesheet" />
+<link href="~/Content/css/PlantillaCotizacion.css" rel="stylesheet" />
+<link href="~/js/loading-bar.min.css" rel="stylesheet" />
+
+
+<div class="col-sm-12 col-md-12" ng-app="portalComercialApp" ng-controller="cotizacionController">
+
+    @* Datos del cliente *@
+    <div class="form-horizontal form-data-user">
+        <div class="row row-title">
+            <div class="col-sm-4 col-md-4">
+                @* No. Reserva *@
+                <div class="form-group">
+                    <label id="lbl-number">N° Reserva: </label>
+                    @Html.DisplayFor(model => model.IdCotizacion, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.IdCotizacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                @* Nombre empresa cliente *@
+                <div class="form-group" style="text-align: center;">
+                    @Html.DisplayFor(model => model.nombreEmpresa, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.nombreEmpresa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                @* Nit *@
+                <div class="form-group">
+                    <label id="lbl-nit" class="text-right">NIT:</label>
+                    @Html.DisplayFor(model => model.NIT, new { htmlAttributes = new { @class = "control-label text-right" } })
+                    @Html.ValidationMessageFor(model => model.NIT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row row-lbls">
+            <div class="col-sm-4 col-md-4 text-center">
+                <label>Nombre De Contacto:</label>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <label>Cargo:</label>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <label>Telefono:</label>
+            </div>
+        </div>
+        <div class="row row-text">
+            <div class="col-sm-4 col-md-4 text-center">
+                <div class="form-group">
+                    @Html.DisplayFor(model => model.nombreCliente, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.nombreCliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <div class="form-group">
+                    @Html.DisplayFor(model => model.Cargo, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.Cargo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <div class="form-group">
+                    @Html.DisplayFor(model => model.telefono, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row row-lbls">
+            <div class="col-sm-4 col-md-4 text-center">
+                <label>Correo:</label>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <label>Celular:</label>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <label>Producto:</label>
+            </div>
+        </div>
+        <div class="row row-text">
+            <div class="col-sm-4 col-md-4 text-center">
+                <div class="form-group">
+                    @Html.DisplayFor(model => model.correoElectronico, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <div class="form-group">
+                    @Html.DisplayFor(model => model.celular, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.celular, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 text-center">
+                <div class="form-group">
+                    @Html.DisplayFor(model => model.NombreProductoCotizacion, new { htmlAttributes = new { @class = "control-label" } })
+                    @Html.ValidationMessageFor(model => model.NombreProductoCotizacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Formulario *@
+    <form id="form-RegistroNit" ng-submit="abrirModalResumen()">
+
+        <div class="row form-top">
+
+            <div class="col-sm-2 col-md-2 lbl-select">
+                <label class="control-label" id="lb-tp">Tipo De Área Protegida:</label>
+            </div>
+
+            @* Listados de Tipo área protegida/Sector económico *@
+            <div class="col-sm-4 col-md-4 row-select">
+                <div class="inner-addon right-addon">
+                    <select class="form-control" ng-model="cotizacion.idTipoAP" ng-required="true" id="selectAP">
+                        <option value="">--Seleccione--</option>
+                        <option ng-repeat="datos in lstTipoAP" value="{{datos.Id_area}}">{{datos.Tipo_area}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-2 col-md-2 lbl-select">
+                <label class="control-label" id="lb-sctr">Sector Económico:</label>
+            </div>
+
+            @* Sector económico *@
+            <div class="col-sm-4 col-md-4 row-select">
+                <div class="inner-addon right-addon">
+                    <select class="form-control" ng-model="cotizacion.idSectorEconomico" ng-required="true" id="selectSector">
+                        <option value="">--Seleccione--</option>
+                        <option ng-repeat="datos in lstSectorEconomico" value="{{datos.Id_sector}}">{{datos.Descripcion}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        @*@* Sedes *@
+        <div class="form-group" ng-show="lstCotizacionSedes.length > 0" ng-repeat="datos in lstCotizacionSedes">
+            @*@* Título *@
+            <div class="row row-new">
+                <div class="col-sm-2 col-md-2">
+                    <label id="lbl-title-sede">{{ datos.NombreSede }}</label>
+                </div>
+                <div class="col-sm-10 col-md-10"></div>
+            </div>
+            @*@* Campos *@
+            <div class="row row-sede">
+                <div class="col-sm-1 col-md-1 col-city">
+                    <label class="control-label">Ciudad:</label>
+                </div>
+                <div class="col-sm-3 col-md-3 col-city-select">
+                    <div class="inner-addon left-addon">
+                        <select class="form-control" ng-model="datos.Id_Ciudad" ng-required="true" id="selectCiudad">
+                            <option value="">--Seleccione--</option>
+                            <option ng-repeat="datos in lstCiudadesFactor" value="{{datos.Id}}">{{datos.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 col-md-2 col-per">
+                    <label>N° Personal Permanente: </label>
+                </div>
+                <div class="col-sm-1 col-md-1 col-exp">
+                    <input style="width:80px;" class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="text" maxlength="10" onpaste="return false" ng-keypress="valideKey($event)" pattern="^[0-9]+$" ng-model="datos.NoPersonalPermanente" ng-required="true" id="NumeroExpuestos">
+                </div>
+
+                <div class="col-sm-2 col-md-2 col-lbl-promedio">
+                    <label>Promedio Visitantes X Dia: </label>
+                </div>
+                <div class="col-sm-1 col-md-1 col-npt-promedio">
+                    <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="text" maxlength="10" style="width:80px;" class="form-control" max="9999999999" onpaste="return false" pattern="^[0-9]+$" ng-keypress="valideKey($event)" ng-model="datos.NoPersonalVisitantes" ng-required="true" id="numeroPromedioVisitantes">
+                </div>
+
+                <div class="col-sm-2 col-md-2">
+                    <button type="button" ng-click="eliminarSede($index)" class="btn btn-delete" id="btn-delete">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-md-2 col-risk">
+                    <label id="lbl-risk">Tipo De Riesgo:</label>
+                </div>
+                <div class="col-sm-3 col-md-3 col-select-risk">
+                    <div class="inner-addon left-addon">
+                        <select class="form-control" ng-model="datos.Id_TipoRiesgo" ng-required="true" id="tipoRiesgoID">
+                            <option value="">--Seleccione--</option>
+                            <option ng-repeat="datos in lstTipoRiesgo" value="{{datos.Id}}">{{datos.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-7 col-md-7"></div>
+            </div>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-md-8"></div>
+            <div class="col-sm-4 col-md-4">
+                <button type="button" ng-click="agregarSede()" class="btn btn-add" id="btn-add">
+                    Crear Sede
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <button type="button" class="btn btn-primary text-center" id="btn-cancel">Cancelar</button>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <button type="submit" ng-disabled="!lstCotizacionSedes.length > 0" class="btn btn-success text-center" id="btn-submit">Crear Cotización</button>
+            </div>
+        </div>
+    </form>
+
+    @* Modal Resumen de la Cotización *@
+    <div class="modal fade" id="modalResumenCotizacion" role="dialog">
+        <div class="modal-dialog  modal-md">
+            <div class="modal-content pd-mdl-content">
+                <div class="modal-body">
+
+                    <div ALIGN="center">
+                        <p class="title-modal">Resumen de la Cotización</p>
+                        <p class="title-sub">{{ lstInformacionReserva[0].nombreEmpresa }}</p>
+                        <p class="title-sub" style="font-size: 14px !important">NIT: {{ lstInformacionReserva[0].NIT }}</p>
+                        <br />
+                        <p class="title-sub">Contacto: {{ lstInformacionReserva[0].contacto }}</p>
+
+                        <p class="title-sub">Tipo de área protegida: </p>
+                        <p class="title-sub">{{ nombreTipoAP[0].Tipo_area }}</p>
+
+                        <p class="title-sub">Sector Económico: </p>
+                        <p class="title-sub">{{ nombreSector[0].Descripcion }}</p>
+
+                        <div ng-repeat="datos in lstCotizacionSedes">
+                            <p class="title-sub"><b>{{ datos.NombreSede }}</b></p>
+                            <p class="title-sub">Personal Permanente: {{ datos.NoPersonalPermanente }}</p>
+                            <p class="title-sub">Visitantes Promedio: {{ datos.NoPersonalVisitantes }}</p>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button style="width:100%; background-color: #284565; border-color: white;" type="button" class="btn btn-danger" data-dismiss="modal">Editar</button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button style="width:100%;" id="btnGuardarInfo" ng-click="guardarCotizacion()" type="button" class="btn btn-success">Solicitar Cotización</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal Cotización Creada Exitosamente *@
+    <div class="modal fade" id="modalCreadaCotizacion" role="dialog">
+        <div class="modal-dialog  modal-md">
+            <div class="modal-content pd-mdl-content">
+                <div class="modal-body">
+
+                    <div ALIGN="center">
+                        <p class="title-modal">Cotización creada exitosamente</p>
+                        <p class="title-sub">{{ lstInformacionReserva[0].nombreEmpresa }}</p>
+                        <p class="title-sub" style="font-size: 14px !important">NIT: {{ lstInformacionReserva[0].NIT }}</p>
+                        <br />
+                        <p class="title-sub">Contacto: {{ lstInformacionReserva[0].contacto }}</p>
+                        <p class="title-sub">Tipo de área protegida: </p>
+                        <p class="title-sub">{{ nombreTipoAP[0].Tipo_area }}</p>
+                        <br />
+                        <br />
+                        <p class="title-sub">La cotización ha sido enviada a tu correo: {{ lstInformacionReserva[0].correoElectronico }} y a tu director: {{ nombreDirector }}. Espera el envió de la cotización firmada y autorizada por el.</p>
+                    </div>
+                    <br />
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button style="width:100%;" ng-click="redirectMisReservas()" id="btnGuardarInfo" type="button" class="btn btn-success">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Plantilla Reporte Email Cotización *@
+    <div class="form-inline" id="reporteCotizacion" ng-show="motrarReporte">
+        <div class="col-xs-12 col-md-12">
+            <img src="~/Image/EmermedicA-ICON.jpg" class="img-responsive" />
+        </div>
+        <br />
+        <div class="col-sm-12 col-md-12">
+            <section class="text-left">
+                <p><strong>{{ InfReporteCotizacion[0].Ciudad }} - {{ InfReporteCotizacion[0].FechaCreacion }}</strong></p>
+                <p><strong>Señores.</strong></p>
+                <p><strong>{{ InfReporteCotizacion[0].NombreEmpresa }}</strong></p>
+                <p><strong>Nit. </strong>{{ InfReporteCotizacion[0].Nit }}</p>
+                @*<p><strong>Attn. Sr. </strong>Enterprise Name Contact</p>
+                    <p><strong>Medellín - Antioquia</strong></p>*@
+            </section>
+            <br />
+            <section class="text-justify tx-body">
+                <p>
+                    <strong>EMERMEDICA S.A.</strong> es la compañía colombiana líder en la prestación de servicios
+                    de Atención Médica Pre hospitalaria, con trayectoria y experiencia desde 1991, actualmente
+                    tenemos prestación del servicio en las ciudades de <strong>
+                        Bogotá, Bucaramanga, Cali, Chía, Medellín, Neiva,
+                        Soacha y Villavicencio,
+                    </strong>respaldados por el <strong>GRUPO AXA COLPATRIA.</strong>
+                    Nuestro compromiso es llevar salud, tranquilidad y seguridad a todos nuestros
+                    afiliados a través de un servicio con los mejores estándares de calidad.
+                </p>
+                <p>
+                    Presentamos nuestro Servicio de AREA PROTEGIDA con el fin de que lo puedan analizar como
+                    una solución a la necesidad de acceder a un sistema de emergencias oportuno y con
+                    altos estándares de calidad.
+                </p>
+                <h5>
+                    <strong>PRESTACIÓN DE SERVICIOS DE SALUD EN LA MODALIDAD DE ÁREA PROTEGIDA:</strong>
+                </h5>
+                <p>
+                    Producto diseñado especialmente para proveer servicios de salud para eventos
+                    que clasifiquen como de emergencia o urgencia médica; siempre que ocurran dentro
+                    de las instalaciones de la Empresa Cliente, en favor de cualquier persona, sean:
+                    empleados, socios, visitantes ocasionales, sus clientes, proveedores, contratistas,
+                    entre otros. Con respuesta los 365 días del año, las 24 horas del día.
+                </p>
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <h4>
+                    <strong>Qué Ofrecemos:</strong>
+                </h4>
+                <h5>
+                    <strong>Comunicación rápida y efectiva.</strong>
+                </h5>
+                <p>
+                    Tendrán a disposición varias líneas telefónicas conectadas a nuestra línea de Emergencia
+                    que lo comunicará con la Central de Comunicaciones, para la aplicación del método de
+                    priorización de la atención basada en los síntomas del paciente y sus antecedentes
+                    médicos (TRIAGE).
+                </p>
+
+                <p>
+                    En Emermédica contamos con sistemas de información que soportan la operación desde la llamada del
+                    cliente/usuario a nuestra central de comunicaciones hasta la atención prestada en sitio por el
+                    médico, donde interactúan sistemas de última tecnología para la
+                    recepción de la llamada, sistema de verificación de registro del cliente y recepción de datos
+                    del usuario, KHEIRON (nombre, edad, dirección, antecedentes, etc.); sistema de posicionamiento
+                    y rastreo geo satelital GPS.
+                </p>
+                <br />
+                <h5>
+                    <strong>Ubicación Estratégica</strong>
+                </h5>
+                <br />
+                <p>
+                    Nuestras unidades se encuentran ubicadas estratégicamente en distintos sitios de cada ciudad,
+                    apoyadas por un sistema de georreferenciación satelital GPS que permite ubicar el móvil más
+                    cercano y con la tipología necesaria para atender el evento.
+                </p>
+                <br />
+                <h5>
+                    <strong>Valoración Médica</strong>
+                </h5>
+                <p>
+                    Con la información suministrada durante el TRIAGE, y la valoración médica en sitio realizada
+                    en el lugar por nuestro equipo médico, se inician las acciones indicadas para estabilizar al
+                    paciente y definir la conducta médica a seguir: manejo ambulatorio domiciliario o traslado a
+                    Institución Intrahospitalaria; (la gran mayoría de los casos son resueltos en el lugar del
+                    evento sin necesidad de trasladar al paciente). En caso de que, a criterio del médico en sitio,
+                    el paciente deba ser trasladado a una clínica o institución hospitalaria se realizará bajo
+                    condiciones técnicas y científicas que aseguren la estabilidad del paciente hasta que se logre
+                    la recepción del mismo con la Institución intrahospitalaria. La definición del centro asistencial
+                    al que será trasladado el paciente es definida por la compañía de acuerdo con la severidad del
+                    caso y aseguramiento del paciente.
+                </p>
+
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+                <h5>
+                    <u>SERVICIOS MÉDICOS OFERTADOS</u>
+                </h5>
+                <br />
+                <p>
+                    <strong>Atención de Emergencias Médicas. </strong>Entendidos como aquellos eventos en los que
+                    exista un riesgo real e inmediato de perder la vida. Algunos casos asociados a un evento de
+                    emergencia son: síndrome coronario agudo, trauma mayor, heridas con compromiso sistémico,
+                    shock de cualquier tipo, alteración neurológica aguda de mayor complejidad, trastornos mentales
+                    que pongan en riesgo la vida del paciente o de quienes están con él.
+                </p>
+                <br />
+                <p>
+                    <strong>Atención de Urgencias Médicas. </strong>Entendidos como aquellos eventos o situaciones
+                    en los que, aunque no hay riesgo inminente de muerte ni secuelas invalidantes, hay presencia de
+                    síntomas alarmantes que requieren una pronta intervención médica para calmar síntoma o prevenir
+                    complicaciones mayores. Algunos casos asociados a una urgencia son: alteración neurológica aguda
+                    de severidad moderada, sintomatología cardiovascular con riesgo de descompensación, trastornos
+                    de conducta que pongan en peligro al paciente, familia o compañeros, traumas con riesgo de
+                    descompensación clínica o pérdida de un miembro u órgano; entre otros.
+                </p>
+                <br />
+                <p>
+                    <strong>Traslados Primarios Asistidos. </strong>Conjunto de actividades destinadas al traslado de
+                    personas en estado crítico o limitado con atención pre-hospitalaria, hacia una institución
+                    hospitalaria desde el lugar donde se encuentre el paciente siempre y cuando se encuentre dentro de
+                    los perímetros de cobertura establecidos; en ambulancias básicas
+                    o medicalizadas, dotadas con equipos de alta tecnología, con conductor experto,
+                    acompañada por un recurso humano calificado médico y/o enfermera o auxiliar, con
+                    entrenamiento en Emergencias, soporte avanzado de trauma y cardiovascular, como
+                    también en técnicas de reanimación cardiopulmonar. El traslado primario no aplica para
+                    entidades de salud, ya que en caso de que el traslado derive de una atención o de la permanencia
+                    de un paciente en las instalaciones de la institución, debe realizarse un traslado secundario y
+                    cumplir con todo el proceso de referencia y contra- referencia contemplado en la ley.
+                </p>
+
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+                <p>
+                    <strong>Orientación Médica Telefónica o Virtual. (OMT-OMV): </strong>Orientación a través de personal
+                    médico, a la persona que ésta en línea telefónica o virtual, sobre la situación médica que éste le
+                    refiera, pudiendo dar recomendaciones de manejo, alerta y cuidado. Disponible conforme el horario de
+                    atención previsto por EMERMÉDICA.
+                </p>
+                <br />
+                <p>
+                    <strong>TRIAGE: </strong>Método para definir la prioridad de la atención al USUARIO en caso de
+                    una contingencia médica, según la gravedad de su estado clínico, para lo cual se aplicarán los
+                    estándares de clasificación y tiempos de respuesta estimados, definidos por la normatividad
+                    legal vigente. A los servicios de Área Protegida, le corresponden los siguientes niveles de
+                    atención:
+
+                    TRIAGE I. Emergencias Médicas Nivel 1 / Clave Roja: La condición clínica del paciente representa
+                    un riesgo vital y necesita reanimación. La asignación del recurso será inmediata, con  un
+                    tiempo  estimado de  desplazamiento hasta el  sitio del  evento de  20 minutos.
+
+                    TRIAGE II. Emergencias Médicas Nivel 2 / Clave Naranja: La condición clínica del paciente
+                    puede evolucionar hacia un rápido deterioro o a su muerte, e incrementar el riesgo de la pérdida
+                    de   un   miembro   u   órgano.   Tiempo   de   llegada   hasta   30   minutos.
+
+                    TRIAGE III. Urgencias Médicas / Clave Amarilla: La condición clínica del paciente requiere de
+                    medidas diagnósticas y terapéuticas en urgencias, son pacientes que se encuentran estables pero
+                    que se pueden empeorar si no se actúa. Tiempo estimado de arribo para la atención, 60 minutos.
+                </p>
+                <br />
+                <h5>
+                    <u>BENEFICIOS</u>
+                </h5>
+                <br />
+                <ul>
+                    <li type="square">Sin exclusiones por edad o enfermedad.</li>
+                    <li type="square">Sin límite de Uso.</li>
+                    <li type="square">
+                        Práctica de exámenes en sitio, conforme los realizables a nivel extramural,
+                        y conforme con los servicios pre-hospitalarios habilitados en el registro Especial de Prestadores
+                        de Servicios de salud; tales como: electrocardiograma, glucometría, oximetría, a criterio del
+                        médico.
+                    </li>
+                    <li type="square">Recepción del paciente en el centro asistencial con impresión diagnóstica.</li>
+                    <li type="square">Médicos enlazados a nuestra central de urgencias a través de tecnología GPS.</li>
+                    <li type="square">Atención directa y personalizada.</li>
+                </ul>
+                <br />
+                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <h5>
+                    <u>VALORES AGREGADOS:</u>
+                </h5>
+                <br />
+                <p>
+                    <strong>Portal Empresarial: </strong>Plataforma virtual que permite a la empresa realizar el
+                    manejo de novedades de su contrato, agendar citas con su ejecutivo de cuenta o incluso programar
+                    capacitaciones sobre el manejo adecuado de Urgencias y Emergencias.
+                </p>
+                <br />
+                <u>
+                    <strong>Minuta de Contrato:</strong>
+                </u>&nbsp;
+                <p>
+                    <strong>EMERMÉDICA SA </strong>cuenta con una Minuta de Contrato que define el producto ofertado,
+                    la cual deberá ser suscrita por el Cliente, una vez acepte nuestra oferta económica.
+                    Si el cliente requiere que se incluyan cláusulas de tipo institucional, podrán adicionarse
+                    el contrato, a través de un anexo.
+                </p>
+                <h5>
+                    <u>PROPUESTA ECONÓMICA:</u>
+                </h5>
+                <br />
+                <div class="col-xs-12 col-md-12">
+
+                    <table class="table table-bordered table-responsive">
+
+                        <thead>
+                            <tr>
+                                <th colspan="3" class="text-center">{{ InfReporteCotizacion[0].NombreProducto }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="text-center"></th>
+                                <th scope="col" class="text-center">Ciudad</th>
+                                <th scope="col" class="text-center">Riesgo ARL</th>
+                                <th scope="col" class="text-center">Sector Económico</th>
+                                <th scope="col" class="text-center">Tipo AP*</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="datos in InfSedesCotizacion">
+                                <th scope="row" class="text-center">{{ datos.NombreSede }}</th>
+                                <td class="text-center">{{ datos.NombreCiudad }}</td>
+                                <td class="text-center">{{ datos.NombreTipoRiesgo }}</td>
+                                <td class="text-center">{{ datos.SectorEconomico }}</td>
+                                <td class="text-center">{{ datos.TipoAP }}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <STRONG>
+                                        <u>COBERTURA</u><br />
+                                        Atención prehospitalaria de Emergencias y Urgencias.
+                                    </STRONG>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <p>*Área Protegida, AP Copropiedades, AP por licitación, AP &lt; 12 meses, AP áreas comunes, AP Bienestar, AP Colpatria, AP Alojamiento, AP Construcción, AP Educación.</p>
+                </div>
+
+                <h5>
+                    <u>PROPUESTA ECONÓMICA:</u>
+                </h5>
+                <br />
+                <div class="col-xs-12 col-md-12">
+
+                    <table class="table table-bordered table-responsive">
+
+                        <thead>
+                            <tr>
+                                <th colspan="3" class="text-center">{{ InfReporteCotizacion[0].NombreProducto }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="text-center"></th>
+                                <th scope="col" class="text-center">Personal Administrativo &nbsp;<p style="font-size: 1em">Administrativo + Operario</p></th>
+                                <th scope="col" class="text-center">Promedio De Visitantes Diario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="datos in InfSedesCotizacion">
+                                <th scope="row" class="text-center">{{ datos.NombreSede }}</th>
+                                <td class="text-center">{{ datos.NoPersonalPermanente }}</td>
+                                <td class="text-center">{{ datos.NoPersonalVisitantes }}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <STRONG>
+                                        <u>COBERTURA</u><br />
+                                        Atención prehospitalaria de Emergencias y Urgencias.
+                                    </STRONG>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+
+                    <form class="form-control-sm">
+                        <div class="fr-title text-center" style="margin-top: 10px;margin-bottom: 20px;">
+                            <label class="label-important control-label">PROPUESTA ECONÓMICA</label>
+                        </div>
+                        <div class="fr-tx-body">
+                            <label id="lbl-" class="control-label label-important">{{ valorPropuestaEconomica() | currency }} MAS EL 5% DE IVA MES.</label>
+                        </div>
+                        <div class="fr-tx-body">
+                            <label id="lb--" class="control-label label-important">TOTAL {{ valorPropuestaEconomicaIva() | currency }} Mensual IVA Incluido.</label>
+                        </div>
+                        <div class="footer">
+                            <label id="lb-footer" class="text-muted control-label" style="font-size: 0.9em;">
+                                <br /> <br />
+                                *Este valor sólo comprende los servicios indicados de forma expresa en la presente oferta.
+                            </label>
+                            <br /> <br />
+                        </div>
+                    </form>
+                </div>
+                <br /> <br /> <br /> <br /> <br /> <br /><br /> <br />
+                <ul>
+                    <li type="square">
+                        Cualquier servicio o beneficio adicional no contemplado en esta oferta,
+                        que pudiere llegarse a incluir, será valorado de manera adicional al valor de la presente
+                        propuesta.
+                        <br /> <br />
+                    </li>
+                </ul>
+
+                <p>
+                    Queremos agradecer la confianza depositada en nosotros, esto nos brinda la oportunidad de ofrecer nuestros servicios, en forma oportuna, eficaz y con alto grado de calidad.
+                </p>
+                <p>
+                    Cualquier información adicional con gusto será	aclarada	por su asesora comercial
+                </p>
+                <p>
+                    {{ InfReporteCotizacion[0].NombreAsesor }} <strong>Celular</strong> {{ InfReporteCotizacion[0].CelularAsesor }}.
+                </p>
+                <p>
+                    Para	mayor	información,	Los	invitamos	a	visitar	nuestra	página	de	internet
+                    www.emermedica.com.co
+                </p>
+                <strong>
+                    Cordialmente,
+                </strong>
+
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+                <p>
+                    <u>
+                        {{ InfReporteCotizacion[0].NombreDirector }}<br />
+                    </u>
+                    <strong> Director Comercial Emermédica</strong>
+                </p>
+                <p>
+                    <strong>Celular:</strong> {{ InfReporteCotizacion[0].CelularDirector }}
+                </p>
+                <p>
+                    {{ InfReporteCotizacion[0].CorreoDirector }} <br />
+                </p>
+                <br /><br /><br /><br /><br />
+            </section>
+        </div>
+    </div>
+
+</div>
+<br /><br />
+@*Librerias Externas*@
+<script ype="text/javascript" src="~/js/kendo.all.min.js"></script>
+<script type="text/javascript" src="~/js/angular.min.js"></script>
+<script type="text/javascript" src="~/js/loading-bar.min.js"></script>
+@*<script type="text/javascript" src="~/App/CotizarReserva/indexViewModel.js"></script>*@
+<script type="text/javascript" src="~/js/Cotizacion/cotizacion.controller.js"></script>

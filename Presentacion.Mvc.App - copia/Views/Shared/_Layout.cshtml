@@ -1,0 +1,255 @@
+﻿@using System.Security.Claims
+@using Presentacion.Mvc.App.Models
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/Image/icono.png" />
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/fuente.css" rel="stylesheet" />
+    <link href="~/Styles/estilos.css" rel="stylesheet" />
+    <link href="~/Styles/style.css" rel="stylesheet" />
+
+    @*<link href="~/Styles/font-awesome.min.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/devoops.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.3.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/locales/bootstrap-datepicker.es.js"></script>
+    <script src="~/Scripts/bootstrap-timepicker.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/jquery.placeholder.min.js"></script>
+
+    <!-- pnotify 3 -->
+    <script src="~/Scripts/pnotify/pnotify.custom.min.js"></script>
+    <link href="~/Scripts/pnotify/pnotify.custom.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/qTip/jquery.qtip.min.js"></script>
+
+    <link href="~/Scripts/qTip/jquery.qtip.css" rel="stylesheet" />
+    <!-- select2 (version 3.4.1) -->
+    <script src="~/Scripts/select2.js"></script>
+    <script src="~/Scripts/select2_locale_es.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Styles/select2.css">
+    <link rel="stylesheet" type="text/css" href="~/Styles/select2-bootstrap2.css">
+
+    <!-- Jquery Datatable -->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/DataTables-1.10.11/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/Responsive-2.0.2/css/responsive.bootstrap.min.css" />
+
+    <script type="text/javascript" src="~/Scripts/DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/DataTables/Responsive-2.0.2/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/DataTables/Responsive-2.0.2/js/responsive.bootstrap.min.js"></script>
+    <title>Herramientas Comerciales</title>
+
+    @Scripts.Render("~/bundles/layout")
+</head>
+<body>
+
+    @{
+        var claimsIdentity = User.Identity as ClaimsIdentity;
+        var nombre = "";
+        var nombreHijo = "";
+
+        if (!claimsIdentity.Claims.Any())
+        {
+            Response.Redirect("~/Login/");
+        }
+        else
+        {
+            nombre = claimsIdentity.FindFirst(ClaimTypes.Actor).Value;
+        }
+
+        if (!(claimsIdentity.FindFirst(ClaimTypes.Anonymous).Value.ToString().Equals("")))
+        {
+            nombre = claimsIdentity.FindFirst(ClaimTypes.Authentication).Value;
+            nombreHijo = claimsIdentity.FindFirst(ClaimTypes.Actor).Value;
+        }
+    }
+
+
+    <div id="main" class="container-fluid">
+        <script>
+            function inicio() {
+                if (window.name == "sidebar-show") {
+                    $("#main").addClass(window.name);
+                } else {
+                    $("#main").removeClass("sidebar-show");
+                }
+                PNotify.prototype.options.styling = "bootstrap3";
+            }
+            window.onload = inicio();
+        </script>
+        <div class="row fondo-azul-emermedica flex-parent">
+            @if (nombreHijo == "")
+            {
+                <div id="datosUsuario" class="col-lg-2 flex-child" style="padding-top: 10px;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Bienvenid@@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <b style="">@nombre</b>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div id="datosUsuario" class="col-lg-2 flex-child" style="padding-top: 10px;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Bienvenid@@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <b style="">@nombre</b>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div id="bnr" class="col-lg-10" style="padding-right: 0px; padding-left: 0px; border : 1px solid #1C5CA6; ">
+                <img src="~/Image/Banner/home.jpg" alt="home" class="img-responsive" data-ult-click-menu="home" />
+            </div>
+
+
+        </div>
+
+        <div class="row">
+
+            <div id="sidebar-left" class="col-md-2 col-sm-2">
+
+                @if (!(nombreHijo == ""))
+                {
+                    <div id="datosUsuario" style="padding-top: 10px; text-align:center !important;">
+                        <div class="row">
+                            <div class="col-md-12 " style="text-align:center !important;">
+                                Trabajando como:
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 " style="text-align:center !important;">
+
+                                <b style="text-align:center !important; text-anchor:middle">@nombreHijo</b>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div id="sidebar-left" class="col-xs-3 col-sm-12">
+                        @Html.MvcSiteMap().Menu(false, true, false)
+
+                        <ul id="menu" class="nav main-menu ">
+                            <li>
+                                <a href="@Url.Action("SignOut","Login")" class="dropdown-toggle">
+                                    <div class="col-lg-10">
+                                        <i class="glyphicon glyphicon-off"></i>
+                                        <span class="hidden-xs">
+                                            Cerrar sesión
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--Start Content-->
+            <div id="content" class="col-xs-12 col-sm-10">
+                <div class="show-sidebar" style="display: block; position: absolute;">
+                    <a class="btn btn-link" onclick="hideMenu()"><i class="fa  glyphicon glyphicon-align-justify"></i></a>
+                </div>
+
+                <div class="render-body">
+
+                    <div class="row">
+                        @RenderBody()
+                    </div>
+                </div>
+                <div id="ajax-content"></div>
+            </div>
+            <!--End Content-->
+        </div>
+    </div>
+
+    @{
+        @Html.Hidden("urlCotizadorInterna", ConfiguracionesGlobales.urlCotizadorInterna)
+        @Html.Hidden("urlCotizadorExterna", ConfiguracionesGlobales.urlCotizadorExterna)
+        @Html.Hidden("descMenuInterno", ConfiguracionesGlobales.descMenuInterno)
+        @Html.Hidden("descMenuExterno", ConfiguracionesGlobales.descMenuExterno)
+        @Html.Hidden("urlPortalPruebas", ConfiguracionesGlobales.urlPortalPruebas)
+        @Html.Hidden("urlPortalProduccion", ConfiguracionesGlobales.urlPortalProduccion)
+        @Html.Hidden("urlPortalDesarrollo", ConfiguracionesGlobales.urlPortalDesarrollo)
+
+    }
+
+    @Html.Hidden("pathBanners", Url.Content("~/"))
+
+</body>
+
+
+
+@Styles.Render("~/Styles/site.css")
+@Styles.Render("~/Content/kui.css")
+@RenderSection("css", required: false)
+
+@Html.Partial("_Windows")
+
+</html>
+<script>
+
+    $(function () {
+
+
+        $('.glyphicon-family').html('<img src="@Url.Content("~/Image/glyphicon/glyphicon-family.png")" />');
+        $('.glyphicon-tran').html('<img src="@Url.Content("~/Image/glyphicon/glyphicon-tran.png")" />');
+        $('.glyphicon-perimetros').html('<img src="@Url.Content("~/Image/glyphicon/glyphicon-perimetros.png")" />');
+        $('.glyphicon-consultas').html('<img src="@Url.Content("~/Image/glyphicon/glyphicon-consultas.png")" />');
+        $('.glyphicon-reportes').html('<img src="@Url.Content("~/Image/glyphicon/glyphicon-reportes.png")" />');
+
+
+    });
+
+    function hideMenu() {
+
+        if (window.name == "sidebar-show") {
+
+            $("#main").addClass(window.name);
+
+            window.name = "";
+
+        } else {
+
+            window.name = "sidebar-show";
+            $("#main").removeClass(window.name);
+        }
+
+    };
+</script>
+
+@Scripts.Render("~/bundles/ui")
+
+
+@RenderSection("scripts", false)

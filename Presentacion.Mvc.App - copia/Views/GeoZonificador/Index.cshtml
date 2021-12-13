@@ -1,0 +1,89 @@
+﻿@model Presentacion.Mvc.App.Models.GeoZonificadorModel
+<style>
+    thead {
+        background-color: #22558d;
+        color: white;
+    }
+
+    .control-label {
+        margin-top: 7px;
+    }
+</style>
+
+<div style="width: 900px; margin-left: auto; margin-right: auto; margin-top:30px">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Geo-Zonificador</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                <div class="form-inline col-md-12" role="form">
+                    <div class="form-group col-md-5">
+                        @Html.LabelFor(m => m.Direccion, new { @for = "Direccion" }): 
+                        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control", style = "width: 70%; margin-left: 2%;", placeholder = " ejemplo Calle 121 #7-42", required = "required" })
+                    </div>
+                    <div class="form-group col-md-5">
+                        @Html.LabelFor(m => m.Ciudad, new { @for = "Ciudad" }):
+                        @Html.DropDownListFor(m => m.Ciudad, new SelectList(Model.Ciudades, "Value", "Text"), new { style = "width: 70%; margin-left: 2%;", @class = "form-control" })
+                    </div>
+                    <input type="submit" class="form-control btn btn-primary" value="Consultar" />
+                </div>
+            }
+        </div>
+    </div>
+    @if (ViewBag.pintarTabla)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Resultado</h4>
+            </div>
+            <div class="panel-body">
+
+                <div id="table">
+                    <table class="table table-bordered dataTables_scroll dataTable no-footer" id="grdResul">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.DireccionNormalizada)</td>
+                                <td>@Model.DireccionNormalizada</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.Barrio)</td>
+                                <td>@Model.Barrio</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.ZonaOperacion)</td>
+                                <td>@Model.ZonaOperacion</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.Longitud)</td>
+                                <td>@Model.Longitud</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.Latitud)</td>
+                                <td>@Model.Latitud</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.Estado)</td>
+                                <td>@Model.Estado</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if(ViewBag.EsError)
+    {
+        <div class="alert alert-danger">
+            Dirección fuera de cobertura o no encontrada.
+        </div>
+    }
+</div>

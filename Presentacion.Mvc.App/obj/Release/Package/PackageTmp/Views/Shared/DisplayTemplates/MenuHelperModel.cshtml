@@ -1,0 +1,63 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+<ul id="menu" class="nav main-menu ">
+
+    <li>
+        <a href="~/Home/" class="active">
+            <div class="row">
+                <div class="col-lg-10" style="padding-right:0px;">
+                    <i class="glyphicon glyphicon-home" style="padding-right: 0.5em;"></i>
+                    <span class="hidden-xs">Inicio</span>
+                </div>
+            </div>
+        </a>
+    </li>
+    @{
+        var numeroNode = 0;
+    }
+
+    @foreach (var node in Model.Nodes)
+    {
+        if (node.Title != "Home")
+        {
+            numeroNode = numeroNode + 1;
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle">
+            <div class="row">
+                <div class="col-md-10" style="padding-right:0px;">
+                    <i class="glyphicon @node.Description" style="padding-right: 0.5em;"></i>
+                    <span class="hidden-xs">
+                        @Html.DisplayFor(m => node.Title)
+                    </span>
+                </div>
+                <div class="col-md-1 hidden-xs">
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                </div>
+            </div>
+        </a>
+
+        @if (node.Children.Any())
+                {
+        <ul class="dropdown-menu">
+            @foreach (var children in node.Children)
+                        {
+            <li>
+                @if (@children.Title.Equals("Administración sesión en vez de"))
+                                {
+                <a href="~/@children.Controller/@children.Action" style="padding-left: 20px;"><span class="glyphicon glyphicon-option-vertical"></span>Administracion sesion <br />&nbsp;&nbsp;&nbsp;en vez de</a>
+                                }
+                                else
+                                {
+                <a href="~/@children.Controller/@children.Action" style="padding-left: 20px;"><span class="glyphicon glyphicon-option-vertical"></span>@children.Title</a>
+                                }
+            </li>
+                        }
+        </ul>
+
+                }
+    </li>
+        }
+    }
+</ul>

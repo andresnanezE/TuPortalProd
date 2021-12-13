@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DireccionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EMB_DIRECCIONES">
+          <Key>
+            <PropertyRef Name="idDireccion" />
+          </Key>
+          <Property Name="idDireccion" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RMTCON" Type="varchar" MaxLength="50" />
+          <Property Name="RMTRCCB" Type="varchar" MaxLength="50" />
+          <Property Name="nivsocio" Type="varchar" MaxLength="500" />
+          <Property Name="dirAlterna" Type="varchar" MaxLength="500" />
+          <Property Name="zonapostal" Type="varchar" MaxLength="500" />
+          <Property Name="coddane" Type="varchar" MaxLength="500" />
+          <Property Name="coddireccion" Type="varchar" MaxLength="500" />
+          <Property Name="fuente" Type="varchar" MaxLength="500" />
+          <Property Name="validacionPlaca" Type="varchar" MaxLength="500" />
+          <Property Name="zona" Type="varchar" MaxLength="500" />
+          <Property Name="longitude" Type="varchar" MaxLength="500" />
+          <Property Name="barrioTraducido" Type="varchar" MaxLength="500" />
+          <Property Name="latitude" Type="varchar" MaxLength="500" />
+          <Property Name="dirtrad" Type="varchar" MaxLength="500" />
+          <Property Name="coddirplaca" Type="varchar" MaxLength="500" />
+          <Property Name="localidad" Type="varchar" MaxLength="500" />
+          <Property Name="validacion" Type="varchar" MaxLength="500" />
+          <Property Name="estado" Type="varchar" MaxLength="500" />
+          <Property Name="barrio" Type="varchar" MaxLength="500" />
+          <Property Name="esambigua" Type="varchar" MaxLength="500" />
+          <Property Name="dirIngresada" Type="varchar" MaxLength="500" />
+          <Property Name="ciudadIngresada" Type="varchar" MaxLength="50" />
+          <Property Name="fechaConsulta" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EMB_HOMOLOGACION_BARRIO">
+          <Key>
+            <PropertyRef Name="idHomologacion" />
+          </Key>
+          <Property Name="idHomologacion" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="barrioServicio" Type="varchar" MaxLength="200" />
+          <Property Name="barrioEmermedica" Type="varchar" MaxLength="200" />
+          <Property Name="ciudad" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityContainer Name="DireccionModelStoreContainer">
+          <EntitySet Name="EMB_DIRECCIONES" EntityType="Self.EMB_DIRECCIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMB_HOMOLOGACION_BARRIO" EntityType="Self.EMB_HOMOLOGACION_BARRIO" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DireccionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EMB_DIRECCIONES">
+          <Key>
+            <PropertyRef Name="idDireccion" />
+          </Key>
+          <Property Name="idDireccion" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RMTCON" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RMTRCCB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nivsocio" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="dirAlterna" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="zonapostal" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="coddane" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="coddireccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="fuente" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="validacionPlaca" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="longitude" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="barrioTraducido" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="latitude" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="dirtrad" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="coddirplaca" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="localidad" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="validacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="barrio" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="esambigua" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="zona" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="dirIngresada" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ciudadIngresada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fechaConsulta" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="EMB_HOMOLOGACION_BARRIO">
+          <Key>
+            <PropertyRef Name="idHomologacion" />
+          </Key>
+          <Property Name="idHomologacion" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="barrioServicio" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="barrioEmermedica" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ciudad" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="DireccionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EMB_DIRECCIONES" EntityType="Self.EMB_DIRECCIONES" />
+          <EntitySet Name="EMB_HOMOLOGACION_BARRIO" EntityType="Self.EMB_HOMOLOGACION_BARRIO" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DireccionModelStoreContainer" CdmEntityContainer="DireccionEntities">
+          <EntitySetMapping Name="EMB_DIRECCIONES">
+            <EntityTypeMapping TypeName="DireccionModel.EMB_DIRECCIONES">
+              <MappingFragment StoreEntitySet="EMB_DIRECCIONES">
+                <ScalarProperty Name="fechaConsulta" ColumnName="fechaConsulta" />
+                <ScalarProperty Name="ciudadIngresada" ColumnName="ciudadIngresada" />
+                <ScalarProperty Name="dirIngresada" ColumnName="dirIngresada" />
+                <ScalarProperty Name="zona" ColumnName="zona" />
+                <ScalarProperty Name="idDireccion" ColumnName="idDireccion" />
+                <ScalarProperty Name="RMTCON" ColumnName="RMTCON" />
+                <ScalarProperty Name="RMTRCCB" ColumnName="RMTRCCB" />
+                <ScalarProperty Name="nivsocio" ColumnName="nivsocio" />
+                <ScalarProperty Name="dirAlterna" ColumnName="dirAlterna" />
+                <ScalarProperty Name="zonapostal" ColumnName="zonapostal" />
+                <ScalarProperty Name="coddane" ColumnName="coddane" />
+                <ScalarProperty Name="coddireccion" ColumnName="coddireccion" />
+                <ScalarProperty Name="fuente" ColumnName="fuente" />
+                <ScalarProperty Name="validacionPlaca" ColumnName="validacionPlaca" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="barrioTraducido" ColumnName="barrioTraducido" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="dirtrad" ColumnName="dirtrad" />
+                <ScalarProperty Name="coddirplaca" ColumnName="coddirplaca" />
+                <ScalarProperty Name="localidad" ColumnName="localidad" />
+                <ScalarProperty Name="validacion" ColumnName="validacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="barrio" ColumnName="barrio" />
+                <ScalarProperty Name="esambigua" ColumnName="esambigua" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMB_HOMOLOGACION_BARRIO">
+            <EntityTypeMapping TypeName="DireccionModel.EMB_HOMOLOGACION_BARRIO">
+              <MappingFragment StoreEntitySet="EMB_HOMOLOGACION_BARRIO">
+                <ScalarProperty Name="idHomologacion" ColumnName="idHomologacion" />
+                <ScalarProperty Name="barrioServicio" ColumnName="barrioServicio" />
+                <ScalarProperty Name="barrioEmermedica" ColumnName="barrioEmermedica" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

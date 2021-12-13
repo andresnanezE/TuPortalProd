@@ -1,0 +1,552 @@
+﻿body {
+    background-image: url('../../Image/Alarmas/CotizarReserva/Screenshot_6.png');
+    font-family: Arial,Arial, Helvetica, sans-serif;
+}
+
+/* Diseño para Portatil con baja Resolución*/
+@media screen and (min-width: 992px) {
+    /* Formulario Datos reserva*/
+    #form-reserve {
+        background: url('../../Image/Alarmas/CotizarReserva/Artboard 5@300x@2x.png');
+        height: 315px;
+        margin-left: -1px;
+        margin-right: 0px;
+    }
+
+    .rw-top {
+        margin-top: 0px;
+        padding-top: 34px;
+        margin-left: 0px;
+        margin-right: -0px;
+        color: #ffffff;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+        font-weight: bold !important;
+    }
+
+    a.btn {
+        bottom: 10px;
+    }
+
+    .rw-title {
+        color: #ffffff;
+        font-size: 1.5em;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold !important;
+    }
+
+    div.row:nth-child(4) {
+        color: #ffffff;
+        font-size: 1.5em;
+        font-family: Arial;
+        font-weight: bold !important;
+    }
+
+    div.row:nth-child(6) {         
+         font-size: 1.5em;
+         font-family: Arial, Helvetica, sans-serif;
+         color: rgb(255, 255, 255);
+         font-weight: bold !important;
+         
+    }
+    div.row:nth-child(8) {
+        font-size: 1.5em;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #ffffff;
+        font-weight: bold !important;
+    }
+
+    div.rw-txt {
+        color: #FFFFFF;
+        font-size: 1.2em;
+        font-family: Arial;
+        font-weight: normal;
+        top: 10px;
+    }
+
+    div.row:nth-child(5) > div:nth-child(1) > div:nth-child(1) > label:nth-child(1) {
+        margin-top: 10px;
+    }
+
+    #lbl-tx {
+        margin-top: 10px;
+    }
+
+    div.rw-txt:nth-child(3) > div:nth-child(2) > div:nth-child(1) > label:nth-child(1) {
+        margin-top: 10px;
+    }
+
+    div.rw-txt:nth-child(3) > div:nth-child(3) > div:nth-child(1) > label:nth-child(1) {
+        margin-top: 10px;
+    }
+
+    div.row:nth-child(5) > div:nth-child(2) > div:nth-child(1) > label:nth-child(1) {
+        margin-top: 10px;
+    }
+
+    div.row:nth-child(5) > div:nth-child(3) > div:nth-child(1) > label:nth-child(1) {
+        margin-top: 10px;
+    }
+
+    .btn-edit {
+        background-color: #34C38B;
+        border-color: #34C38B;
+        top: 10px;
+        width: 200px;
+        font-family: arial;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+
+    .btn:hover, .btn:focus, .btn.focus {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: normal;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
+        background-color: #22558E;
+        font-size: 15px;
+        color: #FFFFFF;
+        font-family: Arial;
+        top: 0px;
+        padding-top: 20px;
+        padding-bottom: 23px;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) {
+        background-color: #22558e;
+        color: #FFFFFF;
+        padding-top: 20px;
+        padding-bottom: 44px;
+        font-family: Arial;
+        font-size: 15px;
+        width: 12%;
+    }
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) {
+        top: 6px;
+        color: #226dbb;
+        font-size: 15px;
+        font-family: arial;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > label:nth-child(1) {
+        color: #226db4;
+        font-size: 15px;
+        font-family: arial;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) {
+        padding-top: 20px;
+        font-size: 15px;
+        font-family: arial;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) {
+        font-size: 15px;
+        padding-top: 20px;
+        font-family: Arial;
+        background-color: #22558e;
+        color: #FFFFFF;
+        width: 13%;
+        padding-bottom: 44px;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) {
+        color: #226db4;
+        font-size: 15px;
+        font-family: arial;
+        width: 14%;
+    }
+
+        #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > label:nth-child(1) {
+            color: #226db4;
+            padding-top: 20px;
+            font-size: 15px;
+            font-family: arial;
+        }
+
+    div.lbl-blue:nth-child(5) > label:nth-child(1) {
+        font-size: 15px;
+        font-family: Arial;
+        background-color: #22558e;
+        padding-top: 20px;
+        color: #FFFFFF;
+        padding-left: 12px;
+        padding-right: 15px;
+    }
+
+    div.lbl-trp:nth-child(6) {
+        color: #226db4;
+        padding-top: 20px;
+    }
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
+        background-color: rgb(34, 85, 142);
+        top: 0px;
+        color: rgb(255, 255, 255);
+        font-size: 15px;
+        font-family: arial;
+        padding-bottom: 63px;
+        padding-top: 5px;
+    }
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) {
+        background-color: #22558e;
+        top: 0px;
+        color: #FFFFFF;
+        font-size: 15px;
+        font-family: arial;
+        padding-bottom: 42px;
+        padding-top: 5px;
+        width: 13%;
+    }
+
+    .ll-space {
+        padding-top: 94px;
+    }
+
+    div.col-xs-4:nth-child(8) {
+        left: 80px;
+        top: 67px;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(7) {
+        background-color: #22558e;
+        padding-top: 66px;
+        margin-bottom: -90px;
+        padding-bottom: 1px;
+        padding-top: 67px;
+        margin-bottom: -90px;
+        padding-bottom: 0px;
+        color: #ffffff;
+    }
+
+    div.col-xs-4:nth-child(8) > label:nth-child(1) {
+        color: #226db4;
+        padding-left: 20px;
+    }
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(5) {
+        font-size: 15px;
+        font-family: arial;
+        padding-top: 8px;
+        background-color: #22558e;
+        color: #FFFFFF;
+        padding-bottom: 39px;
+        width: 12%;
+    }
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) {
+        color: #226db4;
+        top: 6px;
+        font-size: 15px;
+        font-family: arial;
+        width: 14%;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) {
+        color: #226db4;
+        top: 20px;
+        font-size: 15px;
+        font-family: arial;
+        width: 15%;
+    }
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(6) {
+        top: 6px;
+        font-size: 15px;
+        font-family: arial;
+        color: #226db4;
+        width: 15%;
+    }
+
+    div.col-sm-4:nth-child(8) {
+        top: 21px;
+        color: #226db4;
+        font-size: 15px;
+        font-family: arial;
+        left: 125px;
+    }
+
+    div.col-sm-1:nth-child(7) {
+        background-color: #22558e;
+        color: #FFFFFF;
+        padding-top: 45px;
+        padding-bottom: 39px;
+        margin-bottom: -90px;
+        font-size: 15px;
+        font-family: Arial;
+    }
+
+    .rw-lbl-title {
+        font-size: 19px;
+        background-color: #22558e;
+        color: #FFFFFF;
+        margin-top: -5px;
+        padding-top: 10px;
+    }
+
+    .table {
+        background: url('../../Image/Alarmas/CotizarReserva/Screenshot_6.png');
+        color: #226db4;
+        font-size: 15px;
+        font-family: Arial;
+    }
+
+    .tr {
+        text-align: center;
+    }
+
+    .rw-tbl {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .table > thead:nth-child(1) > tr:nth-child(1) {
+        background-color: #34c38b;
+        color: #FFFFFF;
+        font-family: Arial;
+        font-size: 1.2em;
+    }
+
+    .rw-nt {
+        margin-left: 0px;
+        margin-right: 0px;
+        background-color: #22558e;
+        color: #FFFFFF;
+        font-size: 19px;
+        font-family: Arial;
+        font-weight: bold;
+    }
+
+        .rw-nt > div:nth-child(1) {
+            background-color: #22558e;
+            color: #fff;
+            font-size: 20px;
+            font-family: Arial;
+            font-weight: bold;
+            padding-top: 5px;
+        }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > label:nth-child(1) {
+        color: #226db4;
+        font-size: 14px;
+        font-family: Arial;
+        padding-top: 44px;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > label:nth-child(1) {
+        padding-top: 43px;
+        font-weight: bold;
+        font-family: Arial;
+        color: #1D3959;
+        font-size: 17px;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) {
+        right: 48px;
+        bottom: 2px;
+        left: -38px;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) {
+        color: #226db4;
+        top: 43px;
+        font-size: 14px;
+        font-family: Arial;
+        right: 179px;
+        left: -112px;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) {
+        top: 40px;
+        right: 114px;
+        color: #226db4;
+        font-size: 17px;
+        font-family: Arial;
+        padding-right: 0px;
+        left: -94px;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) {
+        top: 28px;
+        color: #226db4;
+        font-size: 14px;
+        font-family: Arial;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) {
+        font-weight: bold;
+        font-family: Arial;
+        color: #1D3959;
+        font-size: 17px;
+        top: 25px;
+        right: 49px;
+        left: -39px;
+    }
+
+        .row-ntc > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > label:nth-child(1) {
+            font-weight: bold;
+        }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) {
+        color: #226db4;
+        font-size: 14px;
+        font-family: Arial;
+        top: 26px;
+        right: 177px;
+        left: -113px;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) {
+        color: #226db4;
+        font-size: 17px;
+        font-family: Arial;
+        top: 25px;
+        right: 224px;
+        left: -94px;
+    }
+
+    .row-ntc > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) {
+        color: #1D3959;
+        font-size: 19px;
+        font-family: Arial;
+        top: 54px;
+    }
+
+    #exampleFormControlTextarea1 {
+        padding-left: 41px;
+        padding-right: 54px;
+        border-radius: 50px;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208);
+        overflow-y: hidden;
+    }
+
+    .col-xs-11 {
+        top: 30px;
+        right: 39px;
+    }
+
+    div.col-sm-12:nth-child(3) {
+        top: 44px;
+        right: 90px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .btn-add-note {
+        width: 90%;
+        background-color: #34C38B;
+        color: #fff;
+        font-family: Arial;
+        font-weight: bold;
+    }
+
+    #frm-body {
+        margin-bottom: 70px;
+    }
+
+    .btn-lbr {
+        width: 70%;
+        background-color: #EFAD4D;
+        Color: #fff;
+        font-family: Arial;
+        font-weight: bold;
+    }
+
+    .row-ntc > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) {
+        top: 50px;
+    }
+
+    .btn-rnr {
+        width: 70%;
+        font-family: Arial;
+        font-weight: bold;
+        color: #fff;
+        background-color: #34C38B;
+    }
+
+    .btn-cancel {
+        /* top: 50px; */
+        width: 70%;
+        background-color: #22558E;
+        color: #fff;
+        font-family: Arial;
+        font-weight: bold;
+    }
+
+    .row-ntc > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) {
+        top: 50px;
+        right: 60px;
+    }
+
+    .col-sm-11 {
+        top: 26px;
+    }
+
+    .row-ntc > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
+        top: 50px;
+        left: 60px;
+    }
+
+    /*Fin Formulario Datos reserva*/
+}
+
+
+@media screen and (min-width:1366px) {        
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) {
+        padding-bottom: 20px;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) {
+        padding-bottom: 20px;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(7) {
+        padding-top: 43px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+
+    #frm-body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
+        padding-right: 0px;
+        padding-left: 7px;
+    }
+
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    #frm-body > div:nth-child(2) > div:nth-child(1) > div:nth-child(5) {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .ll-space {
+        padding-top: 20px;
+        padding-bottom: 46px;
+    }
+
+    div.col-xs-4:nth-child(8) {
+        top: 44px;
+    }  
+    
+}

@@ -1,0 +1,80 @@
+﻿@model Presentacion.Mvc.App.Models.LogSesionEnVezDe
+
+@{
+    ViewBag.Title = "Reporte log sesionenvezde";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><strong>@ViewBag.Title</strong></h4>
+    </div>
+    <div class="form-horizontal">
+        <hr />
+
+        @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+            {
+        <div class="row">
+            <div class="col-md-6 col-md-offset-2 alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                @*<a class="close" data-dismiss="alert">×</a>*@
+                @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                        {
+                @modelError.ErrorMessage<br />
+                        }
+            </div>
+        </div>
+            }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaInicial, htmlAttributes: new { @class = "control-label col-md-2 col-lg-offset-2" })
+            <div class="col-md-3">
+                <div class="input-group input-append date">
+                    @Html.EditorFor(model => model.FechaInicial, new { htmlAttributes = new { @class = "form-control datepicker-sesion", @Value = String.Format("{0:dd/MM/yyyy}", DateTime.Now) } })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.FechaInicial, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaFinal, htmlAttributes: new { @class = "control-label col-md-2 col-lg-offset-2" })
+            <div class="col-md-3">
+                <div class="input-group input-append date">
+                    @Html.EditorFor(model => model.FechaFinal, new { htmlAttributes = new { @class = "form-control datepicker-sesion", @Value = String.Format("{0:dd/MM/yyyy}", DateTime.Now) } })
+
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.FechaFinal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-4">
+                <button type="submit" formtarget="_blank" class="btn btn-primary" id="enviar"> <span class="glyphicon glyphicon-ok-sign"></span> Generar reporte</button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<script>
+    $(function () {
+        $('.datepicker-sesion').datepicker({
+            format: "dd/mm/yyyy", language: 'es'
+            , ignoreReadonly: true,
+            autoclose: true,
+            endDate: '0d'
+        });
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

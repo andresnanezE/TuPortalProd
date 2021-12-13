@@ -1,0 +1,97 @@
+﻿@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+
+@{
+    ViewBag.Title = "Listado Factores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/Factores.css" rel="stylesheet" />
+<script>
+    function openMod(postbck, messa) {
+        var TeamDetailPostBackURL = '@Url.Action("Emergente", "Mensaje")';
+        var id = messa;
+        var options = { "backdrop": "static", keyboard: true };
+        $.ajax({
+            type: "POST",
+            url: TeamDetailPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ "title": "Reservas próximas a vencer", "mess": id }),
+            datatype: "json",
+            success: function (data) {
+                debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function (ex) {
+                alert("Error.", ex);
+            }
+        });
+    }
+</script>
+
+<div class="col-xs-12 col-sm-12 col-md-12">
+
+    <br />
+    <br />
+    @*Formulario de Factores*@
+    <form id="filtrofactores-form" action="@Url.Action("Index", new{ asesoID = Model.asesoID})" method="POST">
+        <div class="panel panel-default-color" style="width: 100%; margin-bottom: 50px;">
+
+            @*Banner Titulo*@
+            <div class="panel-heading-color" ALIGN="center">
+                <label class="title-factor">Factores</label>
+            </div>
+        </div>
+
+        @*Tabla de Factores*@
+        <div class="container">
+            <div class="col-md-7 col-xs-7 col-sm-7">
+                <table id="ListadoFactores" class="table table-bordered table-responsive centered" style="margin-left: 34%;">
+                    <thead>
+                        <tr style="background-color: #22558d;">
+                            <th colspan="2" class="title-factor-table" style="vertical-align: top;">
+                                <label for="Nombre" style="margin-left: 1em;">Nombre</label>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in  Model.factores)
+                        {
+                        <tr>
+                            <td colspan="2">
+                                <div class="row" style="margin-left: 4px; margin-top: 10px;">
+                                    <div class="title-factor-table-tr col-md-6">
+                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                    </div>
+                                    <div class="col-md-6" style="text-align: right; margin-top: -10px !important;">
+                                        <button type="button" class="btn btn-cnslt" id="btnEditar"><i class="fa  glyphicon glyphicon-arrow-right" style="margin-bottom: 6px; color: #ffffff;"></i>&nbsp; @Html.ActionLink("Consultar", "DetalleFactores", new { idFactor = item.Id, nombreFactor = item.Nombre, idTipoFactor = item.Id_TipoFactor }, new { @class = "title-factor-table-tr-consultar" })</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @if (!string.IsNullOrWhiteSpace(ViewBag.Mensaje))
+                {
+                <div class="alert alert-success">
+                    <p align="center"><strong><font size="5">@ViewBag.Mensaje</font></strong></p>
+                </div>
+                }
+            </div>
+        </div>
+
+        @*Modal*@
+        <input type=hidden id='mesNot' value='@Html.DisplayTextFor(model => model.mensaje)'><br>
+        <div id="myModal" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="myModalContent"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,122 @@
+﻿@model Presentacion.Mvc.App.Models.SolicitudesInternas
+
+@{
+    ViewBag.Title = "Enviar solicitud.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    @using (Html.BeginForm("Index", "SolicitudesInternas", FormMethod.Post, new { Id = "crearTicketForm", enctype = "multipart/form-data" }))
+    {
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin-bottom: 50px;">
+            <h4><strong>@ViewBag.Title</strong></h4>
+        </div>
+
+        <div class="form-horizontal">
+
+            @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                    @modelError.ErrorMessage<br />
+                            }
+                </div>
+            </div>
+                }
+
+            @if (ViewBag.Message != null && !string.IsNullOrEmpty(ViewBag.Message))
+                {
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2 alert alert-info" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @ViewBag.Message
+                </div>
+            </div>
+                }
+
+            @if (Model != null)
+                {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Asunto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ciudad, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(m => m.Ciudad.idCiudad, Model.CiudadesItems, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Ciudad.idCiudad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Area, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(m => m.Area.idArea, Model.AreasItems, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Area.idArea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TipoRequerimiento, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(m => m.TipoRequerimiento.idTRequerimiento, Model.TRequerimientosItems, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TipoRequerimiento.idTRequerimiento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-2">
+                    <input type="file" name="Attach" id="Attach" multiple="multiple">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-2">
+                    <button type="button" class="btn btn-primary" id="enviar" onclick="validar()"> <span class="glyphicon glyphicon-ok-sign"></span> Enviar</button>
+                </div>
+            </div>
+                }
+        </div>
+    </div>
+
+    <div class="row" id="_alert">
+        <div class="col-md-7 col-md-offset-2">
+            <div class="alert alert-info" role="alert" id="ainfo">
+                <span class="glyphicon glyphicon-exclamation-sign send" aria-hidden="true"></span>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2">
+            <div class="alert alert-info" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                Si tienes inquietudes sobre la información aquí registrada,  te invitamos a contactar el equipo de administración de ventas.
+            </div>
+        </div>
+    </div>
+
+    }
+</div>
+
+@Scripts.Render("~/bundles/filer")
+@Scripts.Render("~/bundles/SolicitudesInternas")
+@Styles.Render("~/Styles/filer")

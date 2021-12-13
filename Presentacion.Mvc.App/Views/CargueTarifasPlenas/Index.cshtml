@@ -1,0 +1,105 @@
+﻿@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.CargueTarifaPlenaModel
+@{
+    ViewBag.Title = "Cargue Tarifas Plenas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div id="programacionTurnos-form">
+        <div class="panel panel-default" style="width: 65%">
+            <div class="panel-heading">
+                <h3>Cargue Tarifas plenas</h3>
+            </div>
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @using (Html.BeginForm("Index", "CargueTarifasPlenas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="file" name="file" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <input type="submit" value="Cargar" class="btn btn-primary" />
+                        <br /><br />
+                        @ViewBag.Message
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <table id="listaDatos" class="table table-striped table-bordered" style="">
+                <thead>
+                    <tr>
+                        <th style="vertical-align: top;">
+                            @Html.Label("Ciudad")
+                        </th>
+                        <th style="vertical-align: top;">
+                            @Html.Label("Tarifa plena")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                {
+                    foreach (var item in Model.ListaCargueTarifasPlenas)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.CIUDAD)
+                        </td>
+                        <td>
+                            @item.TARIFA_PLENA.ToString("C")
+                        </td>
+                    </tr>
+                    }
+                }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model.ListaCargueTarifasPlenas, page => Url.Action("Paginador", new { page }));
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        $(document).ready(function () {
+        $('table#listaDatos').DataTable({
+            oLanguage: {
+                sEmptyTable: "No hay datos para mostrar",
+                sInfo: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando 0 a 0 de 0 registros",
+                sInfoFiltered: "(Friltrado desde _MAX_ registros totales)",
+                sLengthMenu: "Mostrar _MENU_ registros por pagina",
+                sLoadingRecords: "Cargando...",
+                sProcessing: "Procesando...",
+                sSearch: "Buscar:",
+                sZeroRecords: "No se encontraron registros que coincidan",
+                oPaginate: {
+                    sFirst: "Primera",
+                    sLast: "Ultima",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
+                }
+            },
+            "autoWidth": false,
+            //"sort": true,
+            //"filter": true,
+            //"dom": "<'row'<'col-md-6'l><'col-md-6'f>>" + "<'row'<'col-md-12'i>>" ,
+            "processing": false,
+            "searching": false,
+            "paging": false,
+            //"ordering": true,
+            "info": false,
+            "columns": [
+                   { "searchable": true, "orderable": true, "Width": "14%", "Class": "alignCenter" },
+                   { "searchable": true, "orderable": true, "Width": "14%", "Class": "alignCenter" }
+            ]
+        });
+        });
+</script>

@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Response";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <img src="https://saventaenlinea.blob.core.windows.net/imagenes/logo-header.png" class="img-fluid" style="width: 280px;">
+            </div>
+            <div class="col-sm-12 append text-center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="font-size: 2.5rem;font-weight: 600;color: rgb(20,69,116);">¡Solicitud enviada!</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p>
+                            Estamos validando tus datos. En un plazo máximo de 4 días hábiles daremos respuesta al correo que has registrado.<br /><br />
+                            En caso de dudas e inquietudes te puedes comunicar con nuestra línea de atención.<br /><br /><br />
+                            Bogotá: 3077089<br /><br />
+                            Nacional: 01 8000 117096
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <a href="@Url.Action("Index","MedioPago")">
+                            <button class="btn" style="padding: 6px 100px;margin-bottom: 10px;border-radius: 25px;margin-top: 20px;background-color: rgb(171,44,40);color: rgb(255,255,255)!important;font-weight: 700;">
+                                Continuar
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

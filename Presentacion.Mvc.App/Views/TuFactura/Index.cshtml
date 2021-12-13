@@ -1,0 +1,154 @@
+﻿@model Presentacion.Mvc.App.Models.FacturaAnexosViewModel
+@{
+    ViewBag.Title = "Tu factura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+
+    <form id="listado" action="@Url.Action("Index", "TuFactura")" method="POST">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><strong>@ViewBag.Title</strong></h4>
+            </div>
+            <div class="form-horizontal">
+                <br />
+                <br />
+                <input type="hidden" id="contratoSeleccionado" name="contratoSeleccionado" value="@Model.Contratos" />
+
+                @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                {
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-2 alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            @foreach (var modelError in Html.ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                            {
+                                @modelError.ErrorMessage<br />
+                            }
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+
+                    <div class="col-md-2">
+                        No. de documento o Nit
+                    </div>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(m => m.NumeroDocumento, new
+                   {
+                       @class = "form-control Padd",
+                       maxLength = 13,
+                       onblur = "buscarContratos()"
+                   })
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+
+                    <div class="col-md-2">
+                        Selecciona tu Contrato
+                    </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(
+                        m => m.ContratoId, Model.Contratos,
+                        new { @class = "form-control validate[]" }
+                        )
+                        @Html.Hidden("urlObtenerContratosNit", Url.Action("ObtenerContratosNit"))
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form id="reporteFactura" action="@Url.Action("ReporteFactura", "TuFactura")" method="POST" target="_blank">
+
+        <input type="hidden" id="NumeroDocumento2" name="NumeroDocumento2" value="" />
+
+        @if (Model.ContratosFacturas.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr class="Fmorado">
+                        <th>Factura</th>
+                        <th>N° de factura</th>
+                        <th>Periodo de factura</th>
+                        <th>Valor factura</th>
+                        <th>Saldo factura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ContratosFacturas.Count(); i++)
+                    {
+                        <tr>
+                            <th scope="row" class="basu">
+                                <a class="btn btn-link" onclick="reporteFactura('@Model.ContratosFacturas[i].NUM_DOCU',
+                                    '@Model.ContratosFacturas[i].COD_DOCU',
+                                    '@Model.ContratosFacturas[i].PREFIJO',
+                                    '@Model.ContratosFacturas[i].TIPO_DOCUMENTO',
+                                    '@Model.ContratosFacturas[i].RMT_CONT')">
+                                    <i class="fa  glyphicon glyphicon-download"> </i>
+                                </a>
+                            </th>
+                            <td class="mitad" style="text-align:center;">@Model.ContratosFacturas[i].NUM_DOCU</td>
+                            <td class="suba" style="text-align:center;">@Model.ContratosFacturas[i].PERIODO_FACTURA</td>
+                            <td class="mitad" style="text-align:center;">$ @Model.ContratosFacturas[i].VAL_TOTA</td>
+                            <td class="mitad" style="text-align:center;">$ @Model.ContratosFacturas[i].VAL_SALD</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @Html.HiddenFor(model => model.NUM_DOCU)
+            @Html.HiddenFor(model => model.COD_DOCU)
+            @Html.HiddenFor(model => model.RMT_CONT);
+            @Html.HiddenFor(model => model.TIPO_DOCUMENTO);
+            @Html.HiddenFor(model => model.PREFIJO);
+        }
+    </form>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title titu_inicia" id="myModalLabel">Tu Factura</h4>
+            </div>
+            <div class="modal-body">
+                @Html.ValidationSummary()
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalFactura" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title titu_inicia" id="myModalLabel">Tu Factura</h4>
+            </div>
+            <div class="modal-body" id="txt-modal-factura"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/TuFactura/TuFactura.js"></script>

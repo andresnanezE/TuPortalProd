@@ -1,0 +1,16 @@
+﻿#bg {
+    width: 100%;
+    height: auto
+}
+
+.bgwidth {
+    width: 80%;
+}
+
+.bgheight {
+    height: 100%;
+}
+
+.padd {
+    margin-left: 30%;
+}

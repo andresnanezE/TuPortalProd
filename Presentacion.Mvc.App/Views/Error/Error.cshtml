@@ -1,0 +1,45 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Error";
+}
+
+<form action="~/Home" method="post">
+    <a>
+        <img id="btn-inicio" src="~/Image/BANNER-ERROR/inicio.jpg" onclick="submit()" />
+    </a>
+    <a>
+        <img id="btn-return" src="~/Image/BANNER-ERROR/regresar.jpg" onclick="goBack()" />
+    </a>
+</form>
+<script>
+        function goBack() {
+            window.history.back();
+        }
+        function goHome() {
+            location = "http://www.mozilla.org";;
+        }
+</script>
+<style>
+    #content {
+        background: url("../Image/BANNER-ERROR/BANNER ERROR-03.jpg") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    #btn-return {
+        position: absolute;
+        left: 40%;
+        top: 17%;
+        width: 10%;
+    }
+
+    #btn-inicio {
+        position: absolute;
+        left: 50%;
+        top: 17%;
+        width: 10%;
+    }
+</style>

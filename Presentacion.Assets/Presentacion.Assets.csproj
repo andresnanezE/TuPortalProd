@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5115873E-4903-4940-A6C7-579EA1706005}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Presentacion.Assets</RootNamespace>
+    <AssemblyName>Presentacion.Assets</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Uploads\Banners\225672b6-e142-4563-9a0e-cc8fb6c05b8e.jpeg" />
+    <Content Include="Uploads\Banners\3662cce7-3dbf-4e4b-9bca-0ff069b70333.jpeg" />
+    <Content Include="Uploads\Banners\486528f1-fd98-41d7-a0bb-a6f05ca57aed.jpeg" />
+    <Content Include="Uploads\Banners\64fed0ee-c5aa-40dd-867e-247bb88de441.jpeg" />
+    <Content Include="Uploads\Banners\7a463553-3436-4dea-8883-14c2996fb396.png" />
+    <Content Include="Uploads\Banners\89f207c7-844e-4fbb-be77-0529f96121a0.jpeg" />
+    <Content Include="Uploads\Banners\9cab4339-3813-4308-ad47-b805c5db9add.jpeg" />
+    <Content Include="Uploads\Banners\9ddc73a2-c674-41db-9fe1-bb00682da77e.png" />
+    <Content Include="Uploads\Banners\b1106afc-aedc-40ff-99d5-fcc805120745.jpeg" />
+    <Content Include="Uploads\Banners\banner-1.jpg" />
+    <Content Include="Uploads\Banners\banner-2.jpg" />
+    <Content Include="Uploads\Banners\banner-3.jpg" />
+    <Content Include="Uploads\Banners\c692be95-6def-4e57-9b16-f9ce3c63f98a.png" />
+    <Content Include="Uploads\Banners\e166cd99-d8d2-4243-ab9d-ce274facfcdb.jpeg" />
+    <Content Include="Uploads\Banners\e59859a1-cd51-40ca-aee1-8d1e0d6d65e7.jpeg" />
+    <Content Include="Uploads\Banners\e6fb92ad-fcdd-4199-941a-26b83ecb41d5.jpeg" />
+    <Content Include="Uploads\Banners\fbba66a6-8284-4560-bc43-7fa3225a3b29.png" />
+    <Content Include="Uploads\Destacados\2304c17f-7777-40f8-84bc-7440121a6fd6.jpeg" />
+    <Content Include="Uploads\Destacados\2e9d272c-7cb3-4d05-96be-5edde9ca8bb0.jpeg" />
+    <Content Include="Uploads\Destacados\450ee03f-82a3-4d77-9a52-f69200f3c8a7.jpeg" />
+    <Content Include="Uploads\Destacados\708dcefb-c88a-4019-b9bb-299640e1316a.jpeg" />
+    <Content Include="Uploads\FileUpload\Imagenes\asesora.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\Chakras.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\cirque.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\clubs.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\el-colombiano.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\el-frente.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\el-llano.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\el-mundo.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\el-nuevo-siglo.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\el-universal.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\factura.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\flamingo.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\las-vegas-centro.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\meta.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\pilon.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\quinto-poder.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\rancherias.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\salinas.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\tiendas.jpg" />
+    <Content Include="Uploads\FileUpload\Imagenes\vanguardia.jpg" />
+    <Content Include="Uploads\Noticias\Banners\00228369-b65b-41e6-9d4d-c473242dfd62.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\0241b07b-e1eb-4635-9763-48787d2cb2d2.png" />
+    <Content Include="Uploads\Noticias\Banners\17322392-f5e0-4bec-b282-30ec0837cd68.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\1b2fb345-9ea3-43ac-81b3-ce7ecc08340e.png" />
+    <Content Include="Uploads\Noticias\Banners\20c3597e-9f23-4256-9af6-533376bfbd88.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\2c905da7-482f-4887-9615-a0afef826887.png" />
+    <Content Include="Uploads\Noticias\Banners\2d06be0d-ccf7-4dfd-9f28-d48dfe733de0.png" />
+    <Content Include="Uploads\Noticias\Banners\41346152-6a29-4cc1-9b49-cb4c2653633e.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\46e6e6f2-3158-46e7-851c-ecc047ca7782.png" />
+    <Content Include="Uploads\Noticias\Banners\512bc790-4fce-4f5b-8767-85a573eeb0b6.png" />
+    <Content Include="Uploads\Noticias\Banners\52092400-9280-4049-a721-2322b3efa44f.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\55708a65-0c24-4f8d-832c-08cfb871489f.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\59249680-bf08-4f38-ab89-cd3b43af7a35.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\728f74a2-45b4-469b-b2a4-341958810e12.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\912d0c6c-c4cb-4e78-8171-f01a34ecc2fe.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\936f5aa8-1e5a-45bc-97b3-d2861a7e3eb2.png" />
+    <Content Include="Uploads\Noticias\Banners\9c24252a-2933-4c9b-896d-a81c1907b6bc.png" />
+    <Content Include="Uploads\Noticias\Banners\c1c47744-79a5-481d-b86d-dc60e7af5e86.jpeg" />
+    <Content Include="Uploads\Noticias\Banners\c4dc0d6f-89a3-4c9b-b037-6bbd568abf42.png" />
+    <Content Include="Uploads\Noticias\Banners\e1eb546e-83b9-4a69-a88e-920f3e696e38.png" />
+    <Content Include="Uploads\Noticias\Imagenes\0681c055-b779-4aa6-9d7c-6281be6397dc.png" />
+    <Content Include="Uploads\Noticias\Imagenes\13e0b145-cd4e-4837-aaa5-7c5ccdb771c7.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\2042d243-d95a-4d53-a07a-d58bdb982bee.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\2cfcd60a-af85-4928-b92c-06b64459aad5.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\365f13ad-ea2a-40d5-b727-82684a3b614a.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\41552d66-0e53-4a5a-b4ae-e123aab4fe48.png" />
+    <Content Include="Uploads\Noticias\Imagenes\486cb801-6e8a-4eef-b3c8-b1cad59dc194.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\4def1bba-f015-4a5b-bd54-e031c3db45a3.png" />
+    <Content Include="Uploads\Noticias\Imagenes\75d9b0e2-1886-4b90-813e-3da44a9d61c2.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\8699c3e4-2371-4b0c-a9b5-0e6c5174eba3.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\88d5505f-d8a3-4d12-a82b-e50d10d3b627.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\8e5694b3-aded-47b8-ab84-74e89a8b477e.png" />
+    <Content Include="Uploads\Noticias\Imagenes\9497571d-0974-4dbe-8493-1a4dac955bfe.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\9b866d49-beff-4006-8fc0-0ef89fdc0e64.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\b26f5211-5867-449b-9708-23fb5ebabfd0.png" />
+    <Content Include="Uploads\Noticias\Imagenes\ba6ef35b-479d-457c-9f29-896a144b6197.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\ca809845-c4e9-49e4-b76e-37b84847cc2e.png" />
+    <Content Include="Uploads\Noticias\Imagenes\d7b8d3c9-eaa3-4de7-8f60-87d16faccb6f.png" />
+    <Content Include="Uploads\Noticias\Imagenes\dfce9d82-8f15-4add-a629-ab8489fb0c86.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\f03da965-60e0-4892-b8c0-4327ed849f44.jpeg" />
+    <Content Include="Uploads\Noticias\Imagenes\f1942cba-447a-4ba0-9bc3-9ade7295074b.jpeg" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Emermedica Assets.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Temp\" />
+    <Folder Include="Uploads\como_voy\pimcondiciones\corretaje\" />
+    <Folder Include="Uploads\como_voy\pimcondiciones\directo\" />
+    <Folder Include="Uploads\como_voy\planesdevuelo\corretaje\" />
+    <Folder Include="Uploads\como_voy\planesdevuelo\directo\" />
+    <Folder Include="Uploads\FileUpload\Archivos\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>9375</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:9373/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

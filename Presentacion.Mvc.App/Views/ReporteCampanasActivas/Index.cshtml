@@ -1,0 +1,54 @@
+﻿@*@using PagedList.Mvc*@
+@model Presentacion.Mvc.App.Models.CampanasActivasModel
+
+@{
+    ViewBag.Title = "Consultar Reporte de Campañas Activas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/reportes")
+@Styles.Render("~/Styles/spinner.css")
+
+<br />
+<br />
+
+<div class="col-md-9">
+    @using (Html.BeginForm())
+    {
+    @*@Sector económico*@
+    <div class="form-group">
+        @Html.Label("Nombre Campaña", new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.DropDownListFor(model => model.campaignID, new SelectList(Model.campaigns,
+                "Id_sector", "Descripcion"),
+                "--seleccione--", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <input type="button" class="btn btn-primary reporte" data-action="GenerarReporte" id="reporte-campaign" value="Descargar Reporte" />
+            <br /><br />
+        </div>
+    </div>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        var n = '@ViewData.ModelState.Any()';
+
+        if (n === 'True') {
+            $('#reporte-campaign').prop('disabled', true);
+        }
+
+        $("input#reporte-campaign").on("click", function () {
+            $("form#consulta-form input[name=ExportarFormato]").val("PDF");
+            $("form#consulta-form input[name=TipoInforme]").val("R");
+            $("form#consulta-form").submit();
+        });
+
+    });
+</script>

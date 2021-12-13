@@ -1,0 +1,330 @@
+﻿@model Presentacion.Mvc.App.Models.AfiliacionesModel
+@{
+    ViewBag.Title = "Resumen Afiliaciones";
+}
+@if (Model.ListaResultadoResumen.FirstOrDefault() != null)
+{
+    <ul class="nav nav-tabs">
+        <li id="resumenTab"><a data-toggle="tab" href="#seccion-resumen-estatus" onclick="pestana('resumenTab')">Resumen</a></li>
+        <li id="detalleTab"><a data-toggle="tab" href="#seccion-resumen" onclick="pestana('detalleTab')">Detallado</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="resumen">
+            <form id="Estatus-form" action="@Url.Action("ExportarResumenEstatus")" method="POST" target="_blank">
+                <input type="hidden" name="ExportarFormato"/>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4><strong>Resultados de tu consulta</strong></h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <table class="table table-striped table-condensed table-hover" id="tabla-estatus" style="font-size: 1em;">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="9" class="text-center">
+                                                    <h4 style="display: inline-block;"><strong>Resumen</strong></h4>
+                                                    <span style="position: relative; float: right;">
+                                                        <span>Exporta tu resumen en &nbsp;</span><br />
+                                                        <input type="button" class="btn btn-danger btn-sm" id="resumen-pdf-estatus" value="PDF"/>&nbsp;                                                        
+                                                        <input type="button" class="btn btn-success btn-sm" id="resumen-excel-estatus" value="EXCEL"/>
+                                                        <input type="hidden" name="ExportarFormato" />
+                                                    </span>
+                                                </th>
+                                            </tr>
+                                            <tr class="filtros">
+                                                <th class="col-md-4">ESTATUS</th>
+                                                <th class="col-md-3">Cantidad Asesores Vendiendo</th>
+                                                <th class="col-md-3">Promedio año asesores vendiendo</th>
+                                                <th class="col-md-3">Productividad asesores vendiendo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var resumen in Model.ListaResultadoEstatus)
+                                            {
+                                                <tr>
+                                                    <td>@resumen.ESTATUS_RESUMEN</td>
+                                                    <td>@resumen.CANTIDAD_ASESORES</td>
+                                                    @{ var promedio = double.Parse(@resumen.PROMEDIO_ASESORES.ToString()).ToString("F");
+                                                     var productividad = double.Parse(@resumen.PRODUCTIVIDAD_ASESORES.ToString()).ToString("F"); }
+                                                    <td>@promedio</td>
+                                                    <td>@productividad</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="detalle" style="display:none">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><strong>Resultados de tu consulta</strong></h4>
+                    </div>
+                    <div class="panel-body">
+                        <form id="Detallado-form" action="@Url.Action("ExportarResumenDetallado")" method="POST" target="_blank">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    @Html.Label("Periodos", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-8">
+                                        <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().PERIODO_INICIO a @Model.ListaResultadoResumen.FirstOrDefault().PERIODO_FINAL </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    @Html.Label("Fecha de digitación", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-8">
+                                        <p class="form-control-static">@Model.ListaResultadoResumen.FirstOrDefault().ACT_HORA_MAENO </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-horizontal">
+                                <span style="position: relative; float: right;">
+                                    <span>Exporta tu resumen en &nbsp;</span><br />
+                                    <input type="button" class="btn btn-danger btn-sm" id="resumen-pdf-detallado" value="PDF" />&nbsp;
+                                    <input type="button" class="btn btn-success btn-sm" id="resumen-excel-detallado" value="EXCEL" />
+                                    <input type="hidden" name="ExportarFormato" />
+                                </span>
+                            </div>
+                        </form>
+                        <form id="Asesor-form" action="@Url.Action("ExportarInformeAsesor")" method="POST" target="_blank">
+                            <input type="hidden" name="ExportarFormato" value="excel" />
+                            <input type="hidden" name="TipoInforme" value="Detallado" />
+
+                            <input type="hidden" name="CedulaAsesor" value="Detallado" />
+                            <input type="hidden" name="NombreAsesor" value="Detallado" />
+                            <input type="hidden" name="Estatus" value="Detallado" />
+                            <input type="hidden" name="AreasProtegidas" value="Detallado" />
+                            <input type="hidden" name="Pmp" value="Detallado" />
+                            <input type="hidden" name="Familiar" value="Detallado" />
+                            <input type="hidden" name="PerInicio" value="Detallado" />
+                            <input type="hidden" name="PerFin" value="Detallado" />
+                            <input type="hidden" name="NumOrden" value="Detallado" />
+                            <input type="hidden" name="Productividad" value="Detallado" />
+                            <input type="hidden" name="Cumplimiento" value="Detallado" />
+                            <input type="hidden" name="Metas" value="Detallado" />
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <table class="table table-striped table-condensed table-hover" id="tabla-datos" style="font-size: 1em;">
+                                        @{ var listaTotal = Model.ListaResultadoResumen.Where(x => x.ESTATUS.Equals("TOTAL")).ToList();}
+                                        <thead>
+                                            <tr>
+                                                <th colspan="9" class="text-center">
+                                                    <h4 style="display: inline-block;"><strong>Detallado asesores</strong></h4>
+
+                                                </th>
+                                            </tr>
+                                            <tr class="filtros">
+                                                <th class="col-md-6">Estatus Asesor</th>
+                                                <th class="col-md-3">Fecha de ingreso</th>
+                                                <th class="col-md-2">Familiar</th>
+                                                <th class="col-md-2">PMP</th>
+                                                <th class="col-md-2">Areas Protegidas</th>
+                                                <th class="col-md-2"> Totales</th>
+                                                <th class="col-md-2"> Productividad Trimestral</th>
+                                                <th class="col-md-2"> Cumplimiento</th>
+                                                <th class="col-md-2"> Metas</th>
+                                                <th class="col-md-2"> Resultado</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="panel-tabla" style="font-size: 1em;">
+                                            @foreach (var estatus in Model.ListaEstatusAsesor)
+                                            {
+
+
+                                                var totalAP1 = 0;
+                                                var totalPMP1 = 0;
+                                                var totalFAM1 = 0;
+                                                var totales1 = 0;
+                                                var subtotalProductividad = 0;
+                                                var subtotalCumplimiento = 0.00;
+                                                var subtotalMetas = 0;
+                                                if (!estatus.Equals("TOTAL"))
+                                                {
+                                            <tr>
+                                                <td colspan="9" style="font-weight: 800;">@estatus</td>
+
+                                            </tr>
+                                                    foreach (var datosAsesor in Model.ListaResultadoResumen.Where(x => x.ESTATUS.Equals(estatus)).GroupBy(x => new { x.CC_ASESOR, x.NOMB_ASESOR, x.FAMILIAR, x.PMP, x.AREAS_PROTEGIDAS, x.PRODUCTIVIDAD, x.CUMPLIMIENTO, x.METAS, x.FECHAINICIO_ASESOR }).ToList())
+                                                    {
+                                            <tr>
+
+                                                <td style="padding-left: 1.5em;">
+                                                    <input type="button" class="btn btn-link" id="informe-asesor"
+                                                           data-ccasesor="@datosAsesor.Key.CC_ASESOR"
+                                                           data-nombreasesor="@datosAsesor.Key.NOMB_ASESOR"
+                                                           data-estatus="@estatus"
+                                                           data-areasprotegidas="@datosAsesor.Key.AREAS_PROTEGIDAS"
+                                                           data-pmp="@datosAsesor.Key.PMP"
+                                                           data-familiar="@datosAsesor.Key.FAMILIAR"
+                                                           data-productividad="@datosAsesor.Key.PRODUCTIVIDAD"
+                                                           data-cumplimiento="@datosAsesor.Key.CUMPLIMIENTO"
+                                                           data-metas="@datosAsesor.Key.METAS"
+                                                           data-fechainicio="@Model.ListaResultadoResumen.FirstOrDefault().PERIODO_INICIO"
+                                                           data-fechafin="@Model.ListaResultadoResumen.FirstOrDefault().PERIODO_FINAL"
+                                                           value="@datosAsesor.Key.CC_ASESOR - @datosAsesor.Key.NOMB_ASESOR" />
+                                                </td>
+                                                <td>  @String.Format("{0:dd/MM/yyyy}", datosAsesor.Key.FECHAINICIO_ASESOR)  </td>
+                                                <td>@datosAsesor.Key.FAMILIAR</td>
+
+                                                <td>@datosAsesor.Key.PMP</td>
+
+                                                <td>@datosAsesor.Key.AREAS_PROTEGIDAS</td>
+
+                                                @{
+                                                        var totaless = datosAsesor.Key.PMP + datosAsesor.Key.FAMILIAR + datosAsesor.Key.AREAS_PROTEGIDAS;
+                                                        totalPMP1 = totalPMP1 + datosAsesor.Key.PMP ?? 0;
+                                                        totalAP1 = totalAP1 + datosAsesor.Key.AREAS_PROTEGIDAS ?? 0;
+                                                        totalFAM1 = totalFAM1 + datosAsesor.Key.FAMILIAR ?? 0;
+                                                        totales1 = totales1 + totaless ?? 0;
+                                                        subtotalProductividad = subtotalProductividad + datosAsesor.Key.PRODUCTIVIDAD;
+                                                        subtotalCumplimiento = subtotalCumplimiento + decimal.ToDouble(datosAsesor.Key.CUMPLIMIENTO);
+                                                        subtotalMetas = subtotalMetas + datosAsesor.Key.METAS;
+
+                                                        var cumplimiento = double.Parse(@datosAsesor.Key.CUMPLIMIENTO.ToString()).ToString("F");
+                                                }
+                                                <td>@totaless</td>
+
+                                                <td>@datosAsesor.Key.PRODUCTIVIDAD</td>
+
+                                                <td>@cumplimiento %</td>
+
+                                                <td>@datosAsesor.Key.METAS</td>
+
+                                                <td>
+                                                    @{
+                                                        if (@datosAsesor.Key.CUMPLIMIENTO >= 100)
+                                                        {
+                                                                <img width:100%; width="20" src="~/Image/sabanaAsesores/check.jpg" />
+                                                        }
+                                                        else
+                                                        {
+                                                                <img width:100%; width="20" src="~/Image/sabanaAsesores/alerta.jpg" />
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                                    }
+                                            <tr>
+                                                <th class="col-md-6" style="font-weight: 800;">Subtotales</th>
+                                                <th class="col-md-1"></th>
+                                                <th class="col-md-1">@totalFAM1</th>
+                                                <th class="col-md-1">@totalPMP1</th>
+                                                <th class="col-md-1">@totalAP1</th>
+                                                <th class="col-md-1">@totales1</th>
+                                                <th class="col-md-1">@subtotalProductividad</th>
+                                                <th class="col-md-1">@subtotalCumplimiento.ToString("F")</th>
+                                                <th class="col-md-1">@subtotalMetas</th>
+                                            </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr style="font-weight: 800;">
+                                                <th class="col-md-6">Totales</th>
+                                                @{
+                                            int? pmp1 = Model.ListaResultadoResumen.Sum(x => x.PMP);
+                                            int? fam1 = Model.ListaResultadoResumen.Sum(x => x.FAMILIAR);
+                                            int? area1 = Model.ListaResultadoResumen.Sum(x => x.AREAS_PROTEGIDAS);
+                                            int? total_productividad = Model.ListaResultadoResumen.Sum(x => x.PRODUCTIVIDAD);
+                                            decimal? total_cumplimiento = Model.ListaResultadoResumen.Sum(x => x.CUMPLIMIENTO);
+                                            int? total_metas = Model.ListaResultadoResumen.Sum(x => x.METAS);
+                                                }
+                                                <th class="col-md-2"></th>
+                                                <th class="col-md-2">@fam1</th>
+                                                <th class="col-md-2">@pmp1</th>
+                                                <th class="col-md-2">@area1</th>
+                                                @{ var tot = pmp1 + fam1 + area1;}
+                                                <th class="col-md-2">@tot</th>
+                                                <th class="col-md-2">@total_productividad</th>
+                                                @{var totCump = double.Parse(total_cumplimiento.ToString()).ToString("F"); }
+                                                <th class="col-md-2">@totCump</th>
+                                                <th class="col-md-2">@total_metas</th>
+
+                                            </tr>
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("input#informe-asesor").on("click", function () {
+                $("form#Asesor-form input[name=ExportarFormato]").val("Pdf");
+                $("form#Asesor-form input[name=TipoInforme]").val("R");
+                $("form#Asesor-form input[name=CedulaAsesor]").val($(this).attr("data-ccasesor"));
+                $("form#Asesor-form input[name=NombreAsesor]").val($(this).attr("data-nombreasesor"));
+                $("form#Asesor-form input[name=Estatus]").val($(this).attr("data-estatus"));
+                $("form#Asesor-form input[name=AreasProtegidas]").val($(this).attr("data-areasprotegidas"));
+                $("form#Asesor-form input[name=Pmp]").val($(this).attr("data-pmp"));
+                $("form#Asesor-form input[name=Familiar]").val($(this).attr("data-familiar"));
+                $("form#Asesor-form input[name=PerInicio]").val($(this).attr("data-fechainicio"));
+                $("form#Asesor-form input[name=PerFin]").val($(this).attr("data-fechafin"));
+                $("form#Asesor-form input[name=Productividad]").val($(this).attr("data-productividad"));
+                $("form#Asesor-form input[name=Cumplimiento]").val($(this).attr("data-cumplimiento"));
+                $("form#Asesor-form input[name=Metas]").val($(this).attr("data-metas"));
+                $("form#Asesor-form").submit();
+            });
+
+            $("input#resumen-pdf-estatus").on("click", function () {
+                $("form#Estatus-form input[name=ExportarFormato]").val("Pdf");
+                $("form#Estatus-form").submit();
+            });
+
+            $("input#resumen-excel-estatus").on("click", function () {
+                $("form#Estatus-form input[name=ExportarFormato]").val("Excel");
+                $("form#Estatus-form").submit();
+            });
+
+            $("input#resumen-pdf-detallado").on("click", function () {
+                $("form#Detallado-form input[name=ExportarFormato]").val("Pdf");
+                $("form#Detallado-form").submit();
+            });
+
+            $("input#resumen-excel-detallado").on("click", function () {
+                $("form#Detallado-form input[name=ExportarFormato]").val("Excel");
+                $("form#Detallado-form").submit();
+            });
+
+        });
+
+        function pestana(id_pesta) {
+            if (id_pesta == 'resumenTab') {
+                debugger;
+                document.getElementById("resumen").style.display = 'block';
+                document.getElementById("detalle").style.display = 'none';
+            }
+            else {
+                document.getElementById("resumen").style.display = 'none';
+                document.getElementById("detalle").style.display = 'block';
+            }
+        }
+    </script>
+}
+else
+{
+    <div class="col-md-12">
+        <div class="alert alert-succes text-center" role="alert" style="color: #3c763d !important; background-color: #dff0d8 !important; border-color: #d6e9c6 !important; ">
+            <strong>No se encontraron afiliaciones para esa combinación de filtros</strong>
+        </div>
+    </div>
+}
+

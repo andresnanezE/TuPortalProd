@@ -1,0 +1,738 @@
+﻿body {
+   
+    font-family: Arial, Helvetica, sans-serif;
+}
+#loading-bar .bar {
+    background-color: #4CAF50 !important;
+    height: 8px !important;
+}
+@media screen and (min-width: 992px) {
+    /*Formulario datos ususario precargados*/
+    .form-data-user {
+        background-image: url('../../Image/Alarmas/CotizarReserva/Artboard 5@300x@2x.png');
+        color: #FFFFFF;
+        font-size: 20px;
+        height: 250px;
+        margin-left: -16px;
+        margin-right: -16px;
+    }
+
+    .title-modal {
+        color: #22558d;
+        font-size: 23px;
+        font-weight: bold;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 10px;
+    }
+
+    .title-sub {
+        color: #22558d;
+        font-size: 16px;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 10px;
+    }
+
+    .form-horizontal > div:nth-child(1) {
+        padding-top: 25px;
+        margin-left: 14px;
+    }
+
+    #lbl-nit {
+        margin-left: 50%;
+    }
+
+    .form-horizontal {
+        margin-top: -20px;
+        margin-bottom: 10px;
+    }
+
+    .row-title {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+    }
+
+    .row-lbls {
+        background-color: #ffffff;
+        color: #22558D;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 17px;
+    }
+
+    a {
+        color: #FFFFFF;
+    }
+
+        a:hover, a:focus {
+            color: #FFF;
+            text-decoration: underline;
+        }
+    /* Fin Formulario datos ususario precargados*/
+
+    /*Formulario Cotizar Reserva*/
+
+    #form-RegistroNit {
+        padding-bottom: 10%;
+        padding-top: 1%;
+    }
+
+    .form-top {
+        margin-top: 15px;
+        font-size: 13px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #045A9D;
+    }
+
+    div.row-select {
+        right: 52px;
+    }
+
+        div.row-select:nth-child(2) {
+            left: 0px;
+            right: 0px;
+        }
+
+    div.lbl-select {
+        padding-top: 9px;
+        left: -15px;
+    }
+
+    div.col-sm-2:nth-child(3) {
+        right: 0px;
+        left: 1%;
+    }
+
+    div.col-sm-4:nth-child(4) {
+        left: -50px;
+    }
+
+    #selectAP {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: button-arrow-down;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #selectSector {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: button-arrow-down;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #selectCiudad {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: button-arrow-down;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #tipoRiesgoID {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: button-arrow-down;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #tipoRiesgoID, option {
+        color: #22558D;
+    }
+
+    #selectAP, option {
+        color: #22558D;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #selectSector, option {
+        color: #22558D;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #selectCiudad, option {
+        color: #22558D;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    hr {
+        border: 1px solid #D9D9D9;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    #form-RegistroNit > hr:nth-child(2) {
+        border: 1px solid #D9D9D9;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    #ciudadFactorID {
+        border-radius: 50px;
+    }
+
+    #lbl-title-sede {
+        color: #22558D;
+        font-size: 18px;
+    }
+
+    .col-city {
+        top: 9px;
+        left: 5%;
+        color: #045A9D;
+    }
+
+    div.lbl-select:nth-child(1) {
+        right: 9px;
+        left: 15px;
+    }
+
+    .col-city-select {
+        left: 2%;
+    }
+
+    .col-per {
+        top: 9px;
+        left: 55px;
+        color: #22558D;
+    }
+
+    div.col-sm-1:nth-child(4) {
+        right: 2%;
+    }
+
+    #NumeroExpuestos {
+        color: #045A9D;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    .col-lbl-promedio {
+        top: 9px;
+        color: #22558d;
+        right: 2%;
+    }
+
+    div.col-sm-1:nth-child(6) {
+        right: 4%;
+        padding-right: 40px;
+    }
+
+    #numeroPromedioVisitantes {
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+        color: #22558d;
+    }
+
+    .col-select-risk {
+        top: 30px;
+        right: 6.2%;
+        width: 50%
+    }
+
+    .col-risk {
+        top: 40px;
+        left: 0.8%;
+        color: #2255a6;
+    }
+
+    #btn-add {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        background-color: #22558D;
+        color: #FFFFFF;
+        left: 135px;
+        top: 5px;
+    }
+
+    #btn-delete {
+        font-family: rial, Helvetica, sans-serif;
+        font-weight: bold;
+        background-color: #FFFFFF;
+        border: solid 2px #183B63;
+        border-radius: 10px;
+    }
+
+    hr {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    #form-RegistroNit > hr:nth-child(6) {
+        border: 1px solid #D9D9D9;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    div.row:nth-child(7) > div:nth-child(2) {
+        left: 25px;
+    }
+
+    div.col-sm-2:nth-child(7) {
+        left: 40px;
+    }
+
+    #btn-cancel {
+        font-family: rial, Helvetica, sans-serif;
+        font-weight: bold;
+        width: 300px;
+        background-color: #22558D;
+    }
+
+    #btn-submit {
+        font-family: rial, Helvetica, sans-serif;
+        font-weight: bold;
+        width: 300px;
+        background-color: #34C38A;
+        border-color: #34C38A;
+    }
+
+    div.col-md-6:nth-child(1) {
+        left: 20%;
+        top: 70px;
+    }
+
+    div.col-sm-12:nth-child(2) {
+        top: 70px;
+    }
+
+    .glyphicon-trash {
+        color: darkgray;
+    }
+
+    .row-sede {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+    }
+
+    #tipoRiesgoID {
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    label {
+        font-weight: normal;
+    }
+
+    /*Fin Formulario Cotizar Reserva*/
+    /* icono dentro del input*/
+    .inner-addon {
+        position: relative;
+        color: #22558D;
+    }
+
+        .inner-addon .glyphicon {
+            position: absolute;
+            padding: 10px;
+            pointer-events: none;
+            margin-right: 0px;
+        }
+
+    .right-addon input {
+        padding-right: 30px;
+    }
+
+    .right-addon .glyphicon {
+        left: 378px;
+    }
+
+    .left-addon > i:nth-child(1) {
+        left: 270px;
+    }
+}
+
+@media screen and (min-width: 1366px) {
+    /*Formulario datos ususario precargados*/
+    .form-data-user {
+        background-image: url('../../Image/Alarmas/CotizarReserva/Artboard 5@300x@2x.png');
+        color: #FFFFFF;
+        font-size: 20px;
+        height: 220px;
+        margin-left: -16px;
+        margin-right: -16px;
+    }
+
+    .title-modal {
+        color: #22558d;
+        font-size: 23px;
+        font-weight: bold;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 10px;
+    }
+
+    .title-sub {
+        color: #22558d;
+        font-size: 16px;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 10px;
+    }
+
+    .form-horizontal > div:nth-child(1) {
+        padding-top: 25px;
+        margin-left: 14px;
+    }
+
+    #lbl-nit {
+        margin-left: 275px;
+    }
+
+    .form-horizontal {
+        margin-top: -20px;
+    }
+
+    .row-title {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+    }
+
+    .row-lbls {
+        background-color: #ffffff;
+        color: #22558D;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 17px;
+    }
+
+    a {
+        color: #FFFFFF;
+    }
+
+        a:hover, a:focus {
+            color: #FFF;
+            text-decoration: underline;
+        }
+    /* Fin Formulario datos ususario precargados*/
+
+    /*Formulario Cotizar Reserva*/
+
+    #form-RegistroNit {
+        padding-bottom: 10%;
+        padding-top: 1%;
+    }
+
+    .form-top {
+        margin-top: 15px;
+        font-size: 13px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #045A9D;
+    }
+
+    div.row-select {
+        right: 52px;
+    }
+
+    div.lbl-select {
+        padding-top: 9px;
+        left: -15px;
+    }
+
+    div.col-sm-2:nth-child(3) {
+        right: 0px;
+        left: 4%;
+    }
+
+    div.col-sm-4:nth-child(4) {
+        right: 106px;
+    }
+
+    div.col-sm-2:nth-child(5) {
+        left: 1%;
+    }
+
+    #selectAP {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: menuarrow;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #selectSector {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: button-arrow-down;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #selectCiudad {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: button-arrow-down;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #tipoRiesgoID {
+        border-radius: 50px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -webkit-appearance: caret;
+        -moz-appearance: button-arrow-down;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        border: 0 !important;
+        background: rgb(255,255,255);
+        background-image: none;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    #tipoRiesgoID, option {
+        color: #22558D;
+    }
+
+    #selectAP, option {
+        color: #22558D;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #selectSector, option {
+        color: #22558D;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #selectCiudad, option {
+        color: #22558D;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #form-RegistroNit > hr:nth-child(2) {
+        border: 1px solid #D9D9D9;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    #ciudadFactorID {
+        border-radius: 50px;
+    }
+
+    #lbl-title-sede {
+        color: #22558D;
+        font-size: 18px;
+    }
+
+    .col-city {
+        top: 9px;
+        left: 110px;
+        color: #045A9D;
+    }
+
+    div.lbl-select:nth-child(1) {
+        right: 9px;
+        left: 15px;
+    }
+
+    .col-city-select {
+        left: 60px;
+    }
+
+    .col-per {
+        top: 9px;
+        left: 55px;
+        color: #22558D;
+    }
+
+    div.col-sm-1:nth-child(4) {
+        left: 10px;
+        margin-right: 0px;
+        margin-left: 0px;
+        padding-right: 35px;
+    }
+
+    #NumeroExpuestos {
+        color: #045A9D;
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+    }
+
+    .col-lbl-promedio {
+        top: 9px;
+        color: #22558d;
+    }
+
+    div.col-sm-1:nth-child(6) {
+        right: 34px;
+        padding-right: 40px;
+    }
+
+    #numeroPromedioVisitantes {
+        box-shadow: 1px 2px 6px rgb(208,208,208), 1px 2px 6px rgb(208,208,208) !important;
+        color: #22558d;
+    }
+
+    .col-select-risk {
+        top: 30px;
+        right: 48px;
+        width: 50%
+    }
+
+    .col-risk {
+        top: 40px;
+        left: 60px;
+        color: #2255a6;
+    }
+
+    #btn-add {
+        font-family: rial, Helvetica, sans-serif;
+        font-weight: bold;
+        background-color: #22558D;
+        color: #FFFFFF;
+        left: 135px;
+        top: 5px;
+    }
+
+    #btn-delete {
+        font-family: rial, Helvetica, sans-serif;
+        font-weight: bold;
+        background-color: #FFFFFF;
+        border: solid 2px #183B63;
+        border-radius: 10px;
+    }
+
+    hr {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        border: 1px solid #d9d9d9;
+    }
+
+    #form-RegistroNit > hr:nth-child(6) {
+        border: 2px solid #D9D9D9;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    div.row:nth-child(7) > div:nth-child(2) {
+        left: 25px;
+    }
+
+    div.col-sm-2:nth-child(7) {
+        left: 40px;
+    }
+
+    #btn-cancel {
+        font-family: rial, Helvetica, sans-serif;
+        font-weight: bold;
+        width: 300px;
+        background-color: #22558D;
+    }
+
+    #btn-submit {
+        font-family: rial, Helvetica, sans-serif;
+        font-weight: bold;
+        width: 300px;
+        background-color: #34C38A;
+        border-color: #34C38A;
+    }
+
+    div.col-md-6:nth-child(1) {
+        left: 310px;
+        top: 70px;
+    }
+
+    div.col-sm-12:nth-child(2) {
+        top: 70px;
+    }
+
+    .glyphicon-trash {
+        color: darkgray;
+    }
+
+    .row-sede {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+    }
+
+    #tipoRiesgoID {
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    /*Fin Formulario Cotizar Reserva*/
+    /* icono dentro del input*/
+    .inner-addon {
+        position: relative;
+        color: #22558D;
+    }
+
+        .inner-addon .glyphicon {
+            position: absolute;
+            padding: 10px;
+            pointer-events: none;
+            margin-right: 0px;
+        }
+
+    .right-addon input {
+        padding-right: 30px;
+    }
+
+    .right-addon .glyphicon {
+        left: 378px;
+    }
+
+    .left-addon > i:nth-child(1) {
+        left: 270px;
+    }
+}
+

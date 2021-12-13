@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Ciudades>
+  <Ciudad>
+    <idCiudad>1</idCiudad>
+    <nombreCiudad>Bogotá</nombreCiudad>
+  </Ciudad>
+  <Ciudad>
+    <idCiudad>2</idCiudad>
+    <nombreCiudad>Bucaramanga</nombreCiudad>
+  </Ciudad>
+  <Ciudad>
+    <idCiudad>3</idCiudad>
+    <nombreCiudad>Cali</nombreCiudad>
+  </Ciudad>
+  <Ciudad>
+    <idCiudad>4</idCiudad>
+    <nombreCiudad>Chia</nombreCiudad>
+  </Ciudad>
+  <Ciudad>
+    <idCiudad>5</idCiudad>
+    <nombreCiudad>Medellin</nombreCiudad>
+  </Ciudad>
+  <Ciudad>
+    <idCiudad>6</idCiudad>
+    <nombreCiudad>Villavicencio</nombreCiudad>
+  </Ciudad>
+</Ciudades>

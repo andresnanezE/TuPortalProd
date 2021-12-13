@@ -1,0 +1,166 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Editar Visitas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    div.a {
+        text-align: justify;
+    }
+</style>
+<div class="col-md-12">
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <form id="form-RegistroNit" action="" method="POST">
+            <div class="panel panel-default" style="width: 100%">
+                <div class="panel-heading" ALIGN="center">
+                    <h3>Editar Reserva</h3>
+                </div>
+            </div>
+
+            @*ID*@
+            @Html.HiddenFor(model => model.IdCotizacion)
+            <div class="form-group">
+                @Html.Label("ID reserva", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.IdCotizacion, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.IdCotizacion, "", new { @class = "text-danger" })
+            </div>
+
+            @*NIT*@
+            @Html.HiddenFor(model => model.NIT)
+            <div class="form-group">
+                @Html.Label("NIT", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.NIT, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.NIT, "", new { @class = "text-danger" })
+            </div>
+            @*Nombre*@
+            <div class="form-group">
+                @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.nombreEmpresa, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.nombreEmpresa, "", new { @class = "text-danger" })
+            </div>
+            @*Contacto*@
+            <div class="form-group">
+                @Html.Label("Contacto", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.Contacto, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.Contacto, "", new { @class = "text-danger" })
+            </div>
+            @*Telefono*@
+            <div class="form-group">
+                @Html.Label("Teléfono", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.telefono, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+            </div>
+            @*Celular*@
+            <div class="form-group">
+                @Html.Label("Celular", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.celular, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.celular, "", new { @class = "text-danger" })
+            </div>
+            @*Cargo*@
+            <div class="form-group">
+                @Html.Label("Cargo", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.Cargo, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.Cargo, "", new { @class = "text-danger" })
+            </div>
+            @*Correo electrónico*@
+            <div class="form-group">
+                @Html.Label("Correo", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.correoElectronico, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })
+            </div>
+
+            @*Tipo área protegida*@
+            <div class="form-group">
+                @Html.Label("Tipo área protegida", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.tipoAreaProt, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.tipoAreaProt, "", new { @class = "text-danger" })
+            </div>
+
+            @*Valor cotización*@
+            <div class="form-group">
+                @Html.Label("Valor cotización", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.Total, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+            </div>
+
+            @*Observaciones pricing*@
+            <div class="form-group">
+                <div class="a">
+                    @Html.Label("Observaciones pricing", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.DisplayFor(model => model.ObservacionesPricing, new { htmlAttributes = new { @class = "control-label col-md-3 row-md-12" } })
+                    @Html.ValidationMessageFor(model => model.ObservacionesPricing, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*@Ciudad*@
+            <div class="form-group ">
+                @Html.Label("Ciudad", htmlAttributes: new { @class = "control-label col-md-3" })
+
+                @Html.DisplayFor(model => model.ciudad, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.ciudad, "", new { @class = "text-danger" })
+            </div>
+
+            @*@Canal*@
+            <div class="form-group">
+
+                @Html.Label("Canal", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.canal, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                @Html.ValidationMessageFor(model => model.canal, "", new { @class = "text-danger" })
+            </div>
+
+            @*@Estado*@
+            <div class="form-group">
+
+                @Html.Label("Estado actual", htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DisplayFor(model => model.estado, new { htmlAttributes = new { @class = "control-label col-md-3 " } })
+                @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
+            </div>
+
+            @*Condiciones especiales*@
+            <div class="form-group">
+                @Html.Label("Condiciones especiales", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.MotivoVisita, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control ValidacionOnlyletter",
+                           placeholder = "Observaciones",
+                           required = "required"
+                       }
+                   })
+                    @Html.ValidationMessageFor(m => m.MotivoVisita, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group fa fa-align-left" style='width:70px; height:25px'>
+                            @*<button type="button" class="btn btn-lg btn-primary col-md-6 col-md-offset-10" id="libReserv" style='width:135px; height:50px' onclick="location.href='@Url.Action("LiberarReserva","BloqueoNit",Model)'">Liberar Reserva</button>*@
+                            <input type="submit" class="btn btn-lg btn-warning col-md-6 col-md-offset-10" id="libReserv" style='width:135px; height:50px' value="Liberar Reserva" name="action:LiberarReserva">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group fa fa-align-right" style='width:70px; height:25px'>
+                            <input type="submit" class="btn btn-lg btn-primary col-md-6 col-md-offset-10" id="renovReserv" style='width:135px; height:50px' value="Renovar Reserva" name="action:RenovarReservas">
+                            @*<button type="submit" class="btn btn-lg btn-primary col-md-6 col-md-offset-10" id="renovReserv" style='width:135px; height:50px' onclick="location.href='@Url.Action("RenovarReserva", "BloqueoNit",
+                                Model)'">Renovar Reserva</button>*@
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group fa fa-align-center" style='width:70px; height:25px'>
+                            <button type="button" class="btn btn-lg btn-primary col-md-6 col-md-offset-10" id="myButton" style='width:135px; height:50px' onclick="location.href='@Url.Action("MisCotizaciones","BloqueoNit")'">Regresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+        </form>
+    </div>
+
+    @*}*@
+</div>

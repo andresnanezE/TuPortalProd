@@ -1,0 +1,93 @@
+﻿@using System.Web.Configuration
+@model Presentacion.Mvc.App.Models.LoginModel
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/fuente.css" rel="stylesheet" />
+    <link href="~/Styles/estilos.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.3.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/App/GoogleAnalytics/indexViewModel.js"></script>
+    <link rel="icon" type="image/png" href="~/Image/icono.png" />
+    <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
+    <script type="text/javascript" id="cookieinfo"
+            src="~/js/cookie.js"
+            data-bg="#CFCFCF"
+            data-fg="#000"
+            data-link="#337AC4"
+            data-divlink="#FFF"
+            data-divlinkbg="#337AB7"
+            data-cookie="CookieTuPortal"
+            data-text-align="left"
+            data-close-text="ACEPTO"
+            data-font-size="12px"
+            data-linkmsg=" - Mas informacíon"
+            data-moreinfo="https://www.emermedica.com.co/politica-de-cookies/"
+            data-message="Usamos cookies propias para ayudarte en tu navegación. Si continúas navegando consideramos que aceptas el uso de cookies para Tu Portal">
+    </script>
+
+    <title>Herramientas Comerciales</title>
+</head>
+<body>
+
+    <div class="container" style="margin-top: 10px">
+        <div class="row">
+            <div class="col-sm-5 col-md-5 col-md-offset-3">
+                <div class="panel panel-default" style="width: 500px;">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                            <img src="~/Image/APP COTIZADOR.png" alt="" class="img-responsive" style="width: 90%; margin-left: 10px;">
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <img src="~/Image/logo_emermedica.png" class="col-sm-5 col-xs-5 img-responsive" style="display: inline-block !important; float: none !important; width: 60%;" alt="emermedica" />
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" action="@Url.Action("Index", new{ banderaCaptcha = Model.banderaCaptcha})" method="POST">
+
+                            <fieldset>
+                                <div class="panel-heading text-center" style="padding-top: 0px;">
+                                    <h3 style="margin-top: 0px;"><strong>¡Tranajamos para brindar un mejor servicio!</strong></h3>
+									<h4>Los días el sistema estará fuera de servicio.</h4> 
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script defer>
+
+        //grecaptcha.ready(function () {
+        //    grecaptcha.execute('6LcY0n0UAAAAACthAz-kUx4bfEljlC9zLBu_utSP', { action: 'Index' })
+        //    .then(function (token) {
+
+        //        //document.getElementById("tokenGog").val = token;
+        //        $('#tokenGog').val(token);
+
+        //    });
+        //});
+        function onSubmit(token) {
+            document.getElementById('form').submit();
+        }
+
+        $(document).ready(function () {
+            //$(function () { $("input[name=usuario]").focus(); });
+            localStorage.setItem('namemenu', null);
+        });
+
+    </script>
+</body>
+</html>
+
+@Scripts.Render("~/bundles/validaciones")

@@ -1,0 +1,134 @@
+﻿<div class="form-horizontal" ng-if="vm.formasPago.length > 0 && vm.template==1">
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="fieldset text-center list-unstyled table-radio">
+                <li class="text-center azul-fondo"><b>OPCIONES<br />ELEGIDAS</b></li>
+                <li>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <object data="{{'../Image/personas/ep' + vm.iPersonas + '.png'}}" type="image/png">
+                                <img src="../Image/personas/personascotizador.png" />
+                            </object>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 personas">
+                                    <button id="iPersonas" type="button" class="btn btn-link">
+                                        {{ vm.iPersonas }}
+                                    </button>
+                                </div>
+                                <div class="col-md-6 operadores">
+                                    <button type="button" class="btn btn-link"
+                                            ng-click="vm.agregarPersona(true)">
+                                        <img src="../Image/btn-mas.png" />
+                                    </button>
+                                    <button type="button" class="btn btn-link"
+                                            ng-if="vm.iPersonas > 1"
+                                            ng-click="vm.agregarPersona(false)">
+                                        <img src="../Image/btn-menos.png" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-uppercase azul"><h2><b>{{vm.tarifa.FORMA_PAGO}}</b></h2></li>
+                <li>
+                    <object data="../Image/modalidadPago/{{ vm.removeDiacritics(vm.tarifa.MODALIDAD_PAGO) }}.png" type="image/png">
+                        <img src="../Image/modalidadPago/formapagodefecto.png" />
+                    </object>
+                    <b class="text-uppercase azul">{{vm.tarifa.MODALIDAD_PAGO}}</b>
+                </li>
+            </ul>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <button data-toggle="tooltip" data-placement="top" class="btn btn-primary btn-block"
+                            ng-click="vm.template=0">
+                        Volver a Tabla
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+                        Ver Formulario
+                    </button>
+                    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="../Image/formuarioregistro.png" class="img-responsive" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 table-radio">
+            <div>
+                <button type="button" class="btn btn-default btn-block active azul">
+                    Tu cliente ahorra en total {{ vm.tarifa.VALOR_AHORRO_LIQUIDACION | currency:'$':0 }} al a&ntilde;o  por afiliado
+                </button>
+            </div>
+            <table class="liquidar-table table-bordered text-center table-radio">
+                <thead class="gris-fondo">
+                    <tr><th colspan="5" class="text-left"><b>La tarifa por afiliado en el formulario:</b></th></tr>
+                    <tr class="blanco text-center">
+                        <th>Valor cuota<br />mes sin IVA</th>
+                        <th>IVA</th>
+                        <th>Total tarifa<br />por mes</th>
+                        <th>% de descuento<br />sobre Tarifa Plena</th>
+                        <th>AHORRO<br />al a&ntilde;o</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            *Coloca el 'Valor cuota mes sin IVA' en la secci&oacute;n de 'Beneficiarios' en la columna con el mismo
+                            nombre del formulario de Solicitud
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr class="text-center">
+                        <td><b>{{vm.tarifa.VALOR_TARIFA | currency:'$':0}}</b></td>
+                        <td><b>{{vm.tarifa.VALOR_IVA_TARIFA | currency:'$':0}}</b></td>
+                        <td><b>{{vm.tarifa.VALOR_TARIFA+vm.tarifa.VALOR_IVA_TARIFA | currency:'$':0}}</b></td>
+                        <td><b>{{vm.tarifa.PORCENTAJE_AHORRO  | currency:'':1}}%</b></td>
+                        <td><b>{{vm.tarifa.VALOR_AHORRO | currency:'$':0}}</b></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="liquidar-table table table-bordered text-center table-radio">
+                <thead>
+                    <tr><th colspan="5" class="text-left azul"><b>Liquidaci&oacute;n de cuotas peri&oacute;dicas en el formulario:</b></th></tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            **Escribe esta liquidaci&oacute;n en la secci&oacute;n ‘LIQUIDACI&Oacute;N DE CUOTAS PERI&Oacute;DICAS<br />
+                            PARA PAGO ANTICIPADO EN EL 1er A&Ntilde;O’ del Formulario de Solicitud
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr>
+                        <th class="blanco azul-fondo text-left">VALOR CUOTA</th>
+                        <td class="text-center">{{vm.tarifa.VALOR_TARIFA *vm.iPersonas | currency:"$":0}}</td>
+                    </tr>
+                    <tr>
+                        <th class="blanco azul-fondo text-left">IVA</th>
+                        <td class="text-center">{{vm.tarifa.VALOR_IVA_TARIFA*vm.iPersonas | currency:'$':0}}</td>
+                    </tr>
+                    <tr>
+                        <th class="blanco azul-fondo text-left">TOTAL A PAGAR</th>
+                        <td class="text-center"><b>{{vm.tarifa.VALOR_CUOTA_PERIODICA | currency:'$':0}}</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

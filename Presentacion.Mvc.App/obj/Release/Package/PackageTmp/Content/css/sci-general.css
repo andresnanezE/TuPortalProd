@@ -1,0 +1,46 @@
+﻿
+/*#region --MODAL-- */
+
+#m-cotizacion .modal-dialog .modal-content {
+    width: 70%;
+    border-radius: 0;
+}
+
+    #m-cotizacion .modal-dialog .modal-content .modal-body {
+        padding: 2px;
+    }
+
+#m-title-2,
+#m-title {
+    font-size: 1.56rem;
+    font-weight: 700;
+    color: rgb(40,84,131);
+}
+
+#m-title-2 {
+    margin-top:20px;
+}
+
+#m-message {
+    font-size: 1.4rem;
+    color: rgb(40,84,131);
+}
+/*#endregion */
+
+/*#region --BTN-- */
+.btn-m-aceptar {
+    font-size: 1.56rem !important;
+    font-weight: bold !important;
+    background-color: rgb(52,195,139);
+    color: rgb(255,255,255) !important;
+}
+
+.btn-m-cancelar {
+    font-size: 1.56rem !important;
+    font-weight: bold !important;
+    background-color: rgb(40,69,101);
+    color: rgb(255,255,255) !important;
+    right: 6px;
+}
+
+/*#endregion */

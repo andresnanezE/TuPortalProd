@@ -1,0 +1,253 @@
+﻿@model Presentacion.Mvc.App.Models.RegistroVisitaModel
+@{
+    ViewBag.Title = "Registrar Visitas";
+}
+<script src="~/Scripts/OpenMod.js"></script>
+<script>
+    function openMod(postbck, messa) {
+        var TeamDetailPostBackURL = '../Mensaje/Emergente/';
+        var id = messa;
+        var options = { "backdrop": "static", keyboard: true };
+        $.ajax({
+            type: "GET",
+            url: TeamDetailPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            data: { "title": "Contratos vigentes", "mess": id },
+            datatype: "json",
+            success: function (data) {
+                debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function (ex) {
+                alert("Error.", ex);
+            }
+        });
+    }
+
+</script>
+<div class="col-md-12">
+
+
+    @*NIT*@
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7 col-md-offset-3">
+                    <form id="form-busquedaNit" action="@Url.Action("ConsultarNIT")" method="post">
+                        @Html.Label("NIT", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-6" input type="number">
+                            @Html.EditorFor(model => model.NIT, new
+                       {
+                           htmlAttributes = new
+                           {
+                               @type = "text",
+                               @class = "form-control ValidacionOnlyNumber",
+                               placeholder = "NIT",
+                               required = "required"
+                           }
+                       })
+                            @Html.ValidationMessageFor(model => model.NIT, "", new { @class = "text-danger" })
+                        </div>
+                        @*@DV*@
+                        <div class="form-group col-md-5 col-md-offset-5" style='width:120px; height:25px; text-align: center;' disabled >
+                            @Html.Label("DV", htmlAttributes: new { @class = "control-label col-md-3" })
+                            @Html.DisplayFor(model => model.DV, new { htmlAttributes = new { @class = "control-label col-md-3" } })
+                            @Html.ValidationMessageFor(model => model.DV, "", new { @class = "text-danger" })
+                        </div>
+
+                        <button class="btn btn-lg btn-primary col-md-5 col-md-offset-5" style='width:135px; height:50px' id="myBtn">Consultar NIT</button>
+                        <input type=hidden id='mesNot' value='@Html.DisplayTextFor(model => model.mensaje)'>
+                        <div id="myModal" class="modal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div id="myModalContent"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    @*<a href="@Url.Action("ConsultarNIT","BloqueoNIT",new { NITi=Model.NIT})">Consultar NIT</a>*@
+                </div>
+            </div>
+        </div>
+
+        <form id="form-RegistroNit" action="@Url.Action("Index")" method="post">
+            @Html.HiddenFor(model => model.NIT)
+            @Html.HiddenFor(model => model.DV)
+
+            @*Nombre*@
+            <div class="form-group">
+                @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.nombreEmpresa, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control ValidacionOnlyletter",
+                       placeholder = "Nombre del cliente",
+                       required = "required"
+                   }
+               })
+                    @Html.ValidationMessageFor(model => model.nombreEmpresa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Contacto*@
+            <div class="form-group">
+                @Html.Label("Contacto", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Contacto, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control ValidacionOnlyletter",
+                       placeholder = "Contacto del cliente",
+                       required = "required"
+                   }
+               })
+                    @Html.ValidationMessageFor(model => model.Contacto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Telefono*@
+            <div class="form-group">
+                @Html.Label("Teléfono", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.telefono, new
+               {
+                   htmlAttributes = new
+                   {
+                       @type = "text",
+                       @class = "form-control ValidacionOnlyNumber",
+                       placeholder = "Número de Contacto del cliente",
+                       required = "required"
+                   }
+               })
+                    @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Celular*@
+            <div class="form-group">
+                @Html.Label("Teléfono celular", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.celular, new
+               {
+                   htmlAttributes = new
+                   {
+                       @type = "text",
+                       @class = "form-control ValidacionOnlyNumber",
+                       placeholder = "Número de Contacto del cliente",
+                       required = "required"
+                   }
+               })
+                    @Html.ValidationMessageFor(model => model.celular, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Cargo*@
+            <div class="form-group">
+                @Html.Label("Cargo", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Cargo, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control ValidacionOnlyletter",
+                       placeholder = "Cargo del cliente",
+                       required = "required"
+                   }
+               })
+                    @Html.ValidationMessageFor(model => model.Cargo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Correo electronico*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.correoElectronico, htmlAttributes: new { @type = "email", @class = "control-label col-md-3 " })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.correoElectronico, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control",
+                       placeholder = "Correo electrónico",
+                       required = "required"
+                   }
+               })
+                    @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*Productos para Ofrecer*@
+            <div class="form-group">
+                @Html.Label("Productos", new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @if (Model != null && Model.productos != null)
+                    {
+                        @Html.CheckBoxListFor(x => x.productosIds,
+                                                 x => x.productos,
+                                                 x => x.id_producto,
+                                                 x => x.NombreProducto,
+                                                 x => x.seleccionado)
+                        <br />
+                        @Html.ValidationMessageFor(model => model.productos, "", new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+
+            @*Motivo visita*@
+            <div class="form-group">
+                @Html.Label("Motivo visita", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.MotivoVisita, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control ValidacionOnlyletter",
+                       placeholder = "Motivo visita",
+                       required = "required"
+                   }
+               })
+                    @Html.ValidationMessageFor(model => model.MotivoVisita, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(ViewBag.Mensaje))
+            {
+                <div class="alert alert-success">
+                    <strong>@ViewBag.Mensaje</strong>
+                </div>
+            }
+            <div class="form-group" ALIGN=RIGHT>
+                <div class="row col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group fa fa-align-left" style='width:70px; height:25px'>
+                            <button class="btn btn-lg btn-primary col-md-6 col-md-offset-10" style='width:135px; height:50px'>Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="form-group" ALIGN=RIGHT>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group fa fa-align-left" style='width:70px; height:25px'>
+                        <button type="button" class="btn btn-lg btn-primary col-md-6 col-md-offset-10" id="myButton" style='width:135px; height:50px' onclick="location.href='@Url.Action("MisCotizaciones","BloqueoNit")'">Mis Reservas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        
+        $(document).ready(function () {
+            var mess = $('#mesNot').attr("value");
+            //alert(mess);
+            if (mess) {
+                openMod('/Mensaje/Emergente/', mess);
+            }
+        });
+    </script>
+
+</div>

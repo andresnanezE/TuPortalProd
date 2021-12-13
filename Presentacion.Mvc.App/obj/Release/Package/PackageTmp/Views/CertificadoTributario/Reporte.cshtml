@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsAsesor = true;
+    ViewBag.IsSac = false;
+}
+
+<link href="~/Content/css/MisCotizaciones.css" rel="stylesheet" />
+
+<div id="ov-loading" style="display: none;">
+    <div class="wrap">
+        <div class="loading">
+            <div class="bounceball"></div>
+            <div class="text">Procesando Información</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 text-center" style="margin:25px 0px;">
+    <label class="title-header">Relación de envíos Certificado tributario</label>
+</div>
+
+
+<div class="col-sm-12">
+    <div id="rw-cnt-bsq" class="row pr-">
+        <div id="dv-cnt-bsq" class="col-sm-12 dv-cnt-bsq">
+            <table class="tbl-frm text-left">
+                <tbody>
+                    <tr>
+                        <td style="width: 30%">
+                            <label class="control-label lb-frm-up">Por favor ingrese un dato para realizar la búsqueda:</label>
+                            <div class="inner-addon right-addon dv-search">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="row pr-">
+        <div id="dv-loading-data" class="col-sm-12">
+            <div style="position: absolute;z-index: 12;color: rgb(255,255,255);width: 100%;height: 360px;top: 0;left: 0;">
+                <div style="position: relative;top: 50%;left: 50%;transform: translate(-50% , -50%);width: 59%;text-align: center;">
+                    <label class="sp-loading-data" data-text="Obteniendo solicitudes…">Obteniendo solicitudes…</label>
+                </div>
+            </div>
+        </div>
+        <div id="dv-tb-ctzn" class="col-sm-12" style="display: none; padding: 0">
+            <table id="tb-ctzn" class="table table-hover stripe row-border order-column text-center tb-ctzn">
+                @*nowrap*@
+                <thead>
+                    <tr>
+                        <th>Documento cliente</th>
+                        <th>Tipo de Contrato</th>
+                        <th>Nombre del Contratante</th>
+                        <th>Fecha de Envío</th>
+                        <th>Envío E-mail SI/NO</th>
+                        <th>E-mail</th>
+                        <th>Dirección Física</th>
+                        <th>Error de Envío E-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--ko foreach:envios-->
+                    <tr>
+                        <td data-bind="text: NumeroDocumento"></td>
+                        <td data-bind="text: TipoContrato"></td>
+                        <td data-bind="text: NombreContratante"></td>
+                        <td data-bind="text: moment(FechaEnvio).format('ll')"></td>
+                        <td data-bind="text: EnvioEmail"></td>
+                        <td data-bind="text: Email"></td>
+                        <td data-bind="text: DireccionFisica"></td>
+                        <td data-bind="text: ErrorEnvio"></td>
+                    </tr>
+                    <!--/ko-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+      var isSac = @Html.Raw(Json.Encode(ViewBag.isSac));
+        var isDirector = @Html.Raw(Json.Encode(ViewBag.IsDirector));
+    </script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/js/CertificadoTributario/Reporte.js"></script>
+}

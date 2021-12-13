@@ -1,0 +1,167 @@
+﻿@using PagedList.Mvc
+@model Presentacion.Mvc.App.Models.CaracterizacionCampañasModel
+@{
+    ViewBag.Title = "Caracterización Campañas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<form id="programacionTurnos-form" action="@Url.Action("Index")" method="POST">*@
+
+    <div class="panel panel-default" style="width: 65%">
+        <div class="panel-heading">
+            <h3>Búsqueda</h3>
+        </div>
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <h3 class="text-success" style="padding-left: 20px">
+                @Html.DisplayTextFor(model => model.Mensaje)
+            </h3>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TIPO_TARIFA, new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @using (Html.BeginForm("Campañas", "CaracterizacionCampañas", FormMethod.Post, new { @id = "TiposTarifasForm" }))
+                    {
+                        @Html.DropDownListFor(model => model.TIPO_TARIFA, new SelectList(Model.TipoTarifas,
+                        "CODIGO_TARIFA", "TIPO_TARIFA",
+                        Model.TipoTarifas), "--seleccione--", new { @class = "form-control" })
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.CAMPANA_TARIFA, new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @using (Html.BeginForm("Resultado", "CaracterizacionCampañas", FormMethod.Post, new { @id = "CampañaForm" }))
+                    {
+                        @Html.HiddenFor(model => model.TIPO_TARIFA)
+                        @Html.DropDownListFor(model => model.CAMPANA_TARIFA, new SelectList(Model.Campañas,
+                        "CAMPANA_TARIFA", "CAMPANA_TARIFA",
+                        Model.Campañas), "--seleccione--", new { @class = "form-control" })
+                    }
+                    
+                </div>
+            </div>
+            
+            @*<div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                   
+                        <input type="submit" value="Buscar" class="btn btn-primary" id="buscar" />
+                   
+                    <br /><br />
+                </div>
+            </div>*@
+
+        </div>
+
+
+    </div>
+   
+    
+       <div class="col-md-12">
+        @*<p>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ActionLink("Crear Usuario", "Agregar")
+        </p>*@
+        <table id="listaCaracterizacionCampañas" class="table table-striped table-bordered" style="">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th style="vertical-align: top;">
+                        @Html.Label("Tipo tarifa")
+                    </th>
+                    <th style="vertical-align: top;">
+                        @Html.Label("Campaña")
+                    </th>
+                    <th style="vertical-align: top;">
+                        @Html.Label("Ruta imagen")
+                    </th>
+                    <th style="vertical-align: top;">
+                        @Html.Label("Caracterización")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaCampanaCaracterizacion)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Modificar", "Modificar", new { item.TIPO_TARIFA, item.CAMPANA_TARIFA })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TIPO_TARIFA)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CAMPANA_TARIFA)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RUTA_IMAGEN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CARACTERIZACION)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @Html.PagedListPager(Model.ListaCampanaCaracterizacion, page => Url.Action("Paginador", new
+   {
+       page,
+       Model.TIPO_TARIFA,
+       Model.CAMPANA_TARIFA
+   }))
+    </div>
+
+@*</form>*@
+
+<script>
+    $(function () {
+        $("#CAMPANA_TARIFA").change(function () {
+            $("#CampañaForm").submit();
+        });
+        $("#TIPO_TARIFA").change(function () {
+            $("#TiposTarifasForm").submit();
+        });
+    });
+        $(document).ready(function () {
+            $('table#listaCaracterizacionCampañas').DataTable({
+                oLanguage: {
+                    sEmptyTable: "No hay datos para mostrar",
+                    sInfo: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    sInfoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    sInfoFiltered: "(Friltrado desde _MAX_ registros totales)",
+                    sLengthMenu: "Mostrar _MENU_ registros por pagina",
+                    sLoadingRecords: "Cargando...",
+                    sProcessing: "Procesando...",
+                    sSearch: "Buscar:",
+                    sZeroRecords: "No se encontraron registros que coincidan",
+                    oPaginate: {
+                        sFirst: "Primera",
+                        sLast: "Ultima",
+                        sNext: "Siguiente",
+                        sPrevious: "Anterior"
+                    }
+                },
+                "autoWidth": false,
+                //"sort": true,
+                //"filter": true,
+                //"dom": "<'row'<'col-md-6'l><'col-md-6'f>>" + "<'row'<'col-md-12'i>>" ,
+                "processing": false,
+                "searching": false,
+                "paging": false,
+                //"ordering": true,
+                "info": false,
+                "columns": [
+                       { "orderable": "false", "width": "13%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "14%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "14%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "13%", "Class": "alignCenter" },
+                       { "searchable": true, "orderable": true, "Width": "13%", "Class": "alignCenter" },
+                ]
+            });
+        });
+</script>
+

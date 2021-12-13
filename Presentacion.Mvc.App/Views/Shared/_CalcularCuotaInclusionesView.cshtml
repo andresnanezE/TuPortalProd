@@ -1,0 +1,229 @@
+﻿@model Presentacion.Mvc.App.Models.CalcularCuotaInclusiones
+
+@*
+    Calculadora de inclusiones PMP.
+    JohnNelsonRodriguex*@
+
+<hr />
+<div class="row hidden" id="ialert">
+</div>
+
+<input type="hidden" name="seCargaronTarifas" value=" " id="seCargaronTarifas" data-tarifas="false" />
+
+<div class="form-group">
+    <div class="col-md-3">
+        <label class="control-label" for="fInclusion">Fecha de inclusión</label>
+    </div>
+    <div class="col-md-3 has-feedback">
+        <input type="text" class="form-control dtp" name="fInclusion" value="@String.Format("{0:dd/MM/yyyy}",DateTime.Now)" id="fInclusion" readonly="readonly" />
+        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+    </div>
+
+    <div>
+        <div class="col-md-3">
+            <label class="control-label" id="lblfCorte">Fecha Corte:</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" id="fechaCorte" name="fechaCorte" class="form-control" readonly="readonly" />
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-3">
+        <label class="control-label">Número de personas</label>
+    </div>
+    <div class="col-md-3">
+        <select class="form-control" name="nPersonas" id="nPersonas">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="control-label" id="lblDiasProrrateo">Dias Prorrateo:</label>
+    </div>
+    <div class="col-md-3">
+        <input type="text" id="vDiasProrrateo" name="vDiasProrrateo" class="form-control" readonly="readonly" />
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-3">
+        <label class="control-label">Tarifas</label>
+    </div>
+    <div class="col-md-3">
+        <div class="select-editable">
+            <select onchange="this.nextElementSibling.value=this.value" id="sTarifas" class="form-control">
+                <option value="">0.0</option>
+            </select>
+            <input type="text" name="format" value="" id="iTarifas" />
+        </div>
+    </div>
+</div>
+
+<div class="form-group" style="padding-top: 15px">
+    <div class="col-md-3">
+        <label class="control-label">Ingreso con primera cuota</label>
+    </div>
+    <div class="col-md-3">
+        <input type="checkbox" value="" checked="checked" class="checkbox">
+    </div>
+    <div class="col-md-3">
+        <button name="btn_calcular" id="btn_calcular" value="Calcular" class="btn btn-primary"><span class="glyphicon glyphicon-usd"></span> Calcular</button>
+    </div>
+</div>
+
+<hr />
+
+@*
+    Fila1
+*@
+<div class="form-group">
+
+    <div class="prorrateo">
+        <div class="col-md-3">
+            <label class="control-label" id="lblProrrateo">Valor Prorrateo:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="vProrrateo" name="vProrrateo"></label>
+        </div>
+    </div>
+
+    <div class="pcuota">
+        <div class="col-md-3">
+            <label class="control-label" id="lblCuota">Valor próxima Cuota:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="vProximaCuota" name="vProximaCuota"></label>
+        </div>
+    </div>
+
+    <div id="vleRte">
+        <div class="col-md-3">
+            <label class="control-label" id="lblRte">Valor Recurrente:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="vRecurrente" name="vRecurrente"></label>
+        </div>
+    </div>
+</div>
+@*
+    Fila2
+*@
+<div class="form-group">
+
+    <div class="prorrateo">
+        <div class="col-md-3">
+            <label class="control-label" for="vIvaProrrateo">Valor Iva:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="vIvaProrrateo" name="vIvaProrrateo"></label>
+        </div>
+    </div>
+
+    <div class="pcuota">
+        <div class="col-md-3">
+            <label class="control-label" for="vIvaProximaCuota">Valor Iva:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="vIvaProximaCuota" name="vIvaProximaCuota"></label>
+        </div>
+    </div>
+
+    <div>
+        <div class="col-md-3">
+            <label class="control-label" for="vIvaRecurrente">Valor Iva:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="vIvaRecurrente" name="vIvaRecurrente"></label>
+        </div>
+    </div>
+</div>
+@*
+    Fila3
+*@
+<div class="form-group">
+
+    <div class="prorrateo">
+        <div class="col-md-3">
+            <label class="control-label" for="tProrrateo">Total Prorrateo:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="tProrrateo" name="tProrrateo"></label>
+        </div>
+    </div>
+
+    <div class="pcuota">
+        <div class="col-md-3">
+            <label class="control-label" for="tProximaCuota">Total primera Cuota:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="tProximaCuota" name="tProximaCuota"></label>
+        </div>
+    </div>
+
+    <div>
+        <div class="col-md-3">
+            <label class="control-label" for="tRecurrente">Total Recurrente:</label>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label calc" id="tRecurrente" name="tRecurrente"></label>
+        </div>
+    </div>
+</div>
+
+<style>
+    .select-editable {
+        position: relative;
+        background-color: white;
+        width: 180px;
+        height: 100%;
+    }
+
+        .select-editable select {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            font-size: 14px;
+            border: none;
+            width: 120px;
+            margin: 0;
+        }
+
+        .select-editable input {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100px;
+            height: 30px;
+            /*padding: 1px;*/
+            font-size: 14px;
+            border: none;
+            margin-left: 8PX;
+        }
+
+            .select-editable select:focus, .select-editable input:focus {
+                outline: none;
+            }
+
+    #sTarifas {
+        border-radius: 3px;
+        padding-top: 2px;
+        border: solid 1px #CCCCCC;
+        padding-bottom: 0px;
+        width: 145px;
+    }
+
+    #iTarifas {
+        border-top: solid 1px #CCCCCC;
+    }
+</style>
